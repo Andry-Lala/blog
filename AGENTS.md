@@ -9,6 +9,7 @@
 
 ## Code Style Guidelines
 - **PHP**: Follow Laravel conventions with PSR-12, use Laravel Pint for formatting
+- **Formatting**: 4 spaces indentation, UTF-8 encoding, LF line endings (per .editorconfig)
 - **Imports**: Order: external libraries, then internal (App\), use alphabetical sorting
 - **Naming**: PascalCase for classes, camelCase for methods/variables, snake_case for database columns
 - **Types**: Use strict typing and PHP 8.2+ features (return types, readonly properties)
@@ -16,3 +17,4 @@
 - **Error handling**: Use Laravel's exception handling, validate requests, return proper HTTP responses
 - **Database**: Use Eloquent models with proper fillable arrays, migrations with descriptive names
 - **Testing**: Write both Unit and Feature tests, use factories for test data
+- **Frontend**: Use Tailwind CSS for styling, Vite for bundling

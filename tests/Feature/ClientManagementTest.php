@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ClientManagementTest extends TestCase
@@ -50,7 +51,8 @@ class ClientManagementTest extends TestCase
         $response = $this->actingAs($this->admin)
             ->post(route('clients.store'), $clientData);
 
-        $response->assertRedirect(route('clients.show', Client::first()));
+        $client = Client::where('email', 'john@example.com')->first();
+        $response->assertRedirect(route('clients.show', $client));
         $this->assertDatabaseHas('users', [
             'nom' => 'Doe',
             'prenom' => 'John',
@@ -166,7 +168,6 @@ class ClientManagementTest extends TestCase
     {
         $client = Client::factory()->create([
             'statut' => false,
-            'password' => bcrypt('password'),
         ]);
 
         $response = $this->post(route('login'), [
@@ -180,10 +181,11 @@ class ClientManagementTest extends TestCase
 
     public function test_verified_client_can_login()
     {
-        $client = Client::factory()->create([
+        $client = Client::factory()->make([
             'statut' => true,
-            'password' => bcrypt('password'),
+            'password' => Hash::make('password'),
         ]);
+        $client->save();
 
         $response = $this->post(route('login'), [
             'username' => $client->username,
@@ -228,7 +230,8 @@ class ClientManagementTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewHas('clients');
-        $this->assertEquals(1, $response->viewData['clients']->count());
+        $clients = $response->viewData('clients');
+        $this->assertEquals(1, $clients->count());
     }
 
     public function test_client_filter_by_status()
@@ -241,6 +244,7 @@ class ClientManagementTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewHas('clients');
-        $this->assertEquals(1, $response->viewData['clients']->count());
+        $clients = $response->viewData('clients');
+        $this->assertEquals(1, $clients->count());
     }
 }

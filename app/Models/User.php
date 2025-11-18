@@ -39,6 +39,7 @@ class User extends Authenticatable
         'notes',
         'date_validation',
         'valide_par',
+        'theme',
     ];
 
     /**
@@ -60,12 +61,27 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
             'statut' => 'boolean',
             'date_naissance' => 'date',
             'date_delivrance' => 'date',
             'date_validation' => 'datetime',
         ];
+    }
+
+    /**
+     * Get the investments for the user.
+     */
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
+
+    /**
+     * Check if user is admin.
+     */
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->role === 'administrateur';
     }
 
     /**
