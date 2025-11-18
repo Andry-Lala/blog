@@ -34,10 +34,10 @@ class InvestmentFactory extends Factory
             'address' => $this->faker->address,
             'phone' => $this->faker->phoneNumber,
             'id_number' => $this->faker->unique()->numerify('##########'),
-            'id_photo' => 'investments/id_photos/' . $this->faker->uuid . '.jpg',
+            'id_photo' => 'investments/id_photos/'.$this->faker->uuid.'.jpg',
             'transaction_phone' => $this->faker->phoneNumber,
             'amount' => $this->faker->numberBetween(10000, 1000000),
-            'transaction_proof' => 'investments/transaction_proofs/' . $this->faker->uuid . '.jpg',
+            'transaction_proof' => 'investments/transaction_proofs/'.$this->faker->uuid.'.jpg',
             'status' => $this->faker->randomElement(Investment::getStatuses()),
             'admin_notes' => $this->faker->optional()->sentence,
         ];

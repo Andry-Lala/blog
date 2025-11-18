@@ -10,13 +10,12 @@ class ThemeController extends Controller
     /**
      * Switch the theme for the authenticated user.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function switch(Request $request)
     {
         $request->validate([
-            'theme' => 'required|in:light,dark'
+            'theme' => 'required|in:light,dark',
         ]);
 
         $theme = $request->get('theme');

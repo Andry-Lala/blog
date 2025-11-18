@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Investment extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'user_id',
         'operator',
