@@ -109,6 +109,8 @@
                             <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Montant *</label>
                             <input type="number" id="amount" name="amount" step="0.01" min="0" required
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                            <p id="amount-error" class="mt-1 text-sm text-red-600 dark:text-red-400 hidden"></p>
+                            <p id="amount-info" class="mt-1 text-sm text-gray-500 dark:text-gray-400"></p>
                         </div>
 
                         <div>
@@ -149,13 +151,95 @@ window.addEventListener('load', function() {
     const operatorSelect = document.querySelector('select[name="operator"]');
     const operatorMessage = document.getElementById('operator-message');
     const operatorText = document.getElementById('operator-text');
+    const investmentTypeSelect = document.querySelector('select[name="investment_type"]');
+    const amountInput = document.querySelector('input[name="amount"]');
+    const amountError = document.getElementById('amount-error');
+    const amountInfo = document.getElementById('amount-info');
+
+    // Plages d'investissement en Ariary
+    const investmentRanges = {
+        'Silver': {
+            min: 224200,
+            max: 2237200,
+            minUsd: 50,
+            maxUsd: 499
+        },
+        'Gold': {
+            min: 2241700,
+            max: 3133800,
+            minUsd: 500,
+            maxUsd: 699
+        },
+        'Platinum': {
+            min: 3138300,
+            max: 4478800,
+            minUsd: 700,
+            maxUsd: 999
+        },
+        'Diamond': {
+            min: 4483000,
+            max: null,
+            minUsd: 1000,
+            maxUsd: null
+        }
+    };
 
     console.log('Éléments trouvés:', {
         operatorSelect: operatorSelect,
         operatorMessage: operatorMessage,
-        operatorText: operatorText
+        operatorText: operatorText,
+        investmentTypeSelect: investmentTypeSelect,
+        amountInput: amountInput,
+        amountError: amountError,
+        amountInfo: amountInfo
     });
 
+    // Fonction pour valider le montant selon le type
+    function validateAmountForType() {
+        const selectedType = investmentTypeSelect.value;
+        const amount = parseFloat(amountInput.value);
+
+        if (!selectedType) {
+            amountError.classList.add('hidden');
+            amountInfo.textContent = '';
+            return true;
+        }
+
+        const range = investmentRanges[selectedType];
+
+        if (!range) {
+            amountError.classList.add('hidden');
+            amountInfo.textContent = '';
+            return true;
+        }
+
+        if (amount < range.min) {
+            amountError.textContent = `Le montant minimum pour ce type est ${range.min.toLocaleString('fr-FR')} Ar (${range.minUsd} USD)`;
+            amountError.classList.remove('hidden');
+            amountInput.classList.add('border-red-500');
+            return false;
+        }
+
+        if (range.max && amount > range.max) {
+            amountError.textContent = `Le montant maximum pour ce type est ${range.max.toLocaleString('fr-FR')} Ar (${range.maxUsd} USD)`;
+            amountError.classList.remove('hidden');
+            amountInput.classList.add('border-red-500');
+            return false;
+        }
+
+        amountError.classList.add('hidden');
+        amountInput.classList.remove('border-red-500');
+
+        if (range.max) {
+            amountInfo.textContent = `Plage: ${range.min.toLocaleString('fr-FR')} - ${range.max.toLocaleString('fr-FR')} Ar (${range.minUsd} - ${range.maxUsd} USD)`;
+        } else {
+            amountInfo.textContent = `Minimum: ${range.min.toLocaleString('fr-FR')} Ar (${range.minUsd} USD)`;
+        }
+
+        return true;
+    }
+
+    // Événement pour le changement d'opérateur
     if (operatorSelect && operatorMessage && operatorText) {
         operatorSelect.addEventListener('change', function() {
             console.log('Opérateur changé:', this.value);
@@ -182,7 +266,25 @@ window.addEventListener('load', function() {
                 console.log('Aucun opérateur sélectionné');
             }
         });
-    } else {
+    }
+
+    // Événement pour le changement de type d'investissement
+    if (investmentTypeSelect && amountInput) {
+        investmentTypeSelect.addEventListener('change', function() {
+            console.log('Type d\'investissement changé:', this.value);
+            validateAmountForType();
+        });
+
+        // Validation lors de la saisie du montant
+        amountInput.addEventListener('input', function() {
+            validateAmountForType();
+        });
+
+        // Validation initiale
+        validateAmountForType();
+    }
+
+    if (!operatorSelect || !operatorMessage || !operatorText || !investmentTypeSelect || !amountInput) {
         console.error('Certains éléments n\'ont pas été trouvés');
     }
 });
