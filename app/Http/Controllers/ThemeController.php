@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,17 +15,18 @@ class ThemeController extends Controller
      */
     public function switch(Request $request)
     {
-        $request->validate([
-            'theme' => 'required|in:light,dark',
+        $validated = $request->validate([
+            'theme' => 'required|string|in:light,dark',
         ]);
 
-        $theme = $request->get('theme');
+        $theme = $validated['theme'];
 
         // Save to session
         session(['theme' => $theme]);
 
         // Save to database if user is authenticated
         if (Auth::check()) {
+            /** @var User $user */
             $user = Auth::user();
             $user->theme = $theme;
             $user->save();

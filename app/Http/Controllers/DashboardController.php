@@ -83,7 +83,7 @@ class DashboardController extends Controller
 
         if ($user->role === 'administrateur') {
             // Investissements récents globaux
-            $recentInvestments = Investment::with('user')
+            $recentInvestments = Investment::with('user:id,nom,prenom')
                 ->orderBy('created_at', 'desc')
                 ->take(5)
                 ->get();

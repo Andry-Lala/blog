@@ -71,7 +71,7 @@ class User extends Authenticatable
     /**
      * Get the investments for the user.
      */
-    public function investments()
+    public function investments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Investment::class);
     }
@@ -87,7 +87,7 @@ class User extends Authenticatable
     /**
      * Get the user who validated this client.
      */
-    public function validatedBy()
+    public function validatedBy(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'valide_par');
     }
@@ -95,7 +95,7 @@ class User extends Authenticatable
     /**
      * Get the clients validated by this user.
      */
-    public function validatedClients()
+    public function validatedClients(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(User::class, 'valide_par');
     }
