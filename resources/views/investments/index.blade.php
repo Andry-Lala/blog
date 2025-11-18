@@ -3,20 +3,24 @@
 @section('title', 'Mes Investissements')
 
 @section('header')
-    <div class="ml-4 flex items-center justify-between">
+    <div class="ml-4 flex items-center">
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Mes Investissements</h1>
-        <a href="{{ route('investments.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            Nouvel Investissement
-        </a>
     </div>
 @endsection
 
 @section('content')
 <div class="py-6">
     <div class="px-4 sm:px-6 lg:px-8">
+        <!-- Actions Header -->
+        <div class="mb-6 flex items-center justify-between">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-white">Liste de mes investissements</h2>
+            <a href="{{ route('investments.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Nouvel Investissement
+            </a>
+        </div>
         @if(session('success'))
             <div class="mb-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
                 <div class="flex">
@@ -45,7 +49,7 @@
         @if($investments->count() > 0)
             <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <table id="investmentsTable" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date</th>
@@ -75,7 +79,7 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('investments.show', $investment) }}" 
+                                        <a href="{{ route('investments.show', $investment) }}"
                                            class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" title="Voir les détails">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -87,10 +91,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6">
-                    {{ $investments->links() }}
                 </div>
             </div>
         @else
@@ -112,4 +112,55 @@
         @endif
     </div>
 </div>
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('#investmentsTable').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
+            search: "Rechercher:",
+            lengthMenu: "Afficher _MENU_ entrées",
+            info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+            paginate: {
+                first: '<i class="fas fa-angle-double-left"></i>',
+                last: '<i class="fas fa-angle-double-right"></i>',
+                next: '<i class="fas fa-angle-right"></i>',
+                previous: '<i class="fas fa-angle-left"></i>'
+            }
+        },
+        pageLength: 10,
+        responsive: true,
+        order: [[0, 'desc']],
+        dom: '<"flex flex-col md:flex-row justify-between items-center mb-4"lBfr>t<"flex flex-col md:flex-row justify-between items-center mt-4"ip>',
+        buttons: [
+            {
+                extend: 'excel',
+                text: '<i class="fas fa-file-excel"></i> Excel',
+                className: 'bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
+            },
+            {
+                extend: 'pdf',
+                text: '<i class="fas fa-file-pdf"></i> PDF',
+                className: 'bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
+            },
+            {
+                extend: 'print',
+                text: '<i class="fas fa-print"></i> Imprimer',
+                className: 'bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mb-2 md:mb-0'
+            }
+        ],
+        initComplete: function() {
+            // Masquer la pagination par défaut de Laravel
+            $('.pagination').hide();
+
+            // Améliorer le design de la recherche
+            $('.dataTables_filter label').contents().filter(function() {
+                return this.nodeType === 3;
+            }).remove();
+        }
+    });
+});
+</script>
+@endpush
 @endsection

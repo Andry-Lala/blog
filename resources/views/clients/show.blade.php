@@ -3,30 +3,37 @@
 @section('title', 'Détails du Client')
 
 @section('header')
-    <div class="ml-4 flex items-center justify-between">
+    <div class="ml-4 flex items-center">
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Détails du Client</h1>
-        <div class="flex space-x-3">
-            @if(Auth::user()->role === 'administrateur')
-                <a href="{{ route('clients.edit', $client) }}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                    </svg>
-                    Modifier
-                </a>
-            @endif
-            <a href="{{ route('dashboard') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Retour
-            </a>
-        </div>
     </div>
 @endsection
 
 @section('content')
 <div class="py-6">
     <div class="px-4 sm:px-6 lg:px-8">
+        <!-- Actions Header -->
+        <div class="mb-6 flex items-center justify-between">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-white">
+                Client: {{ $client->prenom }} {{ $client->nom }} ({{ $client->code_utilisateur }})
+            </h2>
+            <div class="flex space-x-3">
+                @if(Auth::user()->role === 'administrateur')
+                    <a href="{{ route('clients.edit', $client) }}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
+                        Modifier
+                    </a>
+                @endif
+                <a href="{{ route('dashboard') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Retour
+                </a>
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Informations de base -->
             <div class="bg-white dark:bg-gray-800 shadow rounded-lg">
