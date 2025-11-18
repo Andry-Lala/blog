@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\InvestmentImageController;
 use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,10 @@ Route::middleware('auth')->group(function () {
 
     // Investment routes
     Route::resource('investments', InvestmentController::class);
-    Route::post('/investments/{investment}/approve', [InvestmentController::class, 'approve'])->name('investments.approve');
-    Route::post('/investments/{investment}/reject', [InvestmentController::class, 'reject'])->name('investments.reject');
+    Route::post('/investments/{investment}/approve', [InvestmentController::class, 'approve'])->name('investments.approve')->middleware('admin');
+    Route::post('/investments/{investment}/reject', [InvestmentController::class, 'reject'])->name('investments.reject')->middleware('admin');
+
+    // Investment image routes
+    Route::get('/investments/{investment}/id-photo', [InvestmentImageController::class, 'showIdPhoto'])->name('investments.id_photo');
+    Route::get('/investments/{investment}/transaction-proof', [InvestmentImageController::class, 'showTransactionProof'])->name('investments.transaction_proof');
 });

@@ -142,6 +142,19 @@
                                             Vos investissements cette année
                                         @endif
                                     </h3>
+                                    @if($user->role === 'administrateur')
+                                        <!-- Tabs for switching between views -->
+                                        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                                            <nav class="-mb-px flex space-x-8">
+                                                <button class="py-2 px-1 border-b-2 border-indigo-500 font-medium text-sm text-indigo-600 dark:text-indigo-400" id="countTab" onclick="switchChart('count')">
+                                                    Nombre d'investissements
+                                                </button>
+                                                <button class="py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300" id="amountTab" onclick="switchChart('amount')">
+                                                    Montants des investissements
+                                                </button>
+                                            </nav>
+                                        </div>
+                                    @endif
                                     <div class="h-64 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                                         <canvas id="investmentChart"></canvas>
                                     </div>
@@ -169,6 +182,37 @@
                                             <div class="flex items-center justify-between">
                                                 <span class="text-sm text-gray-500 dark:text-gray-400">Rejetés</span>
                                                 <span class="text-lg font-semibold text-red-600 dark:text-red-400">{{ $userRejectedCount }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <!-- Global Statistics (only for admins) -->
+                            @if($user->role === 'administrateur')
+                                <div class="bg-white dark:bg-gray-800 shadow rounded-lg">
+                                    <div class="p-6">
+                                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Statistiques globales</h3>
+                                        <div class="space-y-4">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-500 dark:text-gray-400">Total clients</span>
+                                                <span class="text-lg font-semibold text-indigo-600 dark:text-indigo-400">{{ $totalClients ?? 0 }}</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-500 dark:text-gray-400">Montants validés</span>
+                                                <span class="text-lg font-semibold text-green-600 dark:text-green-400">{{ number_format($totalValidatedAmount ?? 0, 2, ',', ' ') }} Ar</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-500 dark:text-gray-400">Montants en attente</span>
+                                                <span class="text-lg font-semibold text-yellow-600 dark:text-yellow-400">{{ number_format($totalPendingAmount ?? 0, 2, ',', ' ') }} Ar</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-500 dark:text-gray-400">Montants en cours</span>
+                                                <span class="text-lg font-semibold text-blue-600 dark:text-blue-400">{{ number_format($totalProcessingAmount ?? 0, 2, ',', ' ') }} Ar</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-500 dark:text-gray-400">Montants rejetés</span>
+                                                <span class="text-lg font-semibold text-red-600 dark:text-red-400">{{ number_format($totalRejectedAmount ?? 0, 2, ',', ' ') }} Ar</span>
                                             </div>
                                         </div>
                                     </div>
@@ -288,11 +332,14 @@
 
 @push('scripts')
 <script>
+    let investmentChart = null;
+    let currentView = 'count';
+
     document.addEventListener('DOMContentLoaded', function() {
         const ctx = document.getElementById('investmentChart').getContext('2d');
 
-        // Données réelles pour le graphique provenant du contrôleur
-        const investmentData = {
+        // Données pour le graphique de nombre d'investissements
+        const countData = {
             labels: @json($chartLabels ?? []),
             datasets: [
                 {
@@ -314,64 +361,126 @@
             ]
         };
 
-        // Configuration du graphique
-        const config = {
-            type: 'line',
-            data: investmentData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            color: document.documentElement.classList.contains('dark') ? '#fff' : '#374151',
-                            font: {
-                                size: 12
-                            }
-                        }
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    label += context.parsed.y + ' investissements';
-                                }
-                                return label;
-                            }
-                        }
-                    }
+        // Données pour le graphique de montants d'investissements (uniquement pour les admins)
+        const amountData = {
+            labels: @json($chartLabels ?? []),
+            datasets: [
+                {
+                    label: 'Montants Validés',
+                    data: @json($validatedAmountData ?? []),
+                    backgroundColor: 'rgba(34, 197, 94, 0.2)',
+                    borderColor: 'rgba(34, 197, 94, 1)',
+                    borderWidth: 2,
+                    tension: 0.4
                 },
-                scales: {
-                    x: {
-                        grid: {
-                            color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                {
+                    label: 'Montants en Attente',
+                    data: @json($pendingAmountData ?? []),
+                    backgroundColor: 'rgba(250, 204, 21, 0.2)',
+                    borderColor: 'rgba(250, 204, 21, 1)',
+                    borderWidth: 2,
+                    tension: 0.4
+                }
+            ]
+        };
+
+        // Configuration du graphique
+        function createChart(data, isAmount = false) {
+            return {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: document.documentElement.classList.contains('dark') ? '#fff' : '#374151',
+                                font: {
+                                    size: 12
+                                }
+                            }
                         },
-                        ticks: {
-                            color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#6B7280'
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        if (isAmount) {
+                                            label += new Intl.NumberFormat('fr-FR').format(context.parsed.y) + ' Ar';
+                                        } else {
+                                            label += context.parsed.y + ' investissements';
+                                        }
+                                    }
+                                    return label;
+                                }
+                            }
                         }
                     },
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                    scales: {
+                        x: {
+                            grid: {
+                                color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#6B7280'
+                            }
                         },
-                        ticks: {
-                            color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#6B7280'
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#6B7280',
+                                callback: function(value) {
+                                    if (isAmount) {
+                                        return new Intl.NumberFormat('fr-FR', { notation: 'compact', compactDisplay: 'short' }).format(value) + ' Ar';
+                                    }
+                                    return value;
+                                }
+                            }
                         }
                     }
                 }
-            }
-        };
+            };
+        }
 
-        // Créer le graphique
-        new Chart(ctx, config);
+        // Créer le graphique initial
+        const isAdmin = @json($user->role === 'administrateur');
+        const initialData = isAdmin ? countData : countData;
+        investmentChart = new Chart(ctx, createChart(initialData, false));
+
+        // Fonction pour basculer entre les vues (uniquement pour les admins)
+        window.switchChart = function(view) {
+            if (!isAdmin) return;
+
+            currentView = view;
+
+            // Mettre à jour les styles des onglets
+            const countTab = document.getElementById('countTab');
+            const amountTab = document.getElementById('amountTab');
+
+            if (view === 'count') {
+                countTab.className = 'py-2 px-1 border-b-2 border-indigo-500 font-medium text-sm text-indigo-600 dark:text-indigo-400';
+                amountTab.className = 'py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300';
+                investmentChart.data = countData;
+                investmentChart.options = createChart(countData, false).options;
+            } else {
+                amountTab.className = 'py-2 px-1 border-b-2 border-indigo-500 font-medium text-sm text-indigo-600 dark:text-indigo-400';
+                countTab.className = 'py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300';
+                investmentChart.data = amountData;
+                investmentChart.options = createChart(amountData, true).options;
+            }
+
+            investmentChart.update();
+        };
     });
 </script>
 @endpush

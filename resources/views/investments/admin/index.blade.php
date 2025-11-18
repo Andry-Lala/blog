@@ -75,35 +75,35 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('investments.show', $investment) }}" 
+                                            <a href="{{ route('investments.show', $investment) }}"
                                                class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" title="Voir les détails">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                                 </svg>
                                             </a>
-                                            
+
                                             @if($investment->status === 'Envoyé')
-                                                <button type="button" class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300" 
-                                                        title="Mettre en cours de traitement" 
-                                                        onclick="document.getElementById('processModal{{ $investment->id }}').classList.add('show')">
+                                                <button type="button" class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300"
+                                                        title="Mettre en cours de traitement"
+                                                        onclick="document.getElementById('processModal{{ $investment->id }}').classList.remove('hidden')">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-1.756.426-1.756 2.924 0-3.35a1.724 1.724 0 00-1.066-2.573c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35z"></path>
                                                     </svg>
                                                 </button>
                                             @endif
-                                            
+
                                             @if($investment->status === 'En cours de traitement')
-                                                <button type="button" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300" 
-                                                        title="Approuver" 
-                                                        onclick="document.getElementById('approveModal{{ $investment->id }}').classList.add('show')">
+                                                <button type="button" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
+                                                        title="Approuver"
+                                                        onclick="document.getElementById('approveModal{{ $investment->id }}').classList.remove('hidden')">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                     </svg>
                                                 </button>
-                                                <button type="button" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300" 
-                                                        title="Rejeter" 
-                                                        onclick="document.getElementById('rejectModal{{ $investment->id }}').classList.add('show')">
+                                                <button type="button" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                                                        title="Rejeter"
+                                                        onclick="document.getElementById('rejectModal{{ $investment->id }}').classList.remove('hidden')">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                     </svg>
@@ -116,7 +116,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
                 <div class="bg-white dark:bg-gray-800 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6">
                     {{ $investments->links() }}
                 </div>
@@ -156,11 +156,11 @@
                     </div>
                 </div>
                 <div class="px-7 py-3 bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
-                    <button type="button" onclick="document.getElementById('processModal{{ $investment->id }}').classList.add('hidden')" 
+                    <button type="button" onclick="document.getElementById('processModal{{ $investment->id }}').classList.add('hidden')"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler
                     </button>
-                    <button type="submit" 
+                    <button type="submit"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-600 text-base font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Mettre en cours
                     </button>
@@ -190,11 +190,11 @@
                     </div>
                 </div>
                 <div class="px-7 py-3 bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
-                    <button type="button" onclick="document.getElementById('approveModal{{ $investment->id }}').classList.add('hidden')" 
+                    <button type="button" onclick="document.getElementById('approveModal{{ $investment->id }}').classList.add('hidden')"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler
                     </button>
-                    <button type="submit" 
+                    <button type="submit"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Approuver
                     </button>
@@ -223,11 +223,11 @@
                     </div>
                 </div>
                 <div class="px-7 py-3 bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
-                    <button type="button" onclick="document.getElementById('rejectModal{{ $investment->id }}').classList.add('hidden')" 
+                    <button type="button" onclick="document.getElementById('rejectModal{{ $investment->id }}').classList.add('hidden')"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler
                     </button>
-                    <button type="submit" 
+                    <button type="submit"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Rejeter
                     </button>

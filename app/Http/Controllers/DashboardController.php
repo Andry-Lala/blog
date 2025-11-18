@@ -29,12 +29,23 @@ class DashboardController extends Controller
             ->get();
 
         // Données pour le graphique des investissements par mois pour l'utilisateur connecté
-        $userMonthlyInvestments = Investment::selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, status, COUNT(*) as count')
-            ->where('user_id', $user->id)
-            ->whereYear('created_at', date('Y'))
-            ->groupByRaw('MONTH(created_at), YEAR(created_at), status')
-            ->orderByRaw('YEAR(created_at), MONTH(created_at)')
-            ->get();
+        $dbDriver = config('database.default');
+
+        if ($dbDriver === 'sqlite') {
+            $userMonthlyInvestments = Investment::selectRaw('strftime("%m", created_at) as month, strftime("%Y", created_at) as year, status, COUNT(*) as count')
+                ->where('user_id', $user->id)
+                ->whereRaw('strftime("%Y", created_at) = ?', [date('Y')])
+                ->groupByRaw('strftime("%m", created_at), strftime("%Y", created_at), status')
+                ->orderByRaw('strftime("%Y", created_at), strftime("%m", created_at)')
+                ->get();
+        } else {
+            $userMonthlyInvestments = Investment::selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, status, COUNT(*) as count')
+                ->where('user_id', $user->id)
+                ->whereYear('created_at', date('Y'))
+                ->groupByRaw('MONTH(created_at), YEAR(created_at), status')
+                ->orderByRaw('YEAR(created_at), MONTH(created_at)')
+                ->get();
+        }
 
         // Préparer les données pour le graphique de l'utilisateur
         $chartLabels = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
@@ -62,6 +73,13 @@ class DashboardController extends Controller
         $chartLabels = null;
         $validatedData = null;
         $pendingData = null;
+        $validatedAmountData = null;
+        $pendingAmountData = null;
+        $totalClients = null;
+        $totalValidatedAmount = null;
+        $totalPendingAmount = null;
+        $totalProcessingAmount = null;
+        $totalRejectedAmount = null;
 
         if ($user->role === 'administrateur') {
             // Investissements récents globaux
@@ -76,16 +94,40 @@ class DashboardController extends Controller
                 ->take(5)
                 ->get();
 
-            // Données pour le graphique global
-            $monthlyInvestments = Investment::selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, status, COUNT(*) as count')
-                ->whereYear('created_at', date('Y'))
-                ->groupByRaw('MONTH(created_at), YEAR(created_at), status')
-                ->orderByRaw('YEAR(created_at), MONTH(created_at)')
-                ->get();
+            // Données pour le graphique global - nombre d'investissements
+            if ($dbDriver === 'sqlite') {
+                $monthlyInvestments = Investment::selectRaw('strftime("%m", created_at) as month, strftime("%Y", created_at) as year, status, COUNT(*) as count')
+                    ->whereRaw('strftime("%Y", created_at) = ?', [date('Y')])
+                    ->groupByRaw('strftime("%m", created_at), strftime("%Y", created_at), status')
+                    ->orderByRaw('strftime("%Y", created_at), strftime("%m", created_at)')
+                    ->get();
+
+                // Données pour le graphique global - montants des investissements
+                $monthlyAmounts = Investment::selectRaw('strftime("%m", created_at) as month, strftime("%Y", created_at) as year, status, SUM(amount) as total')
+                    ->whereRaw('strftime("%Y", created_at) = ?', [date('Y')])
+                    ->groupByRaw('strftime("%m", created_at), strftime("%Y", created_at), status')
+                    ->orderByRaw('strftime("%Y", created_at), strftime("%m", created_at)')
+                    ->get();
+            } else {
+                $monthlyInvestments = Investment::selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, status, COUNT(*) as count')
+                    ->whereYear('created_at', date('Y'))
+                    ->groupByRaw('MONTH(created_at), YEAR(created_at), status')
+                    ->orderByRaw('YEAR(created_at), MONTH(created_at)')
+                    ->get();
+
+                // Données pour le graphique global - montants des investissements
+                $monthlyAmounts = Investment::selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, status, SUM(amount) as total')
+                    ->whereYear('created_at', date('Y'))
+                    ->groupByRaw('MONTH(created_at), YEAR(created_at), status')
+                    ->orderByRaw('YEAR(created_at), MONTH(created_at)')
+                    ->get();
+            }
 
             $chartLabels = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
             $validatedData = array_fill(0, 12, 0);
             $pendingData = array_fill(0, 12, 0);
+            $validatedAmountData = array_fill(0, 12, 0);
+            $pendingAmountData = array_fill(0, 12, 0);
 
             foreach ($monthlyInvestments as $investment) {
                 $monthIndex = $investment->month - 1;
@@ -95,6 +137,22 @@ class DashboardController extends Controller
                     $pendingData[$monthIndex] = $investment->count;
                 }
             }
+
+            foreach ($monthlyAmounts as $amount) {
+                $monthIndex = $amount->month - 1;
+                if ($amount->status === 'Validé') {
+                    $validatedAmountData[$monthIndex] = $amount->total;
+                } elseif ($amount->status === 'Envoyé') {
+                    $pendingAmountData[$monthIndex] = $amount->total;
+                }
+            }
+
+            // Statistiques globales supplémentaires pour l'administrateur
+            $totalClients = User::where('role', 'client')->count();
+            $totalValidatedAmount = Investment::where('status', 'Validé')->sum('amount');
+            $totalPendingAmount = Investment::where('status', 'Envoyé')->sum('amount');
+            $totalProcessingAmount = Investment::where('status', 'En cours de traitement')->sum('amount');
+            $totalRejectedAmount = Investment::where('status', 'Rejeté')->sum('amount');
         }
 
         return view('dashboard.index', compact(
@@ -116,7 +174,14 @@ class DashboardController extends Controller
             'userPendingCount',
             'userProcessingCount',
             'userValidatedCount',
-            'userRejectedCount'
+            'userRejectedCount',
+            'validatedAmountData',
+            'pendingAmountData',
+            'totalClients',
+            'totalValidatedAmount',
+            'totalPendingAmount',
+            'totalProcessingAmount',
+            'totalRejectedAmount'
         ));
     }
 }

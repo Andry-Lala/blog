@@ -121,9 +121,9 @@
                         <div>
                             <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Photo de la pièce d'identité</h4>
                             @if($investment->id_photo)
-                                <img src="{{ asset('storage/' . $investment->id_photo) }}" alt="Photo pièce d'identité" class="w-full rounded-lg" style="max-height: 200px; object-fit: cover;">
+                                <img src="{{ route('investments.id_photo', $investment) }}" alt="Photo pièce d'identité" class="w-full rounded-lg" style="max-height: 200px; object-fit: cover;">
                                 <div class="mt-2">
-                                    <a href="{{ asset('storage/' . $investment->id_photo) }}" target="_blank" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm font-medium">
+                                    <a href="{{ route('investments.id_photo', $investment) }}" target="_blank" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm font-medium">
                                         Voir en grand
                                     </a>
                                 </div>
@@ -136,9 +136,9 @@
                         <div>
                             <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Preuve de transaction</h4>
                             @if($investment->transaction_proof)
-                                <img src="{{ asset('storage/' . $investment->transaction_proof) }}" alt="Preuve de transaction" class="w-full rounded-lg" style="max-height: 200px; object-fit: cover;">
+                                <img src="{{ route('investments.transaction_proof', $investment) }}" alt="Preuve de transaction" class="w-full rounded-lg" style="max-height: 200px; object-fit: cover;">
                                 <div class="mt-2">
-                                    <a href="{{ asset('storage/' . $investment->transaction_proof) }}" target="_blank" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm font-medium">
+                                    <a href="{{ route('investments.transaction_proof', $investment) }}" target="_blank" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm font-medium">
                                         Voir en grand
                                     </a>
                                 </div>
