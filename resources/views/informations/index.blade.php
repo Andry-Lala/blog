@@ -47,106 +47,95 @@
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white">Vos informations</h3>
             </div>
             <div class="p-6">
-                <div class="overflow-x-auto">
-                    <table id="userInfoTable" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-700">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Catégorie</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Champ</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Valeur</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            <!-- Basic Info -->
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations de base</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Code client</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white font-medium">{{ $user->code_utilisateur }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations de base</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nom d'utilisateur</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->username }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations de base</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Email</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->email }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations de base</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Téléphone</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->telephone ?? '-' }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations de base</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Statut</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Basic Information -->
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-4">Informations de base</h4>
+                        <dl class="space-y-3">
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Code client</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->code_utilisateur }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Nom d'utilisateur</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->username }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Email</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->email }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Téléphone</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->telephone ?? '-' }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Statut</dt>
+                                <dd>
                                     @if($user->statut)
                                         <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">Vérifié</span>
                                     @else
                                         <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100">En attente de validation</span>
                                     @endif
-                                </td>
-                            </tr>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
 
-                            <!-- Personal Info -->
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations personnelles</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Date de naissance</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->date_naissance ? $user->date_naissance->format('d/m/Y') : '-' }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations personnelles</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Lieu de naissance</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->lieu_naissance ?? '-' }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations personnelles</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nationalité</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->nationalite ?? '-' }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations personnelles</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Profession</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->profession ?? '-' }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Informations personnelles</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Adresse</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white text-xs">{{ $user->adresse ?? '-' }}</td>
-                            </tr>
+                    <!-- Personal Information -->
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-4">Informations personnelles</h4>
+                        <dl class="space-y-3">
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Date de naissance</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->date_naissance ? $user->date_naissance->format('d/m/Y') : '-' }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Lieu de naissance</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->lieu_naissance ?? '-' }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Nationalité</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->nationalite ?? '-' }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Profession</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->profession ?? '-' }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Adresse</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white text-xs">{{ $user->adresse ?? '-' }}</dd>
+                            </div>
+                        </dl>
+                    </div>
 
-                            <!-- Identity Info -->
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Pièce d'identité</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Type de pièce</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->piece_identite ?? '-' }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Pièce d'identité</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Numéro de pièce</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->numero_piece ?? '-' }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Pièce d'identité</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Date de délivrance</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->date_delivrance ? $user->date_delivrance->format('d/m/Y') : '-' }}</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Pièce d'identité</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Lieu de délivrance</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->lieu_delivrance ?? '-' }}</td>
-                            </tr>
+                    <!-- Identity Information -->
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-4">Pièce d'identité</h4>
+                        <dl class="space-y-3">
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Type de pièce</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->piece_identite ?? '-' }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Numéro de pièce</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->numero_piece ?? '-' }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Date de délivrance</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->date_delivrance ? $user->date_delivrance->format('d/m/Y') : '-' }}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-sm text-gray-600 dark:text-gray-400">Lieu de délivrance</dt>
+                                <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->lieu_delivrance ?? '-' }}</dd>
+                            </div>
                             @if($user->date_validation)
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Pièce d'identité</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Validé le</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->date_validation->format('d/m/Y H:i') }}</td>
-                                </tr>
+                                <div class="flex justify-between">
+                                    <dt class="text-sm text-gray-600 dark:text-gray-400">Validé le</dt>
+                                    <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->date_validation->format('d/m/Y H:i') }}</dd>
+                                </div>
                             @endif
-                        </tbody>
-                    </table>
+                        </dl>
+                    </div>
                 </div>
 
                 @if($user->notes)
@@ -160,52 +149,4 @@
     </div>
 </div>
 
-@push('scripts')
-<script>
-$(document).ready(function() {
-    $('#userInfoTable').DataTable({
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
-            search: "Rechercher:",
-            lengthMenu: "Afficher _MENU_ entrées",
-            info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
-            paginate: {
-                first: '<i class="fas fa-angle-double-left"></i>',
-                last: '<i class="fas fa-angle-double-right"></i>',
-                next: '<i class="fas fa-angle-right"></i>',
-                previous: '<i class="fas fa-angle-left"></i>'
-            }
-        },
-        pageLength: 25,
-        responsive: true,
-        ordering: false,
-        searching: true,
-        dom: '<"flex flex-col md:flex-row justify-between items-center mb-4"lBfr>t<"flex flex-col md:flex-row justify-between items-center mt-4"ip>',
-        buttons: [
-            {
-                extend: 'excel',
-                text: '<i class="fas fa-file-excel"></i> Excel',
-                className: 'bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
-            },
-            {
-                extend: 'pdf',
-                text: '<i class="fas fa-file-pdf"></i> PDF',
-                className: 'bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
-            },
-            {
-                extend: 'print',
-                text: '<i class="fas fa-print"></i> Imprimer',
-                className: 'bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mb-2 md:mb-0'
-            }
-        ],
-        initComplete: function() {
-            // Améliorer le design de la recherche
-            $('.dataTables_filter label').contents().filter(function() {
-                return this.nodeType === 3;
-            }).remove();
-        }
-    });
-});
-</script>
-@endpush
 @endsection
