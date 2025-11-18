@@ -5,12 +5,12 @@
 @section('header')
     <div class="ml-4 flex items-center justify-between">
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Nouvel Investissement</h1>
-        <a href="{{ route('investments.index') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {{-- <a href="{{ route('investments.index') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+            {{-- <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
-            Retour
-        </a>
+            Retour }}
+        </a> --}}
     </div>
 @endsection
 
@@ -155,6 +155,16 @@ window.addEventListener('load', function() {
     const amountInput = document.querySelector('input[name="amount"]');
     const amountError = document.getElementById('amount-error');
     const amountInfo = document.getElementById('amount-info');
+
+    // Pré-sélectionner le type d'investissement si passé en paramètre
+    const urlParams = new URLSearchParams(window.location.search);
+    const preselectedType = urlParams.get('type');
+    if (preselectedType && investmentTypeSelect) {
+        investmentTypeSelect.value = preselectedType;
+        // Déclencher l'événement change pour valider le montant
+        const event = new Event('change', { bubbles: true });
+        investmentTypeSelect.dispatchEvent(event);
+    }
 
     // Plages d'investissement en Ariary
     const investmentRanges = {
