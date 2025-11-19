@@ -35,19 +35,33 @@ class Notification extends Model
     }
 
     /**
-     * Marquer la notification comme lue
+     * Marquer la notification comme lue (avec invalidation de cache)
      */
     public function markAsRead(): bool
     {
-        return $this->update(['is_read' => true]);
+        $result = $this->update(['is_read' => true]);
+
+        // Invalider le cache du compteur de notifications non lues
+        if ($result) {
+            cache()->forget("user_unread_notifications_{$this->user_id}");
+        }
+
+        return $result;
     }
 
     /**
-     * Marquer la notification comme non lue
+     * Marquer la notification comme non lue (avec invalidation de cache)
      */
     public function markAsUnread(): bool
     {
-        return $this->update(['is_read' => false]);
+        $result = $this->update(['is_read' => false]);
+
+        // Invalider le cache du compteur de notifications non lues
+        if ($result) {
+            cache()->forget("user_unread_notifications_{$this->user_id}");
+        }
+
+        return $result;
     }
 
     /**
@@ -55,28 +69,15 @@ class Notification extends Model
      */
     public function related()
     {
-        if (!$this->related_type || !$this->related_id) {
-            return null;
-        }
-
-        try {
-            $class = $this->related_type;
-            if (class_exists($class)) {
-                return $class::find($this->related_id);
-            }
-        } catch (\Exception $e) {
-            return null;
-        }
-
-        return null;
+        return $this->morphTo('related', 'related_type', 'related_id');
     }
 
     /**
-     * Créer une notification pour un utilisateur
+     * Créer une notification pour un utilisateur (avec invalidation de cache)
      */
     public static function createForUser($userId, string $title, string $message, string $type = 'info', $relatedType = null, $relatedId = null, array $data = []): self
     {
-        return self::create([
+        $notification = self::create([
             'user_id' => $userId,
             'title' => $title,
             'message' => $message,
@@ -85,27 +86,44 @@ class Notification extends Model
             'related_id' => $relatedId,
             'data' => $data,
         ]);
+
+        // Invalider le cache du compteur de notifications non lues
+        cache()->forget("user_unread_notifications_{$userId}");
+
+        return $notification;
     }
 
     /**
-     * Obtenir les notifications non lues pour un utilisateur
+     * Obtenir les notifications non lues pour un utilisateur (optimisé)
      */
-    public static function getUnreadForUser($userId)
+    public static function getUnreadForUser($userId, $limit = null)
     {
-        return self::where('user_id', $userId)
+        $query = self::where('user_id', $userId)
             ->where('is_read', false)
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->select(['id', 'title', 'message', 'type', 'related_type', 'related_id', 'created_at'])
+            ->orderBy('created_at', 'desc');
+
+        if ($limit) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 
     /**
-     * Obtenir le nombre de notifications non lues pour un utilisateur
+     * Obtenir le nombre de notifications non lues pour un utilisateur (avec cache)
      */
     public static function getUnreadCountForUser($userId): int
     {
-        return self::where('user_id', $userId)
-            ->where('is_read', false)
-            ->count();
+        return cache()->remember(
+            "user_unread_notifications_{$userId}",
+            now()->addMinutes(5),
+            function () use ($userId) {
+                return self::where('user_id', $userId)
+                    ->where('is_read', false)
+                    ->count();
+            }
+        );
     }
 
     /**

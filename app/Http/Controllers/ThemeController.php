@@ -34,4 +34,24 @@ class ThemeController extends Controller
 
         return response()->json(['success' => true, 'theme' => $theme]);
     }
+
+    /**
+     * Get the current theme for the user.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function current(Request $request)
+    {
+        $theme = session('theme');
+
+        if (!$theme && Auth::check()) {
+            $theme = Auth::user()->theme;
+        }
+
+        if (!$theme) {
+            $theme = config('theme.default', 'light');
+        }
+
+        return response()->json(['theme' => $theme]);
+    }
 }

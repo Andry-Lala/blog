@@ -4,7 +4,7 @@
 
 @section('header')
     <div class="ml-4 flex items-center justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Nouvel Investissement</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">Nouvel Investissement</h1>
         {{-- <a href="{{ route('investments.index') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
             {{-- <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -17,7 +17,7 @@
 @section('content')
 <div class="py-6">
     <div class="px-4 sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 shadow rounded-lg">
+        <div class="bg-white shadow rounded-lg">
             <form action="{{ route('investments.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6 p-6">
                 @csrf
 
@@ -25,9 +25,9 @@
                     <!-- Colonne de gauche -->
                     <div class="space-y-6">
                         <div>
-                            <label for="operator" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Opérateur *</label>
+                            <label for="operator" class="block text-sm font-medium text-gray-700">Opérateur *</label>
                             <select id="operator" name="operator" required
-                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Sélectionner un opérateur</option>
                                 @foreach(\App\Models\Investment::getOperators() as $operator)
                                     <option value="{{ $operator }}">{{ $operator }}</option>
@@ -49,9 +49,9 @@
                         </div>
 
                         <div>
-                            <label for="investment_type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type d'investissement *</label>
+                            <label for="investment_type" class="block text-sm font-medium text-gray-700">Type d'investissement *</label>
                             <select id="investment_type" name="investment_type" required
-                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Sélectionner un type</option>
                                 @foreach(\App\Models\Investment::getInvestmentTypes() as $type)
                                     <option value="{{ $type }}">{{ $type }}</option>
@@ -60,64 +60,64 @@
                         </div>
 
                         <div>
-                            <label for="last_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nom *</label>
+                            <label for="last_name" class="block text-sm font-medium text-gray-700">Nom *</label>
                             <input type="text" id="last_name" name="last_name" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Prénom *</label>
+                            <label for="first_name" class="block text-sm font-medium text-gray-700">Prénom *</label>
                             <input type="text" id="first_name" name="first_name" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Adresse *</label>
+                            <label for="address" class="block text-sm font-medium text-gray-700">Adresse *</label>
                             <textarea id="address" name="address" rows="3" required
-                                      class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"></textarea>
+                                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                         </div>
                     </div>
 
                     <!-- Colonne de droite -->
                     <div class="space-y-6">
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Numéro de téléphone *</label>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Numéro de téléphone *</label>
                             <input type="tel" id="phone" name="phone" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="id_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Numéro de la pièce d'identité (CIN ou Passeport) *</label>
+                            <label for="id_number" class="block text-sm font-medium text-gray-700">Numéro de la pièce d'identité (CIN ou Passeport) *</label>
                             <input type="text" id="id_number" name="id_number" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="id_photo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Photo de la pièce d'identité *</label>
+                            <label for="id_photo" class="block text-sm font-medium text-gray-700">Photo de la pièce d'identité *</label>
                             <input type="file" id="id_photo" name="id_photo" accept="image/*" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Formats acceptés: JPG, PNG, GIF (Max: 2MB)</p>
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <p class="mt-1 text-sm text-gray-500">Formats acceptés: JPG, PNG, GIF (Max: 2MB)</p>
                         </div>
 
                         <div>
-                            <label for="transaction_phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Numéro de téléphone utilisé pour la transaction *</label>
+                            <label for="transaction_phone" class="block text-sm font-medium text-gray-700">Numéro de téléphone utilisé pour la transaction *</label>
                             <input type="tel" id="transaction_phone" name="transaction_phone" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Montant *</label>
+                            <label for="amount" class="block text-sm font-medium text-gray-700">Montant *</label>
                             <input type="number" id="amount" name="amount" step="0.01" min="0" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
-                            <p id="amount-error" class="mt-1 text-sm text-red-600 dark:text-red-400 hidden"></p>
-                            <p id="amount-info" class="mt-1 text-sm text-gray-500 dark:text-gray-400"></p>
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <p id="amount-error" class="mt-1 text-sm text-red-600 hidden"></p>
+                            <p id="amount-info" class="mt-1 text-sm text-gray-500"></p>
                         </div>
 
                         <div>
-                            <label for="transaction_proof" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Capture de la transaction *</label>
+                            <label for="transaction_proof" class="block text-sm font-medium text-gray-700">Capture de la transaction *</label>
                             <input type="file" id="transaction_proof" name="transaction_proof" accept="image/*" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Formats acceptés: JPG, PNG, GIF (Max: 2MB)</p>
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <p class="mt-1 text-sm text-gray-500">Formats acceptés: JPG, PNG, GIF (Max: 2MB)</p>
                         </div>
                     </div>
                 </div>
@@ -263,7 +263,7 @@ window.addEventListener('load', function() {
                 };
 
                 if (operatorPhones[selectedOperator]) {
-                    operatorText.textContent = `Veuillez envoyer l'argent au numéro ${operatorPhones[selectedOperator]} et suivre les instructions jusqu'à confirmation de l'envoi.`;
+                    operatorText.textContent = `Veuillez envoyer l'argent au numéro ${operatorPhones[selectedOperator]}, au nom de Harifidy Razafindranaivo, puis suivre les instructions jusqu'à confirmation de l'envoi.`;
                     operatorMessage.classList.remove('hidden');
                     operatorMessage.classList.add('block');
                     console.log('Message affiché pour:', selectedOperator);

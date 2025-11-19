@@ -4,7 +4,7 @@
 
 @section('header')
     <div class="ml-4 flex items-center">
-        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Gestion des Investissements</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">Gestion des Investissements</h1>
     </div>
 @endsection
 
@@ -37,46 +37,46 @@
         @endif
 
         @if($investments->count() > 0)
-            <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+            <div class="bg-white shadow rounded-lg overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table id="investmentsAdminTable" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-700">
+                    <table id="investmentsAdminTable" class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Client</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Opérateur</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Type</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Montant</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Statut</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Opérateur</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($investments as $investment)
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $investment->created_at->format('d/m/Y H:i') }}</td>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $investment->created_at->format('d/m/Y H:i') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900 dark:text-white">{{ $investment->user->first_name }} {{ $investment->user->last_name }}</div>
-                                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ $investment->user->email }}</div>
+                                        <div class="text-sm text-gray-900">{{ $investment->user->first_name }} {{ $investment->user->last_name }}</div>
+                                        <div class="text-sm text-gray-500">{{ $investment->user->email }}</div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $investment->operator }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $investment->investment_type }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ number_format($investment->amount, 2, ',', ' ') }} Ar</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $investment->operator }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $investment->investment_type }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ number_format($investment->amount, 2, ',', ' ') }} Ar</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($investment->status === 'Validé')
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">Validé</span>
+                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Validé</span>
                                         @elseif($investment->status === 'Rejeté')
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100">Rejeté</span>
+                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Rejeté</span>
                                         @elseif($investment->status === 'En cours de traitement')
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100">En cours</span>
+                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">En cours</span>
                                         @else
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100">Envoyé</span>
+                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Envoyé</span>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
                                             <a href="{{ route('investments.show', $investment) }}"
-                                               class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" title="Voir les détails">
+                                               class="text-blue-600 hover:text-blue-800" title="Voir les détails">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -84,7 +84,7 @@
                                             </a>
 
                                             @if($investment->status === 'Envoyé')
-                                                <button type="button" class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300"
+                                                <button type="button" class="text-yellow-600 hover:text-yellow-800"
                                                         title="Mettre en cours de traitement"
                                                         onclick="document.getElementById('processModal{{ $investment->id }}').classList.remove('hidden')">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,14 +94,14 @@
                                             @endif
 
                                             @if($investment->status === 'En cours de traitement')
-                                                <button type="button" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
+                                                <button type="button" class="text-green-600 hover:text-green-800"
                                                         title="Approuver"
                                                         onclick="document.getElementById('approveModal{{ $investment->id }}').classList.remove('hidden')">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                     </svg>
                                                 </button>
-                                                <button type="button" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                                                <button type="button" class="text-red-600 hover:text-red-800"
                                                         title="Rejeter"
                                                         onclick="document.getElementById('rejectModal{{ $investment->id }}').classList.remove('hidden')">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -122,8 +122,8 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">Aucune demande d'investissement</h3>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Il n'y a actuellement aucune demande d'investissement à traiter.</p>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">Aucune demande d'investissement</h3>
+                <p class="mt-1 text-sm text-gray-500">Il n'y a actuellement aucune demande d'investissement à traiter.</p>
             </div>
         @endif
     </div>
@@ -134,11 +134,11 @@
     <!-- Modal pour traiter -->
     @if($investment->status === 'Envoyé')
     <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 hidden" id="processModal{{ $investment->id }}">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3 text-center">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Mettre en cours de traitement</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Mettre en cours de traitement</h3>
                 <div class="mt-2 px-7">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Voulez-vous mettre cette demande en cours de traitement ?</p>
+                    <p class="text-sm text-gray-500">Voulez-vous mettre cette demande en cours de traitement ?</p>
                 </div>
             </div>
             <form action="{{ route('investments.update', $investment) }}" method="POST" class="mt-5">
@@ -146,12 +146,12 @@
                 @method('PUT')
                 <div class="px-7">
                     <div class="mb-4">
-                        <label for="admin_notes_process_{{ $investment->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Notes (optionnel)</label>
+                        <label for="admin_notes_process_{{ $investment->id }}" class="block text-sm font-medium text-gray-700">Notes (optionnel)</label>
                         <textarea id="admin_notes_process_{{ $investment->id }}" name="admin_notes" rows="3"
-                                  class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"></textarea>
+                                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                     </div>
                 </div>
-                <div class="px-7 py-3 bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
+                <div class="px-7 py-3 bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
                     <button type="button" onclick="document.getElementById('processModal{{ $investment->id }}').classList.add('hidden')"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler
@@ -169,23 +169,23 @@
     <!-- Modal pour approuver -->
     @if($investment->status === 'En cours de traitement')
     <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 hidden" id="approveModal{{ $investment->id }}">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3 text-center">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Approuver l'investissement</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Approuver l'investissement</h3>
                 <div class="mt-2 px-7">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Êtes-vous sûr de vouloir approuver cet investissement ?</p>
+                    <p class="text-sm text-gray-500">Êtes-vous sûr de vouloir approuver cet investissement ?</p>
                 </div>
             </div>
             <form action="{{ route('investments.approve', $investment) }}" method="POST" class="mt-5">
                 @csrf
                 <div class="px-7">
                     <div class="mb-4">
-                        <label for="admin_notes_approve_{{ $investment->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Notes (optionnel)</label>
+                        <label for="admin_notes_approve_{{ $investment->id }}" class="block text-sm font-medium text-gray-700">Notes (optionnel)</label>
                         <textarea id="admin_notes_approve_{{ $investment->id }}" name="admin_notes" rows="3"
-                                  class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"></textarea>
+                                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                     </div>
                 </div>
-                <div class="px-7 py-3 bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
+                <div class="px-7 py-3 bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
                     <button type="button" onclick="document.getElementById('approveModal{{ $investment->id }}').classList.add('hidden')"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler
@@ -202,23 +202,23 @@
 
     <!-- Modal pour rejeter -->
     <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 hidden" id="rejectModal{{ $investment->id }}">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3 text-center">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Rejeter l'investissement</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Rejeter l'investissement</h3>
                 <div class="mt-2 px-7">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Êtes-vous sûr de vouloir rejeter cet investissement ?</p>
+                    <p class="text-sm text-gray-500">Êtes-vous sûr de vouloir rejeter cet investissement ?</p>
                 </div>
             </div>
             <form action="{{ route('investments.reject', $investment) }}" method="POST" class="mt-5">
                 @csrf
                 <div class="px-7">
                     <div class="mb-4">
-                        <label for="admin_notes_reject_{{ $investment->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Motif du rejet *</label>
+                        <label for="admin_notes_reject_{{ $investment->id }}" class="block text-sm font-medium text-gray-700">Motif du rejet *</label>
                         <textarea id="admin_notes_reject_{{ $investment->id }}" name="admin_notes" rows="3" required
-                                  class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"></textarea>
+                                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                     </div>
                 </div>
-                <div class="px-7 py-3 bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
+                <div class="px-7 py-3 bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
                     <button type="button" onclick="document.getElementById('rejectModal{{ $investment->id }}').classList.add('hidden')"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler
@@ -271,7 +271,7 @@ $(document).ready(function() {
             }
         ],
         initComplete: function() {
-            // Masquer la pagination par défaut de Laravel
+            // Masquer la pagination par défaut
             $('.pagination').hide();
 
             // Améliorer le design de la recherche

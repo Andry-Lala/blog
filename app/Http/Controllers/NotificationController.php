@@ -15,8 +15,14 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+
+        // Optimisation : charger uniquement les champs nécessaires
+        // et utiliser eager loading sélectif
         $notifications = $user->notifications()
-            ->with(['related'])
+            ->select(['id', 'user_id', 'title', 'message', 'type', 'is_read', 'related_type', 'related_id', 'created_at'])
+            ->when($request->get('unread_only'), function ($query) {
+                return $query->where('is_read', false);
+            })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
@@ -30,15 +36,36 @@ class NotificationController extends Controller
     /**
      * Obtenir les notifications non lues pour l'utilisateur connecté
      */
-    public function getUnread(): JsonResponse
+    public function getUnread(Request $request)
     {
         $user = Auth::user();
-        $unreadNotifications = Notification::getUnreadForUser($user->id);
-        $unreadCount = Notification::getUnreadCountForUser($user->id);
 
-        return response()->json([
-            'notifications' => $unreadNotifications,
-            'count' => $unreadCount
+        // Optimisation : requête directe avec cache pour le compteur
+        $unreadCount = cache()->remember(
+            "user_unread_notifications_{$user->id}",
+            now()->addMinutes(5),
+            function () use ($user) {
+                return $user->notifications()->where('is_read', false)->count();
+            }
+        );
+
+        // Optimisation : charger uniquement les champs nécessaires
+        $unreadNotifications = $user->notifications()
+            ->select(['id', 'title', 'message', 'type', 'created_at'])
+            ->where('is_read', false)
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get();
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'notifications' => $unreadNotifications,
+                'count' => $unreadCount
+            ]);
+        }
+
+        return view('notifications.index', [
+            'notifications' => $unreadNotifications->paginate(10)
         ]);
     }
 
@@ -95,21 +122,44 @@ class NotificationController extends Controller
     /**
      * Obtenir les détails d'une notification
      */
-    public function show($id): JsonResponse
+    public function show($id, Request $request)
     {
-        $notification = Notification::where('user_id', Auth::id())
-            ->with(['related'])
+        $user = Auth::user();
+
+        // Optimisation : charger uniquement les champs nécessaires
+        // et utiliser eager loading conditionnel
+        $notification = $user->notifications()
+            ->select(['id', 'user_id', 'title', 'message', 'type', 'is_read', 'related_type', 'related_id', 'data', 'created_at', 'updated_at'])
+            ->when(true, function ($query) {
+                // Charger la relation related uniquement si nécessaire
+                return $query->with(['related' => function ($query) {
+                    $query->select(['id', 'name', 'title']); // Charger uniquement les champs nécessaires
+                }]);
+            })
             ->findOrFail($id);
 
-        // Marquer comme lue si ce n'est pas déjà le cas
+        // Marquer comme lue si ce n'est pas déjà le cas (avec optimisation)
         if (!$notification->is_read) {
-            $notification->markAsRead();
+            $notification->update(['is_read' => true]);
+
+            // Invalider le cache du compteur de notifications non lues
+            cache()->forget("user_unread_notifications_{$user->id}");
         }
 
-        return response()->json([
-            'notification' => $notification,
-            'unread_count' => Notification::getUnreadCountForUser(Auth::id())
-        ]);
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'notification' => $notification,
+                'unread_count' => cache()->remember(
+                    "user_unread_notifications_{$user->id}",
+                    now()->addMinutes(5),
+                    function () use ($user) {
+                        return $user->notifications()->where('is_read', false)->count();
+                    }
+                )
+            ]);
+        }
+
+        return view('notifications.show', compact('notification'));
     }
 
     /**

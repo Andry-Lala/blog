@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,7 @@ class ThemeMiddleware
 
                 // Si l'utilisateur est connecté, sauvegarder aussi en base de données
                 if (Auth::check()) {
+                    /** @var User $user */
                     $user = Auth::user();
                     if ($user) {
                         $user->theme = $theme;
@@ -34,6 +36,12 @@ class ThemeMiddleware
                     }
                 }
             }
+        }
+
+        // Si aucun thème n'est défini en session, utiliser le thème par défaut
+        if (!session()->has('theme')) {
+            $defaultTheme = config('theme.default', 'light');
+            session(['theme' => $defaultTheme]);
         }
 
         return $next($request);
