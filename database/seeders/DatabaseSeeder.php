@@ -25,5 +25,8 @@ class DatabaseSeeder extends Seeder
             'role' => 'administrateur',
             'statut' => true,
         ]);
+
+        // Seed exchange rates and investment types
+        $this->call(ExchangeRateSeeder::class);
     }
 }

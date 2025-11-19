@@ -99,4 +99,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'valide_par');
     }
+
+    /**
+     * Get notifications for user.
+     */
+    public function notifications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

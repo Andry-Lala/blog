@@ -282,120 +282,82 @@
                                         </div>
                                         <div class="p-6">
                                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                                                <!-- Silver Card -->
-                                                <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300">
-                                                    <div class="flex items-center justify-center w-12 h-12 bg-gray-400 dark:bg-gray-500 rounded-full mb-4">
-                                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                        </svg>
+                                                @foreach($investmentTypes as $index => $type)
+                                                    @php
+                                                        $amountsInAriary = $type->getAmountsInAriary();
+                                                        $colorSchemes = [
+                                                            [
+                                                                'gradient' => 'from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800',
+                                                                'border' => 'border-gray-200 dark:border-gray-600',
+                                                                'icon' => 'bg-gray-400 dark:bg-gray-500',
+                                                                'button' => 'bg-gray-600 hover:bg-gray-700'
+                                                            ],
+                                                            [
+                                                                'gradient' => 'from-yellow-50 to-yellow-100 dark:from-yellow-700 dark:to-yellow-800',
+                                                                'border' => 'border-yellow-200 dark:border-yellow-600',
+                                                                'icon' => 'bg-yellow-500 dark:bg-yellow-600',
+                                                                'button' => 'bg-yellow-600 hover:bg-yellow-700'
+                                                            ],
+                                                            [
+                                                                'gradient' => 'from-purple-50 to-purple-100 dark:from-purple-700 dark:to-purple-800',
+                                                                'border' => 'border-purple-200 dark:border-purple-600',
+                                                                'icon' => 'bg-purple-500 dark:bg-purple-600',
+                                                                'button' => 'bg-purple-600 hover:bg-purple-700'
+                                                            ],
+                                                            [
+                                                                'gradient' => 'from-blue-50 to-blue-100 dark:from-blue-700 dark:to-blue-800',
+                                                                'border' => 'border-blue-200 dark:border-blue-600',
+                                                                'icon' => 'bg-blue-500 dark:bg-blue-600',
+                                                                'button' => 'bg-blue-600 hover:bg-blue-700'
+                                                            ]
+                                                        ];
+                                                        $colorScheme = $colorSchemes[$index % count($colorSchemes)];
+                                                    @endphp
+                                                    <div class="bg-gradient-to-br {{ $colorScheme['gradient'] }} rounded-lg p-6 border {{ $colorScheme['border'] }} hover:shadow-lg transition-all duration-300 {{ $index === 3 ? 'relative' : '' }}">
+                                                        @if($index === 3)
+                                                            <div class="absolute top-2 right-2">
+                                                                <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full font-semibold">Premium</span>
+                                                            </div>
+                                                        @endif
+                                                        <div class="flex items-center justify-center w-12 h-12 {{ $colorScheme['icon'] }} rounded-full mb-4">
+                                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                            </svg>
+                                                        </div>
+                                                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ $type->name }}</h4>
+                                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{{ $type->description }}</p>
+                                                        <div class="space-y-2 mb-4">
+                                                            <div class="flex justify-between text-sm">
+                                                                <span class="text-gray-500 dark:text-gray-400">Montant minimum:</span>
+                                                                <span class="font-medium text-gray-900 dark:text-white">{{ number_format($amountsInAriary['min_ariary'], 0, ',', ' ') }} Ar</span>
+                                                            </div>
+                                                            <div class="flex justify-between text-sm">
+                                                                <span class="text-gray-500 dark:text-gray-400">Montant maximum:</span>
+                                                                <span class="font-medium text-gray-900 dark:text-white">
+                                                                    @if($amountsInAriary['max_ariary'])
+                                                                        {{ number_format($amountsInAriary['max_ariary'], 0, ',', ' ') }} Ar
+                                                                    @else
+                                                                        Illimité
+                                                                    @endif
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex justify-between text-sm">
+                                                                <span class="text-gray-500 dark:text-gray-400">Équivalent USD:</span>
+                                                                <span class="font-medium text-gray-900 dark:text-white">
+                                                                    ${{ number_format($type->min_amount_usd, 0) }}
+                                                                    @if($type->max_amount_usd)
+                                                                        - ${{ number_format($type->max_amount_usd, 0) }}
+                                                                    @else
+                                                                        et plus
+                                                                    @endif
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <a href="{{ route('investments.create') }}?type={{ $type->slug }}" class="w-full {{ $colorScheme['button'] }} text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center block">
+                                                            Investir
+                                                        </a>
                                                     </div>
-                                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Silver</h4>
-                                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Idéal pour commencer</p>
-                                                    <div class="space-y-2 mb-4">
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Montant minimum:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">224 200 Ar</span>
-                                                        </div>
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Montant maximum:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">2 237 200 Ar</span>
-                                                        </div>
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Équivalent USD:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">50 - 499 $</span>
-                                                        </div>
-                                                    </div>
-                                                    <a href="{{ route('investments.create') }}?type=Silver" class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center block">
-                                                        Investir
-                                                    </a>
-                                                </div>
-
-                                                <!-- Gold Card -->
-                                                <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-700 dark:to-yellow-800 rounded-lg p-6 border border-yellow-200 dark:border-yellow-600 hover:shadow-lg transition-all duration-300">
-                                                    <div class="flex items-center justify-center w-12 h-12 bg-yellow-500 dark:bg-yellow-600 rounded-full mb-4">
-                                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                        </svg>
-                                                    </div>
-                                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Gold</h4>
-                                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Le plus populaire</p>
-                                                    <div class="space-y-2 mb-4">
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Montant minimum:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">2 241 700 Ar</span>
-                                                        </div>
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Montant maximum:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">3 133 800 Ar</span>
-                                                        </div>
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Équivalent USD:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">500 - 699 $</span>
-                                                        </div>
-                                                    </div>
-                                                    <a href="{{ route('investments.create') }}?type=Gold" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center block">
-                                                        Investir
-                                                    </a>
-                                                </div>
-
-                                                <!-- Platinum Card -->
-                                                <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-700 dark:to-purple-800 rounded-lg p-6 border border-purple-200 dark:border-purple-600 hover:shadow-lg transition-all duration-300">
-                                                    <div class="flex items-center justify-center w-12 h-12 bg-purple-500 dark:bg-purple-600 rounded-full mb-4">
-                                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                        </svg>
-                                                    </div>
-                                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Platinum</h4>
-                                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Pour les investisseurs sérieux</p>
-                                                    <div class="space-y-2 mb-4">
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Montant minimum:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">3 138 300 Ar</span>
-                                                        </div>
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Montant maximum:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">4 478 800 Ar</span>
-                                                        </div>
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Équivalent USD:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">700 - 999 $</span>
-                                                        </div>
-                                                    </div>
-                                                    <a href="{{ route('investments.create') }}?type=Platinum" class="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center block">
-                                                        Investir
-                                                    </a>
-                                                </div>
-
-                                                <!-- Diamond Card -->
-                                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-700 dark:to-blue-800 rounded-lg p-6 border border-blue-200 dark:border-blue-600 hover:shadow-lg transition-all duration-300 relative">
-                                                    <div class="absolute top-2 right-2">
-                                                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full font-semibold">Premium</span>
-                                                    </div>
-                                                    <div class="flex items-center justify-center w-12 h-12 bg-blue-500 dark:bg-blue-600 rounded-full mb-4">
-                                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                        </svg>
-                                                    </div>
-                                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Diamond</h4>
-                                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Rendements maximums</p>
-                                                    <div class="space-y-2 mb-4">
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Montant minimum:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">4 483 300 Ar</span>
-                                                        </div>
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Montant maximum:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">Illimité</span>
-                                                        </div>
-                                                        <div class="flex justify-between text-sm">
-                                                            <span class="text-gray-500 dark:text-gray-400">Équivalent USD:</span>
-                                                            <span class="font-medium text-gray-900 dark:text-white">À partir de 1000 $</span>
-                                                        </div>
-                                                    </div>
-                                                    <a href="{{ route('investments.create') }}?type=Diamond" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center block">
-                                                        Investir
-                                                    </a>
-                                                </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>

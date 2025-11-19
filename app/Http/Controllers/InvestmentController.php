@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Investment;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -63,7 +64,7 @@ class InvestmentController extends Controller
         $idPhotoPath = $request->file('id_photo')->store('investments/id_photos', 'public');
         $transactionProofPath = $request->file('transaction_proof')->store('investments/transaction_proofs', 'public');
 
-        Investment::create([
+        $investment = Investment::create([
             'user_id' => Auth::id(),
             'operator' => $request->operator,
             'investment_type' => $request->investment_type,
@@ -78,6 +79,29 @@ class InvestmentController extends Controller
             'transaction_proof' => $transactionProofPath,
             'status' => 'Envoyé',
         ]);
+
+        // Créer une notification pour le client
+        Notification::createForUser(
+            Auth::id(),
+            'Investissement reçu',
+            "Votre demande d'investissement de {$request->amount} Ar a été reçue et est en attente de validation.",
+            'info',
+            'App\\Models\\Investment',
+            $investment->id
+        );
+
+        // Créer une notification pour les administrateurs
+        $admins = \App\Models\User::where('role', 'administrateur')->get();
+        foreach ($admins as $admin) {
+            Notification::createForUser(
+                $admin->id,
+                'Nouvel investissement',
+                "Un nouvel investissement de {$request->amount} Ar a été soumis par " . Auth::user()->first_name . ' ' . Auth::user()->last_name,
+                'info',
+                'App\\Models\\Investment',
+                $investment->id
+            );
+        }
 
         return redirect()->route('investments.index')
             ->with('success', 'Votre demande d\'investissement a été soumise avec succès.');
@@ -100,6 +124,16 @@ class InvestmentController extends Controller
             'status' => 'En cours de traitement',
             'admin_notes' => $request->admin_notes,
         ]);
+
+        // Notifier le client
+        Notification::createForUser(
+            $investment->user_id,
+            'Investissement en cours de traitement',
+            "Votre investissement de {$investment->amount} Ar est maintenant en cours de traitement.",
+            'warning',
+            'App\\Models\\Investment',
+            $investment->id
+        );
 
         return redirect()->route('investments.show', $investment)
             ->with('success', 'La demande a été mise en cours de traitement.');
@@ -135,6 +169,16 @@ class InvestmentController extends Controller
             'admin_notes' => $request->admin_notes,
         ]);
 
+        // Notifier le client
+        Notification::createForUser(
+            $investment->user_id,
+            'Investissement approuvé',
+            "Félicitations ! Votre investissement de {$investment->amount} Ar a été approuvé avec succès.",
+            'success',
+            'App\\Models\\Investment',
+            $investment->id
+        );
+
         return redirect()->route('investments.index')
             ->with('success', 'L\'investissement a été approuvé avec succès.');
     }
@@ -156,6 +200,16 @@ class InvestmentController extends Controller
             'status' => 'Rejeté',
             'admin_notes' => $request->admin_notes,
         ]);
+
+        // Notifier le client
+        Notification::createForUser(
+            $investment->user_id,
+            'Investissement rejeté',
+            "Votre investissement de {$investment->amount} Ar a été rejeté. Motif : " . $request->admin_notes,
+            'error',
+            'App\\Models\\Investment',
+            $investment->id
+        );
 
         return redirect()->route('investments.index')
             ->with('success', 'L\'investissement a été rejeté.');

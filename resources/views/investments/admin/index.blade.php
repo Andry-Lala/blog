@@ -3,7 +3,7 @@
 @section('title', 'Gestion des Investissements')
 
 @section('header')
-    <div class="ml-4 flex items-center justify-between">
+    <div class="ml-4 flex items-center">
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Gestion des Investissements</h1>
     </div>
 @endsection

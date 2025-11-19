@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\InvestmentType;
+use App\Models\ExchangeRate;
 
 class Investment extends Model
 {
@@ -43,7 +45,7 @@ class Investment extends Model
 
     public static function getInvestmentTypes(): array
     {
-        return ['Silver', 'Gold', 'Platinum', 'Diamond'];
+        return InvestmentType::getActiveTypes()->pluck('name')->toArray();
     }
 
     public static function getOperatorPhone(string $operator): string
@@ -63,56 +65,38 @@ class Investment extends Model
 
     public static function getInvestmentRanges(): array
     {
-        return [
-            'Silver' => [
-                'min' => 50,
-                'max' => 499,
-                'min_ariary' => 224200,
-                'max_ariary' => 2237200
-            ],
-            'Gold' => [
-                'min' => 500,
-                'max' => 699,
-                'min_ariary' => 2241700,
-                'max_ariary' => 3133800
-            ],
-            'Platinum' => [
-                'min' => 700,
-                'max' => 999,
-                'min_ariary' => 3138300,
-                'max_ariary' => 4478800
-            ],
-            'Diamond' => [
-                'min' => 1000,
-                'max' => null,
-                'min_ariary' => 4483000,
-                'max_ariary' => null
-            ]
-        ];
+        return InvestmentType::getInvestmentRanges();
     }
 
     public static function getMinAmountForType(string $type): ?float
     {
-        $ranges = self::getInvestmentRanges();
-        return $ranges[$type]['min_ariary'] ?? null;
+        $investmentType = InvestmentType::where('name', $type)->where('is_active', true)->first();
+        if (!$investmentType) {
+            return null;
+        }
+
+        $amountsInAriary = $investmentType->getAmountsInAriary();
+        return $amountsInAriary['min_ariary'];
     }
 
     public static function getMaxAmountForType(string $type): ?float
     {
-        $ranges = self::getInvestmentRanges();
-        return $ranges[$type]['max_ariary'] ?? null;
+        $investmentType = InvestmentType::where('name', $type)->where('is_active', true)->first();
+        if (!$investmentType) {
+            return null;
+        }
+
+        $amountsInAriary = $investmentType->getAmountsInAriary();
+        return $amountsInAriary['max_ariary'];
     }
 
     public static function isValidAmountForType(string $type, float $amount): bool
     {
-        $ranges = self::getInvestmentRanges();
-        if (!isset($ranges[$type])) {
+        $investmentType = InvestmentType::where('name', $type)->where('is_active', true)->first();
+        if (!$investmentType) {
             return false;
         }
 
-        $minAmount = $ranges[$type]['min_ariary'];
-        $maxAmount = $ranges[$type]['max_ariary'];
-
-        return $amount >= $minAmount && ($maxAmount === null || $amount <= $maxAmount);
+        return $investmentType->isValidAmount($amount);
     }
 }

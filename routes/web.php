@@ -6,7 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\InvestmentImageController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\Admin\ExchangeRateController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +21,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Test route for debugging
+require_once __DIR__.'/test.php';
 
 // Protected routes
 Route::middleware('auth')->group(function () {
@@ -43,4 +48,22 @@ Route::middleware('auth')->group(function () {
     // Investment image routes
     Route::get('/investments/{investment}/id-photo', [InvestmentImageController::class, 'showIdPhoto'])->name('investments.id_photo');
     Route::get('/investments/{investment}/transaction-proof', [InvestmentImageController::class, 'showTransactionProof'])->name('investments.transaction_proof');
+
+    // Notification routes
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/unread', [NotificationController::class, 'getUnread'])->name('notifications.unread');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::get('/notifications/{id}', [NotificationController::class, 'show'])->name('notifications.show');
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+
+    // Admin exchange rate routes
+    Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
+        Route::get('/exchange-rates', [ExchangeRateController::class, 'index'])->name('exchange-rates.index');
+        Route::post('/exchange-rates/update-rate', [ExchangeRateController::class, 'updateRate'])->name('exchange-rates.update-rate');
+        Route::get('/exchange-rates/current', [ExchangeRateController::class, 'getCurrentRates'])->name('exchange-rates.current');
+        Route::post('/exchange-rates/store-type', [ExchangeRateController::class, 'storeInvestmentType'])->name('exchange-rates.store-type');
+        Route::put('/exchange-rates/update-type/{investmentType}', [ExchangeRateController::class, 'updateInvestmentType'])->name('exchange-rates.update-type');
+        Route::delete('/exchange-rates/destroy-type/{investmentType}', [ExchangeRateController::class, 'destroyInvestmentType'])->name('exchange-rates.destroy-type');
+    });
 });

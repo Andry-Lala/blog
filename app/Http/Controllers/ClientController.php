@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -96,6 +97,19 @@ class ClientController extends Controller
             'statut' => false,
             'code_utilisateur' => $this->generateCodeUtilisateur(),
         ]);
+
+        // Notifier les administrateurs du nouveau client
+        $admins = \App\Models\User::where('role', 'administrateur')->get();
+        foreach ($admins as $admin) {
+            Notification::createForUser(
+                $admin->id,
+                'Nouveau client inscrit',
+                "Un nouveau client {$validated['prenom']} {$validated['nom']} s'est inscrit sur la plateforme.",
+                'info',
+                'App\\Models\\User',
+                $client->id
+            );
+        }
 
         return redirect()->route('clients.show', $client)
             ->with('success', 'Client créé avec succès.');
@@ -201,6 +215,16 @@ class ClientController extends Controller
             'valide_par' => Auth::id(),
         ]);
 
+        // Notifier le client de sa vérification
+        Notification::createForUser(
+            $client->id,
+            'Compte vérifié',
+            'Félicitations ! Votre compte a été vérifié avec succès. Vous pouvez maintenant effectuer des investissements.',
+            'success',
+            'App\\Models\\User',
+            $client->id
+        );
+
         return redirect()->route('clients.show', $client)
             ->with('success', 'Client vérifié avec succès.');
     }
@@ -215,6 +239,16 @@ class ClientController extends Controller
             'date_validation' => null,
             'valide_par' => null,
         ]);
+
+        // Notifier le client de sa dévérification
+        Notification::createForUser(
+            $client->id,
+            'Compte dévérifié',
+            'Votre compte n\'est plus vérifié. Veuillez contacter l\'administrateur pour plus d\'informations.',
+            'warning',
+            'App\\Models\\User',
+            $client->id
+        );
 
         return redirect()->route('clients.show', $client)
             ->with('success', 'Client dévérifié avec succès.');

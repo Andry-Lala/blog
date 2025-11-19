@@ -12,6 +12,9 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.tailwindcss.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.tailwindcss.min.css">
@@ -55,6 +58,12 @@
                                 </svg>
                                 Gestion des Clients
                             </a>
+                            <a href="{{ route('admin.exchange-rates.index') }}" class="{{ request()->routeIs('admin.exchange-rates.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                                <svg class="text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300 mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Gérer les Taux
+                            </a>
                         @endif
                         <!-- Logout button -->
                         <form method="POST" action="{{ route('logout') }}" class="mt-auto">
@@ -86,11 +95,48 @@
                             @yield('header')
                         </div>
                         <div class="flex items-center space-x-4">
-                            <button class="p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-label="Notifications">
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-                                </svg>
-                            </button>
+                            <!-- Notifications dropdown -->
+                            <div class="relative" x-data="{ open: false }">
+                                <button @click="open = !open" class="p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 relative" aria-label="Notifications">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                                    </svg>
+                                    <span class="notification-badge absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white dark:ring-gray-800" x-show="unreadCount > 0" x-text="unreadCount > 99 ? '99+' : unreadCount"></span>
+                                </button>
+
+                                <!-- Dropdown panel -->
+                                <div x-show="open"
+                                     x-transition:enter="transition ease-out duration-100"
+                                     x-transition:enter-start="transform opacity-0 scale-95"
+                                     x-transition:enter-end="transform opacity-100 scale-100"
+                                     x-transition:leave="transition ease-in duration-75"
+                                     x-transition:leave-start="transform opacity-100 scale-100"
+                                     x-transition:leave-end="transform opacity-0 scale-95"
+                                     @click.away="open = false"
+                                     class="absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
+                                    <div class="py-1">
+                                        <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                                            <div class="flex items-center justify-between">
+                                                <h3 class="text-sm font-medium text-gray-900 dark:text-white">Notifications</h3>
+                                                <a href="{{ route('notifications.index') }}" class="text-xs text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
+                                                    Voir tout
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="max-h-96 overflow-y-auto" id="notificationsList">
+                                            <!-- Notifications will be loaded here -->
+                                            <div class="px-4 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                                                Chargement...
+                                            </div>
+                                        </div>
+                                        <div class="px-4 py-2 border-t border-gray-200 dark:border-gray-700">
+                                            <button onclick="markAllAsRead()" class="w-full text-center text-xs text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
+                                                Tout marquer comme lu
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="relative">
                                 <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-label="Menu utilisateur" aria-expanded="false">
                                     <span class="sr-only">User menu</span>
@@ -122,5 +168,113 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
     @stack('scripts')
+
+    <script>
+        // Notification system
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotifications();
+            // Auto-refresh notifications every 30 seconds
+            setInterval(loadNotifications, 30000);
+        });
+
+        function loadNotifications() {
+            fetch('/notifications/unread')
+                .then(response => response.json())
+                .then(data => {
+                    updateNotificationBadge(data.count);
+                    updateNotificationsList(data.notifications);
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des notifications:', error);
+                });
+        }
+
+        function updateNotificationBadge(count) {
+            const badge = document.querySelector('.notification-badge');
+            if (badge) {
+                if (count > 0) {
+                    badge.textContent = count > 99 ? '99+' : count;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+        }
+
+        function updateNotificationsList(notifications) {
+            const listContainer = document.getElementById('notificationsList');
+            if (!listContainer) return;
+
+            if (notifications.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="px-4 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                        Aucune notification non lue
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = notifications.map(notification => `
+                <div class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0"
+                     onclick="viewNotification(${notification.id})">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="${getNotificationIcon(notification.type)}"></i>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">${notification.title}</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">${notification.message}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${formatTime(notification.created_at)}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getNotificationIcon(type) {
+            const icons = {
+                'success': 'fas fa-check-circle text-green-500',
+                'error': 'fas fa-exclamation-circle text-red-500',
+                'warning': 'fas fa-exclamation-triangle text-yellow-500',
+                'info': 'fas fa-info-circle text-blue-500',
+                'default': 'fas fa-bell text-gray-500'
+            };
+            return icons[type] || icons.default;
+        }
+
+        function formatTime(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = Math.floor((now - date) / 1000); // diff in seconds
+
+            if (diff < 60) return 'à l\'instant';
+            if (diff < 3600) return `il y a ${Math.floor(diff / 60)} min`;
+            if (diff < 86400) return `il y a ${Math.floor(diff / 3600)} h`;
+            return `il y a ${Math.floor(diff / 86400)} j`;
+        }
+
+        function viewNotification(id) {
+            window.location.href = `/notifications/${id}`;
+        }
+
+        function markAllAsRead() {
+            fetch('/notifications/read-all', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadNotifications();
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+        }
+    </script>
 </body>
 </html>

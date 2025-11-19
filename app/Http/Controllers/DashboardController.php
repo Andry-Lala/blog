@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Investment;
+use App\Models\InvestmentType;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -155,6 +157,19 @@ class DashboardController extends Controller
             $totalRejectedAmount = Investment::where('status', 'Rejeté')->sum('amount');
         }
 
+        // Récupérer les types d'investissement actifs pour les clients
+        $investmentTypes = InvestmentType::getActiveTypes();
+
+        // Créer une notification de bienvenue pour les nouveaux utilisateurs (exemple)
+        if ($user->created_at->diffInMinutes(now()) < 5) {
+            Notification::createForUser(
+                $user->id,
+                'Bienvenue sur la plateforme',
+                'Merci de vous être inscrit sur notre plateforme d\'investissement. Découvrez nos différentes options d\'investissement.',
+                'info'
+            );
+        }
+
         return view('dashboard.index', compact(
             'user',
             'totalInvestments',
@@ -181,7 +196,8 @@ class DashboardController extends Controller
             'totalValidatedAmount',
             'totalPendingAmount',
             'totalProcessingAmount',
-            'totalRejectedAmount'
+            'totalRejectedAmount',
+            'investmentTypes'
         ));
     }
 }
