@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Tableau de bord') - Unicorn Madagascar</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/blog-logo.jpeg') }}">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -28,7 +29,8 @@
             <div class="flex flex-col w-64">
                 <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-white border-r border-gray-200">
                     <div class="flex items-center flex-shrink-0 px-4">
-                        <img src="{{ asset('images/logo.svg') }}" alt="Unicorn Madagascar" class="h-8 w-auto">
+                        <img src="{{ asset('images/blog-logo.jpeg') }}" alt="Unicorn Madagascar" class="h-8 w-auto rounded mr-2">
+                        <span class="text-lg font-semibold text-gray-800">Unicorn Madagascar</span>
                     </div>
                     <nav class="mt-8 flex-1 px-2 space-y-1">
                         <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'bg-blue-100 text-blue-900' : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">

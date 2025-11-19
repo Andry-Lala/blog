@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Authentification') - Unicorn Madagascar</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/blog-logo.jpeg') }}">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -17,7 +18,10 @@
         <div class="w-full space-y-8">
             <!-- Header -->
             <div class="text-center">
-                <img src="{{ asset('images/logo.svg') }}" alt="Unicorn Madagascar" class="h-12 w-auto mx-auto mb-4">
+                <div class="flex items-center justify-center mb-4">
+                    <img src="{{ asset('images/blog-logo.jpeg') }}" alt="Unicorn Madagascar" class="h-12 w-auto rounded mr-2">
+                    <span class="text-xl font-semibold text-gray-800">Unicorn Madagascar</span>
+                </div>
                 <p class="mt-2 text-sm text-gray-600">
                     @yield('subtitle')
                 </p>
