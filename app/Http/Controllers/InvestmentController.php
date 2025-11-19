@@ -214,4 +214,27 @@ class InvestmentController extends Controller
         return redirect()->route('investments.index')
             ->with('success', 'L\'investissement a été rejeté.');
     }
+
+    /**
+     * Generate PDF invoice for the investment.
+     */
+    public function generateInvoice(Investment $investment)
+    {
+        if (Auth::id() !== $investment->user_id && !Auth::user()->isAdmin) {
+            abort(403);
+        }
+
+        // Generate PDF content (you can use a library like DomPDF here)
+        // For now, we'll create a simple HTML invoice that can be printed
+        $pdfContent = view('investments.invoice', compact('investment'))->render();
+
+        // Store the PDF temporarily (optional)
+        $pdfPath = "investments/invoice_{$investment->id}.pdf";
+        Storage::put($pdfPath, $pdfContent);
+
+        // Return the PDF as download
+        return response($pdfContent)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', "attachment; filename=invoice_{$investment->id}.pdf");
+    }
 }

@@ -115,6 +115,10 @@
 
 @push('scripts')
 <script>
+function generateInvoice(investmentId) {
+    window.open(`/investments/${investmentId}/invoice`, '_blank');
+}
+
 $(document).ready(function() {
     $('#investmentsTable').DataTable({
         language: {

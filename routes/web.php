@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('investments', InvestmentController::class);
     Route::post('/investments/{investment}/approve', [InvestmentController::class, 'approve'])->name('investments.approve')->middleware('admin');
     Route::post('/investments/{investment}/reject', [InvestmentController::class, 'reject'])->name('investments.reject')->middleware('admin');
+   Route::get('/investments/{investment}/invoice', [InvestmentController::class, 'generateInvoice'])->name('investments.invoice');
 
     // Investment image routes
     Route::get('/investments/{investment}/id-photo', [InvestmentImageController::class, 'showIdPhoto'])->name('investments.id_photo');
