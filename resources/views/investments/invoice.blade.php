@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facture #{{ $investment->id }} - {{ config('app.name', 'Blog') }}</title>
+    <title>Facture FAC-UM-{{ sprintf('%03d', $investment->id) }} - Unicorn Madagascar</title>
     <style>
         body {
             font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
@@ -116,11 +116,11 @@
 <body>
     <div class="invoice-container">
         <div class="invoice-header">
-            <h1>FACTURE</h1>
+            <h1>UNICORN MADAGASCAR - FACTURE</h1>
             <div class="invoice-info">
-                <div><strong>Facture #:</strong> {{ $investment->id }}</div>
+                <div><strong>Numéro de facture:</strong> FAC-UM-{{ sprintf('%03d', $investment->id) }}</div>
                 <div><strong>Date:</strong> {{ $investment->created_at->format('d/m/Y') }}</div>
-                <div><strong>Client:</strong> {{ $investment->user->first_name }} {{ $investment->user->last_name }}</div>
+                <div><strong>Nom du client:</strong> {{ $investment->first_name }} {{ $investment->last_name }}</div>
             </div>
         </div>
 
@@ -164,7 +164,7 @@
         <div class="footer">
             <p>Merci pour votre confiance dans notre plateforme d'investissement.</p>
             <p>Cette facture est générée automatiquement et n'a pas de valeur fiscale.</p>
-            <p>Contactez-nous pour toute question : contact@blog.com</p>
+            <p>Contactez-nous pour toute question : +261 38 27 114 48</p>
         </div>
     </div>
 </body>

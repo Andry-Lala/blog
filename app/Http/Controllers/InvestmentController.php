@@ -224,17 +224,12 @@ class InvestmentController extends Controller
             abort(403);
         }
 
-        // Generate PDF content (you can use a library like DomPDF here)
-        // For now, we'll create a simple HTML invoice that can be printed
-        $pdfContent = view('investments.invoice', compact('investment'))->render();
+        // Generate HTML invoice content
+        $htmlContent = view('investments.invoice', compact('investment'))->render();
 
-        // Store the PDF temporarily (optional)
-        $pdfPath = "investments/invoice_{$investment->id}.pdf";
-        Storage::put($pdfPath, $pdfContent);
-
-        // Return the PDF as download
-        return response($pdfContent)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', "attachment; filename=invoice_{$investment->id}.pdf");
+        // Return the HTML as response for now (can be converted to PDF later with DomPDF)
+        return response($htmlContent)
+            ->header('Content-Type', 'text/html')
+            ->header('Content-Disposition', "inline; filename=facture_{$investment->id}.html");
     }
 }
