@@ -9,7 +9,10 @@ use App\Http\Controllers\InvestmentImageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\Admin\ExchangeRateController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,11 +25,66 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// API route for authentication check
+Route::get('/api/auth-check', function () {
+    // Nettoyer les sessions expirées
+    \App\Services\SessionService::cleanupExpiredSessions();
+
+    if (!Auth::check()) {
+        return response()->json([
+            'authenticated' => false,
+            'reason' => 'Non authentifié',
+            'timestamp' => now()->timestamp
+        ], 401);
+    }
+
+    // Vérification supplémentaire de la validité de la session
+    $currentSessionId = session()->getId();
+    if ($currentSessionId && !\App\Services\SessionService::isSessionValid($currentSessionId)) {
+        // Session invalide détectée, détruire immédiatement
+        Session::flush();
+        Auth::logout();
+
+        return response()->json([
+            'authenticated' => false,
+            'reason' => 'Session invalide',
+            'timestamp' => now()->timestamp
+        ], 401);
+    }
+
+    // Vérification que l'utilisateur est bien associé à cette session
+    $userId = Auth::id();
+    if ($userId && $currentSessionId) {
+        $sessionData = DB::table('sessions')
+            ->where('id', $currentSessionId)
+            ->first();
+
+        // Si la session existe mais n'a pas le bon user_id
+        if ($sessionData && $sessionData->user_id != $userId) {
+            Session::flush();
+            Auth::logout();
+
+            return response()->json([
+                'authenticated' => false,
+                'reason' => 'Session corrompue',
+                'timestamp' => now()->timestamp
+            ], 401);
+        }
+    }
+
+    return response()->json([
+        'authenticated' => true,
+        'user_id' => $userId,
+        'session_id' => $currentSessionId,
+        'timestamp' => now()->timestamp
+    ]);
+})->middleware('web');
+
 // Test route for debugging
 require_once __DIR__.'/test.php';
 
 // Protected routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'force.auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Information routes

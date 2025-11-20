@@ -14,6 +14,17 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'theme' => \App\Http\Middleware\ThemeMiddleware::class,
+            'nocache' => \App\Http\Middleware\NoCacheMiddleware::class,
+            'validate.session' => \App\Http\Middleware\ValidateSessionMiddleware::class,
+            'strict.auth' => \App\Http\Middleware\StrictAuthMiddleware::class,
+            'force.auth' => \App\Http\Middleware\ForceAuthMiddleware::class,
+            'cleanup.sessions' => \App\Http\Middleware\CleanupSessionsMiddleware::class,
+        ]);
+
+        // Appliquer le middleware no-cache à toutes les routes web
+        $middleware->web(append: [
+            \App\Http\Middleware\NoCacheMiddleware::class,
+            \App\Http\Middleware\CleanupSessionsMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

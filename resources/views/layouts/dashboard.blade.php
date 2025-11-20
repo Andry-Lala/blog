@@ -6,6 +6,14 @@
     <title>@yield('title', 'Tableau de bord') - Unicorn Madagascar</title>
     <link rel="icon" type="image/jpeg" href="{{ asset('images/blog-logo.jpeg') }}">
 
+    <!-- Prévenir la mise en cache -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="Thu, 01 Jan 1970 00:00:00 GMT">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -21,6 +29,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.tailwindcss.min.css">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="{{ asset('js/ultimate-auth-guard.js') }}"></script>
 </head>
 <body class="bg-gray-50 text-gray-900">
     <div class="flex h-screen overflow-hidden">
@@ -275,6 +284,59 @@
                 console.error('Erreur:', error);
             });
         }
+
+        // Vérification immédiate de l'authentification au chargement
+        (function() {
+            fetch('/api/auth-check', {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // Si non authentifié, rediriger immédiatement
+                    window.location.href = '/login';
+                }
+            })
+            .catch(error => {
+                console.error('Erreur de vérification d\'authentification:', error);
+                // En cas d'erreur, rediriger vers login par sécurité
+                window.location.href = '/login';
+            });
+        })();
+
+        // Prévenir l'accès via le bouton "Retour" après déconnexion
+        window.addEventListener('pageshow', function(event) {
+            // Vérifier si la page est chargée depuis le cache du navigateur
+            if (event.persisted) {
+                // Forcer le rechargement de la page depuis le serveur
+                window.location.reload();
+            }
+        });
+
+        // Vérification périodique de l'authentification
+        setInterval(function() {
+            fetch('/api/auth-check', {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // Si la réponse n'est pas OK, rediriger vers la page de connexion
+                    window.location.href = '/login';
+                }
+            })
+            .catch(error => {
+                console.error('Erreur de vérification d\'authentification:', error);
+                // En cas d'erreur, rediriger vers login par sécurité
+                window.location.href = '/login';
+            });
+        }, 10000); // Vérifier toutes les 10 secondes pour plus de sécurité
     </script>
 </body>
 </html>

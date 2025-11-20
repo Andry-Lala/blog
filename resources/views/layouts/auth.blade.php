@@ -11,6 +11,36 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        // Protection de base contre l'accès non autorisé après déconnexion
+        (function() {
+            'use strict';
+
+            // Vérifier si l'utilisateur accède à cette page depuis l'historique
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    // Page chargée depuis le cache, forcer rechargement
+                    window.location.reload(true);
+                }
+            });
+
+            // Empêcher la navigation arrière vers les pages protégées
+            history.pushState(null, null, location.href);
+            window.addEventListener('popstate', function(event) {
+                history.pushState(null, null, location.href);
+            });
+
+            // Nettoyer tout stockage local au chargement
+            try {
+                if (window.location.search.includes('forced=1')) {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                }
+            } catch (e) {
+                console.warn('Impossible de nettoyer le stockage:', e);
+            }
+        })();
+    </script>
 </head>
 
 <body class="bg-gray-50 text-gray-900">

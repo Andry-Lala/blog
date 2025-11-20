@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\SessionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
@@ -97,13 +99,34 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::logout();
+        $user = Auth::user();
 
-        $request->session()->invalidate();
+        if ($user) {
+            // Détruire TOUTES les sessions de cet utilisateur (sur tous les appareils)
+            SessionService::destroyAllUserSessions($user->id);
 
-        $request->session()->regenerateToken();
+            // Nettoyer les sessions expirées
+            SessionService::cleanupExpiredSessions();
 
-        return redirect()->route('login');
+            // Forcer la déconnexion de l'utilisateur courant
+            Auth::logout();
+
+            // Invalider complètement la session courante
+            Session::invalidate();
+
+            // Régénérer le token CSRF pour éviter toute réutilisation
+            $request->session()->regenerateToken();
+        }
+
+        // Rediriger vers la page de connexion avec un message et en-têtes anti-cache complets
+        return redirect()->route('login')
+            ->with('status', 'Vous avez été déconnecté avec succès sur tous vos appareils.')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, private')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', 'Thu, 01 Jan 1970 00:00:00 GMT')
+            ->header('Clear-Site-Data', '"cache", "cookies", "storage", "executionContexts"')
+            ->header('X-Frame-Options', 'DENY')
+            ->header('X-Content-Type-Options', 'nosniff');
     }
 
     /**
