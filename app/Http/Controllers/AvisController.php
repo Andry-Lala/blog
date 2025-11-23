@@ -28,4 +28,13 @@ class AvisController extends Controller
         $avis = Avis::orderBy('created_at', 'desc')->get();
         return view('admin.avis', compact('avis'));
     }
+
+    public function destroy($id)
+    {
+        $avis = Avis::findOrFail($id);
+        $avis->delete();
+
+        return redirect()->route('admin.avis.index')->with('success', 'Avis supprimé avec succès.');
+    }
+
 }

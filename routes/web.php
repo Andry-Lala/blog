@@ -25,8 +25,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::post('/envoyer-avis', [AvisController::class, 'envoyerAvis'])->name('envoyer.avis');
-Route::get('/admin/avis', [AvisController::class, 'index'])->middleware('auth')->name('admin.avis.index');
+
 
 // API route for authentication check
 Route::get('/api/auth-check', function () {
@@ -128,4 +127,9 @@ Route::middleware(['auth', 'force.auth'])->group(function () {
         Route::put('/exchange-rates/update-type/{investmentType}', [ExchangeRateController::class, 'updateInvestmentType'])->name('exchange-rates.update-type');
         Route::delete('/exchange-rates/destroy-type/{investmentType}', [ExchangeRateController::class, 'destroyInvestmentType'])->name('exchange-rates.destroy-type');
     });
+
+    // Avis routes
+    Route::delete('/admin/avis/{id}', [AvisController::class, 'destroy'])->name('avis.destroy');
+    Route::post('/envoyer-avis', [AvisController::class, 'envoyerAvis'])->name('envoyer.avis');
+    Route::get('/admin/avis', [AvisController::class, 'index'])->middleware('auth')->name('admin.avis.index');
 });
