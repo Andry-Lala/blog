@@ -4,7 +4,7 @@
 
 @section('header')
     <div class="ml-4 flex items-center">
-        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Détails du Client</h1>
+        <h1 class="text-2xl font-semibold text-gray-900  ">Détails du Client</h1>
     </div>
 @endsection
 
@@ -13,7 +13,7 @@
     <div class="px-4 sm:px-6 lg:px-8">
         <!-- Actions Header -->
         <div class="mb-6 flex items-center justify-between">
-            <h2 class="text-lg font-medium text-gray-900 dark:text-white">
+            <h2 class="text-lg font-medium text-gray-900  ">
                 Client: {{ $client->prenom }} {{ $client->nom }} ({{ $client->code_utilisateur }})
             </h2>
             <div class="flex space-x-3">
@@ -36,58 +36,58 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Informations de base -->
-            <div class="bg-white dark:bg-gray-800 shadow rounded-lg">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Informations de base</h3>
+            <div class="bg-white   shadow rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200  ">
+                    <h3 class="text-lg font-medium text-gray-900  ">Informations de base</h3>
                 </div>
                 <div class="p-6">
                     <dl class="space-y-4">
                         <div class="flex justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Code Client</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white">{{ $client->code_utilisateur }}</dd>
+                            <dt class="text-sm font-medium text-gray-500  ">Code Client</dt>
+                            <dd class="text-sm text-gray-900  ">{{ $client->code_utilisateur }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nom</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white">{{ $client->nom }}</dd>
+                            <dt class="text-sm font-medium text-gray-500  ">Nom</dt>
+                            <dd class="text-sm text-gray-900  ">{{ $client->nom }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Prénom</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white">{{ $client->prenom }}</dd>
+                            <dt class="text-sm font-medium text-gray-500  ">Prénom</dt>
+                            <dd class="text-sm text-gray-900  ">{{ $client->prenom }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nom d'utilisateur</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white">{{ $client->username }}</dd>
+                            <dt class="text-sm font-medium text-gray-500  ">Nom d'utilisateur</dt>
+                            <dd class="text-sm text-gray-900  ">{{ $client->username }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Email</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white">{{ $client->email }}</dd>
+                            <dt class="text-sm font-medium text-gray-500  ">Email</dt>
+                            <dd class="text-sm text-gray-900  ">{{ $client->email }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Téléphone</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white">{{ $client->telephone ?? '-' }}</dd>
+                            <dt class="text-sm font-medium text-gray-500  ">Téléphone</dt>
+                            <dd class="text-sm text-gray-900  ">{{ $client->telephone ?? '-' }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Adresse</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white">{{ $client->adresse ?? '-' }}</dd>
+                            <dt class="text-sm font-medium text-gray-500  ">Adresse</dt>
+                            <dd class="text-sm text-gray-900  ">{{ $client->adresse ?? '-' }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Statut</dt>
+                            <dt class="text-sm font-medium text-gray-500  ">Statut</dt>
                             <dd>
                                 @if($client->statut)
-                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">Vérifié</span>
+                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800    ">Vérifié</span>
                                 @else
-                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100">En attente de validation</span>
+                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800    ">En attente de validation</span>
                                 @endif
                             </dd>
                         </div>
                         @if($client->date_validation)
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Date de validation</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->date_validation->format('d/m/Y H:i') }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Date de validation</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->date_validation->format('d/m/Y H:i') }}</dd>
                             </div>
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Validé par</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->validatedBy ? $client->validatedBy->nom . ' ' . $client->validatedBy->prenom : '-' }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Validé par</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->validatedBy ? $client->validatedBy->nom . ' ' . $client->validatedBy->prenom : '-' }}</dd>
                             </div>
                         @endif
                     </dl>
@@ -96,53 +96,53 @@
 
             <!-- Informations personnelles -->
             <div class="space-y-6">
-                <div class="bg-white dark:bg-gray-800 shadow rounded-lg">
-                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Informations personnelles</h3>
+                <div class="bg-white   shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200  ">
+                        <h3 class="text-lg font-medium text-gray-900  ">Informations personnelles</h3>
                     </div>
                     <div class="p-6">
                         <dl class="space-y-4">
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Date de naissance</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->date_naissance ? $client->date_naissance->format('d/m/Y') : '-' }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Date de naissance</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->date_naissance ? $client->date_naissance->format('d/m/Y') : '-' }}</dd>
                             </div>
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Lieu de naissance</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->lieu_naissance ?? '-' }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Lieu de naissance</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->lieu_naissance ?? '-' }}</dd>
                             </div>
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nationalité</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->nationalite ?? '-' }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Nationalité</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->nationalite ?? '-' }}</dd>
                             </div>
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Profession</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->profession ?? '-' }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Profession</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->profession ?? '-' }}</dd>
                             </div>
                         </dl>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-gray-800 shadow rounded-lg">
-                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Pièce d'identité</h3>
+                <div class="bg-white   shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200  ">
+                        <h3 class="text-lg font-medium text-gray-900  ">Pièce d'identité</h3>
                     </div>
                     <div class="p-6">
                         <dl class="space-y-4">
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Type de pièce</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->piece_identite ?? '-' }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Type de pièce</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->piece_identite ?? '-' }}</dd>
                             </div>
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Numéro de pièce</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->numero_piece ?? '-' }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Numéro de pièce</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->numero_piece ?? '-' }}</dd>
                             </div>
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Date de délivrance</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->date_delivrance ? $client->date_delivrance->format('d/m/Y') : '-' }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Date de délivrance</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->date_delivrance ? $client->date_delivrance->format('d/m/Y') : '-' }}</dd>
                             </div>
                             <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Lieu de délivrance</dt>
-                                <dd class="text-sm text-gray-900 dark:text-white">{{ $client->lieu_delivrance ?? '-' }}</dd>
+                                <dt class="text-sm font-medium text-gray-500  ">Lieu de délivrance</dt>
+                                <dd class="text-sm text-gray-900  ">{{ $client->lieu_delivrance ?? '-' }}</dd>
                             </div>
                         </dl>
                     </div>
@@ -151,20 +151,20 @@
         </div>
 
         @if($client->notes)
-            <div class="mt-6 bg-white dark:bg-gray-800 shadow rounded-lg">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Notes</h3>
+            <div class="mt-6 bg-white   shadow rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200  ">
+                    <h3 class="text-lg font-medium text-gray-900  ">Notes</h3>
                 </div>
                 <div class="p-6">
-                    <p class="text-sm text-gray-700 dark:text-gray-300">{{ $client->notes }}</p>
+                    <p class="text-sm text-gray-700  ">{{ $client->notes }}</p>
                 </div>
             </div>
         @endif
 
         @if(Auth::user()->role === 'administrateur')
-            <div class="mt-6 bg-white dark:bg-gray-800 shadow rounded-lg">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Actions d'administration</h3>
+            <div class="mt-6 bg-white   shadow rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200  ">
+                    <h3 class="text-lg font-medium text-gray-900  ">Actions d'administration</h3>
                 </div>
                 <div class="p-6">
                     <div class="flex flex-wrap gap-3">

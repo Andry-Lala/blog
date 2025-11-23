@@ -73,6 +73,12 @@
                                 </svg>
                                 Gérer les Taux
                             </a>
+                            <a href="{{ route('admin.avis.index') }}" class="{{ request()->routeIs('admin.avis.*') ? 'bg-blue-100 text-blue-900' : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                                <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h8m-8 4h6m2-8v10a2 2 0 01-2 2H7l-4 4V6a2 2 0 012-2h10a2 2 0 012 2z" />
+                                </svg>
+                                Voir les Avis
+                            </a>
                         @endif
                         <!-- Logout button -->
                         <form method="POST" action="{{ route('logout') }}" class="mt-auto">

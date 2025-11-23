@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\AvisController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage');
 });
 
 // Authentication routes
@@ -24,6 +25,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/envoyer-avis', [AvisController::class, 'envoyerAvis'])->name('envoyer.avis');
+Route::get('/admin/avis', [AvisController::class, 'index'])->middleware('auth')->name('admin.avis.index');
 
 // API route for authentication check
 Route::get('/api/auth-check', function () {
