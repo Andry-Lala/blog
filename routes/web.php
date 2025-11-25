@@ -85,6 +85,8 @@ Route::get('/api/auth-check', function () {
 // Test route for debugging
 require_once __DIR__.'/test.php';
 
+//envoyer avis route
+Route::post('/envoyer-avis', [AvisController::class, 'envoyerAvis'])->name('envoyer.avis');
 // Protected routes
 Route::middleware(['auth', 'force.auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -130,6 +132,5 @@ Route::middleware(['auth', 'force.auth'])->group(function () {
 
     // Avis routes
     Route::delete('/admin/avis/{id}', [AvisController::class, 'destroy'])->name('avis.destroy');
-    Route::post('/envoyer-avis', [AvisController::class, 'envoyerAvis'])->name('envoyer.avis');
     Route::get('/admin/avis', [AvisController::class, 'index'])->middleware('auth')->name('admin.avis.index');
 });

@@ -51,11 +51,6 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        // Redirection dynamique
-        if ($request->has('redirect')) {
-            return redirect($request->redirect);
-        }
-
         return redirect()->intended(route('dashboard'));
     }
 
