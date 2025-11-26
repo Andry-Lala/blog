@@ -59,4 +59,40 @@ class Client extends User
         $this->statut = false;
         $this->save();
     }
+
+    /**
+     * Get the total amount of all validated investments for the client.
+     */
+    public function getTotalInvestmentsAttribute(): float
+    {
+        return $this->investments()
+            ->where('status', 'Validé')
+            ->sum('amount');
+    }
+
+    /**
+     * Get the total amount of all investments (regardless of status) for the client.
+     */
+    public function getAllInvestmentsAttribute(): float
+    {
+        return $this->investments()->sum('amount');
+    }
+
+    /**
+     * Get the count of validated investments for the client.
+     */
+    public function getValidatedInvestmentsCountAttribute(): int
+    {
+        return $this->investments()
+            ->where('status', 'Validé')
+            ->count();
+    }
+
+    /**
+     * Get the count of all investments for the client.
+     */
+    public function getAllInvestmentsCountAttribute(): int
+    {
+        return $this->investments()->count();
+    }
 }

@@ -100,11 +100,19 @@ Route::middleware(['auth', 'force.auth'])->group(function () {
     Route::patch('/clients/{client}/verify', [ClientController::class, 'verify'])->name('clients.verify');
     Route::patch('/clients/{client}/unverify', [ClientController::class, 'unverify'])->name('clients.unverify');
 
+    // Admin client management with investment totals
+    Route::get('/admin/clients', [ClientController::class, 'adminIndex'])->name('admin.clients.index')->middleware('admin');
+
     // Investment routes
     Route::resource('investments', InvestmentController::class);
     Route::post('/investments/{investment}/approve', [InvestmentController::class, 'approve'])->name('investments.approve')->middleware('admin');
     Route::post('/investments/{investment}/reject', [InvestmentController::class, 'reject'])->name('investments.reject')->middleware('admin');
    Route::get('/investments/{investment}/invoice', [InvestmentController::class, 'generateInvoice'])->name('investments.invoice');
+
+    // Investment history and summary routes
+    Route::get('/investments/history', [InvestmentController::class, 'history'])->name('investments.history');
+    Route::get('/admin/investments/summary', [InvestmentController::class, 'summary'])->name('investments.summary')->middleware('admin');
+    Route::get('/admin/investments/user/{user}', [InvestmentController::class, 'userInvestments'])->name('investments.user')->middleware('admin');
 
     // Investment image routes
     Route::get('/investments/{investment}/id-photo', [InvestmentImageController::class, 'showIdPhoto'])->name('investments.id_photo');

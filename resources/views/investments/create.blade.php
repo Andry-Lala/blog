@@ -62,19 +62,21 @@
                         <div>
                             <label for="last_name" class="block text-sm font-medium text-gray-700">Nom *</label>
                             <input type="text" id="last_name" name="last_name" required
+                                   value="{{ old('last_name', $user->nom ?? '') }}"
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
                             <label for="first_name" class="block text-sm font-medium text-gray-700">Prénom *</label>
                             <input type="text" id="first_name" name="first_name" required
+                                   value="{{ old('first_name', $user->prenom ?? '') }}"
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
                             <label for="address" class="block text-sm font-medium text-gray-700">Adresse *</label>
                             <textarea id="address" name="address" rows="3" required
-                                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">{{ old('address', $user->adresse ?? '') }}</textarea>
                         </div>
                     </div>
 
@@ -83,12 +85,14 @@
                         <div>
                             <label for="phone" class="block text-sm font-medium text-gray-700">Numéro de téléphone *</label>
                             <input type="tel" id="phone" name="phone" required
+                                   value="{{ old('phone', $user->telephone ?? '') }}"
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
                             <label for="id_number" class="block text-sm font-medium text-gray-700">Numéro de la pièce d'identité (CIN ou Passeport) *</label>
                             <input type="text" id="id_number" name="id_number" required
+                                   value="{{ old('id_number', $user->numero_piece ?? '') }}"
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 

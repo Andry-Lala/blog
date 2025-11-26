@@ -24,9 +24,36 @@ class InvestmentController extends Controller
         $user = Auth::user();
 
         if ($user->isAdmin) {
-            $investments = Investment::with('user')->latest()->paginate(10);
+            // Récupérer les clients avec leurs investissements validés regroupés
+            $clientsWithInvestments = \App\Models\User::where('role', 'client')
+                ->with(['investments' => function($query) {
+                    $query->where('status', 'Validé')
+                          ->select('user_id', 'amount', 'created_at', 'id', 'investment_type', 'operator');
+                }])
+                ->get()
+                ->map(function ($client) {
+                    $validatedInvestments = $client->investments;
+                    $totalAmount = $validatedInvestments->sum('amount');
+                    $investmentCount = $validatedInvestments->count();
 
-            return view('investments.admin.index', compact('investments'));
+                    return [
+                        'id' => $client->id,
+                        'first_name' => $client->first_name,
+                        'last_name' => $client->last_name,
+                        'email' => $client->email,
+                        'total_validated_amount' => $totalAmount,
+                        'validated_investments_count' => $investmentCount,
+                        'last_investment_date' => $validatedInvestments->max('created_at'),
+                        'investments' => $validatedInvestments
+                    ];
+                })
+                ->filter(function ($client) {
+                    return $client['validated_investments_count'] > 0;
+                })
+                ->sortByDesc('total_validated_amount')
+                ->values();
+
+            return view('investments.admin.index', compact('clientsWithInvestments'));
         }
 
         $investments = Investment::where('user_id', $user->id)->latest()->paginate(10);
@@ -35,11 +62,112 @@ class InvestmentController extends Controller
     }
 
     /**
+     * Display investment history for the authenticated client.
+     */
+    public function history()
+    {
+        $user = Auth::user();
+
+        // Récupérer tous les investissements du client avec pagination
+        $investments = Investment::where('user_id', $user->id)
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // Calculer les statistiques
+        $totalInvestments = Investment::where('user_id', $user->id)->sum('amount');
+        $validatedInvestments = Investment::where('user_id', $user->id)->where('status', 'Validé')->sum('amount');
+        $pendingInvestments = Investment::where('user_id', $user->id)->where('status', 'Envoyé')->sum('amount');
+        $processingInvestments = Investment::where('user_id', $user->id)->where('status', 'En cours de traitement')->sum('amount');
+        $rejectedInvestments = Investment::where('user_id', $user->id)->where('status', 'Rejeté')->sum('amount');
+
+        $statistics = [
+            'total_investments' => $totalInvestments,
+            'validated_investments' => $validatedInvestments,
+            'pending_investments' => $pendingInvestments,
+            'processing_investments' => $processingInvestments,
+            'rejected_investments' => $rejectedInvestments,
+            'total_count' => Investment::where('user_id', $user->id)->count(),
+            'validated_count' => Investment::where('user_id', $user->id)->where('status', 'Validé')->count(),
+            'pending_count' => Investment::where('user_id', $user->id)->where('status', 'Envoyé')->count(),
+            'processing_count' => Investment::where('user_id', $user->id)->where('status', 'En cours de traitement')->count(),
+            'rejected_count' => Investment::where('user_id', $user->id)->where('status', 'Rejeté')->count(),
+        ];
+
+        return view('investments.history', compact('investments', 'statistics'));
+    }
+
+    /**
+     * Display investment summary for administrators.
+     */
+    public function summary()
+    {
+        // Vérifier que l'utilisateur est un administrateur
+        if (!Auth::user()->isAdmin) {
+            abort(403, 'Accès non autorisé.');
+        }
+
+        // Récupérer tous les clients avec leurs investissements
+        $clientsWithInvestments = \App\Models\User::where('role', 'client')
+            ->with(['investments' => function($query) {
+                $query->selectRaw('user_id, SUM(amount) as total_amount, COUNT(*) as investment_count')
+                    ->where('status', 'Validé')
+                    ->groupBy('user_id');
+            }])
+            ->get();
+
+        return view('investments.summary', compact('clientsWithInvestments'));
+    }
+
+    /**
+     * Display investments for a specific user (admin only).
+     */
+    public function userInvestments($userId)
+    {
+        // Vérifier que l'utilisateur est un administrateur
+        if (!Auth::user()->isAdmin) {
+            abort(403, 'Accès non autorisé.');
+        }
+
+        // Récupérer l'utilisateur
+        $user = \App\Models\User::findOrFail($userId);
+
+        // Récupérer tous les investissements de l'utilisateur
+        $investments = Investment::where('user_id', $userId)
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // Calculer les statistiques pour cet utilisateur
+        $totalInvestments = Investment::where('user_id', $userId)->sum('amount');
+        $validatedInvestments = Investment::where('user_id', $userId)->where('status', 'Validé')->sum('amount');
+        $pendingInvestments = Investment::where('user_id', $userId)->where('status', 'Envoyé')->sum('amount');
+        $processingInvestments = Investment::where('user_id', $userId)->where('status', 'En cours de traitement')->sum('amount');
+        $rejectedInvestments = Investment::where('user_id', $userId)->where('status', 'Rejeté')->sum('amount');
+
+        $statistics = [
+            'total_investments' => $totalInvestments,
+            'validated_investments' => $validatedInvestments,
+            'pending_investments' => $pendingInvestments,
+            'processing_investments' => $processingInvestments,
+            'rejected_investments' => $rejectedInvestments,
+            'total_count' => Investment::where('user_id', $userId)->count(),
+            'validated_count' => Investment::where('user_id', $userId)->where('status', 'Validé')->count(),
+            'pending_count' => Investment::where('user_id', $userId)->where('status', 'Envoyé')->count(),
+            'processing_count' => Investment::where('user_id', $userId)->where('status', 'En cours de traitement')->count(),
+            'rejected_count' => Investment::where('user_id', $userId)->where('status', 'Rejeté')->count(),
+        ];
+
+        return view('investments.admin.user-investments', compact('investments', 'statistics', 'user'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('investments.create');
+        $user = Auth::user();
+        return view('investments.create', compact('user'));
     }
 
     /**

@@ -18,7 +18,8 @@
                         <label for="nom" class="block text-sm font-medium text-gray-600">Nom *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('nom') border-red-500 @enderror"
-                               id="nom" name="nom" value="{{ old('nom') }}" required>
+                               id="nom" name="nom" value="{{ old('nom') }}" required minlength="2" maxlength="255"
+                               pattern="[a-zA-ZÀ-ÿ\s\-\'\.]+" placeholder="RAKOTOARISOA">
                         @error('nom')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -28,7 +29,8 @@
                         <label for="prenom" class="block text-sm font-medium text-gray-600">Prénom *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('prenom') border-red-500 @enderror"
-                               id="prenom" name="prenom" value="{{ old('prenom') }}" required>
+                               id="prenom" name="prenom" value="{{ old('prenom') }}" required minlength="2" maxlength="255"
+                               pattern="[a-zA-ZÀ-ÿ\s\-\'\.]+" placeholder="Jean">
                         @error('prenom')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -38,7 +40,8 @@
                         <label for="username" class="block text-sm font-medium text-gray-600">Nom d'utilisateur *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('username') border-red-500 @enderror"
-                               id="username" name="username" value="{{ old('username') }}" required>
+                               id="username" name="username" value="{{ old('username') }}" required minlength="3" maxlength="255"
+                               pattern="[a-zA-Z0-9_\-\.]+" placeholder="jean_rakoto">
                         @error('username')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -48,27 +51,31 @@
                         <label for="email" class="block text-sm font-medium text-gray-600">Email *</label>
                         <input type="email"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('email') border-red-500 @enderror"
-                               id="email" name="email" value="{{ old('email') }}" required>
+                               id="email" name="email" value="{{ old('email') }}" required maxlength="255"
+                               placeholder="jean.rakoto@example.com">
                         @error('email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="telephone" class="block text-sm font-medium text-gray-600">Téléphone</label>
-                        <input type="text"
+                        <label for="telephone" class="block text-sm font-medium text-gray-600">Téléphone *</label>
+                        <input type="tel"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('telephone') border-red-500 @enderror"
-                               id="telephone" name="telephone" value="{{ old('telephone') }}">
+                               id="telephone" name="telephone" value="{{ old('telephone') }}"
+                               required minlength="10" maxlength="20" pattern="[+]?[0-9\s\-\(\)]+"
+                               placeholder="+261 34 12 345 67">
                         @error('telephone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="adresse" class="block text-sm font-medium text-gray-600">Adresse</label>
+                        <label for="adresse" class="block text-sm font-medium text-gray-600">Adresse *</label>
                         <textarea
                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('adresse') border-red-500 @enderror"
-                                  id="adresse" name="adresse" rows="3">{{ old('adresse') }}</textarea>
+                                  id="adresse" name="adresse" rows="3" required minlength="5" maxlength="500"
+                                  placeholder="Entrez votre adresse complète">{{ old('adresse') }}</textarea>
                         @error('adresse')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -85,7 +92,8 @@
                         <label for="date_naissance" class="block text-sm font-medium text-gray-600">Date de naissance</label>
                         <input type="date"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('date_naissance') border-red-500 @enderror"
-                               id="date_naissance" name="date_naissance" value="{{ old('date_naissance') }}">
+                               id="date_naissance" name="date_naissance" value="{{ old('date_naissance') }}"
+                               max="{{ date('Y-m-d') }}" min="1900-01-01">
                         @error('date_naissance')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -95,7 +103,8 @@
                         <label for="lieu_naissance" class="block text-sm font-medium text-gray-600">Lieu de naissance</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('lieu_naissance') border-red-500 @enderror"
-                               id="lieu_naissance" name="lieu_naissance" value="{{ old('lieu_naissance') }}">
+                               id="lieu_naissance" name="lieu_naissance" value="{{ old('lieu_naissance') }}"
+                               minlength="2" maxlength="255" placeholder="Antananarivo">
                         @error('lieu_naissance')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -105,7 +114,8 @@
                         <label for="nationalite" class="block text-sm font-medium text-gray-600">Nationalité</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('nationalite') border-red-500 @enderror"
-                               id="nationalite" name="nationalite" value="{{ old('nationalite') }}">
+                               id="nationalite" name="nationalite" value="{{ old('nationalite') }}"
+                               minlength="2" maxlength="255" placeholder="Malagasy">
                         @error('nationalite')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -115,23 +125,24 @@
                         <label for="profession" class="block text-sm font-medium text-gray-600">Profession</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('profession') border-red-500 @enderror"
-                               id="profession" name="profession" value="{{ old('profession') }}">
+                               id="profession" name="profession" value="{{ old('profession') }}"
+                               minlength="2" maxlength="255" placeholder="Développeur">
                         @error('profession')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
 
-                <h3 class="text-lg font-medium text-gray-900 mb-6 mt-8 pb-2 border-b border-gray-200">Pièce d'identité</h3>
+                <h3 class="text-lg font-medium text-black mb-6 mt-8 pb-2 border-b border-gray-200">Pièce d'identité</h3>
 
                 <div class="space-y-4">
                     <div>
-                        <label for="piece_identite" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type de pièce</label>
+                        <label for="piece_identite" class="block text-sm font-medium text-black">Type de pièce *</label>
                         <select
                                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('piece_identite') border-red-500 @enderror"
-                                id="piece_identite" name="piece_identite">
+                                id="piece_identite" name="piece_identite" required>
                             <option value="">Sélectionner...</option>
-                            <option value="CNI" {{ old('piece_identite') == 'CNI' ? 'selected' : '' }}>CNI</option>
+                            <option value="CIN" {{ old('piece_identite') == 'CIN' ? 'selected' : '' }}>CIN (Carte d'Identité Nationale)</option>
                             <option value="Passeport" {{ old('piece_identite') == 'Passeport' ? 'selected' : '' }}>Passeport</option>
                             <option value="Permis" {{ old('piece_identite') == 'Permis' ? 'selected' : '' }}>Permis</option>
                         </select>
@@ -141,30 +152,33 @@
                     </div>
 
                     <div>
-                        <label for="numero_piece" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Numéro de pièce</label>
+                        <label for="numero_piece" class="block text-sm font-medium text-black">Numéro de pièce *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('numero_piece') border-red-500 @enderror"
-                               id="numero_piece" name="numero_piece" value="{{ old('numero_piece') }}">
+                               id="numero_piece" name="numero_piece" value="{{ old('numero_piece') }}"
+                               required minlength="5" maxlength="50" placeholder="1234567890123">
                         @error('numero_piece')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="date_delivrance" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date de délivrance</label>
+                        <label for="date_delivrance" class="block text-sm font-medium text-black">Date de délivrance *</label>
                         <input type="date"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('date_delivrance') border-red-500 @enderror"
-                               id="date_delivrance" name="date_delivrance" value="{{ old('date_delivrance') }}">
+                               id="date_delivrance" name="date_delivrance" value="{{ old('date_delivrance') }}"
+                               required max="{{ date('Y-m-d') }}" min="1900-01-01">
                         @error('date_delivrance')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="lieu_delivrance" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Lieu de délivrance</label>
+                        <label for="lieu_delivrance" class="block text-sm font-medium text-black">Lieu de délivrance *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('lieu_delivrance') border-red-500 @enderror"
-                               id="lieu_delivrance" name="lieu_delivrance" value="{{ old('lieu_delivrance') }}">
+                               id="lieu_delivrance" name="lieu_delivrance" value="{{ old('lieu_delivrance') }}"
+                               required minlength="2" maxlength="255" placeholder="Antananarivo">
                         @error('lieu_delivrance')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -181,7 +195,19 @@
                     <label for="password" class="block text-sm font-medium text-gray-600">Mot de passe *</label>
                     <input type="password"
                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('password') border-red-500 @enderror"
-                           id="password" name="password" required>
+                           id="password" name="password" required minlength="8"
+                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+                           title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)">
+                    <div class="mt-2 text-xs text-gray-500">
+                        <p>Le mot de passe doit contenir :</p>
+                        <ul class="list-disc list-inside mt-1">
+                            <li>Au moins 8 caractères</li>
+                            <li>Une lettre majuscule</li>
+                            <li>Une lettre minuscule</li>
+                            <li>Un chiffre</li>
+                            <li>Un caractère spécial (@$!%*?&)</li>
+                        </ul>
+                    </div>
                     @error('password')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -190,7 +216,7 @@
                     <label for="password_confirmation" class="block text-sm font-medium text-gray-600">Confirmer le mot de passe *</label>
                     <input type="password"
                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('password_confirmation') border-red-500 @enderror"
-                           id="password_confirmation" name="password_confirmation" required>
+                           id="password_confirmation" name="password_confirmation" required minlength="8">
                     @error('password_confirmation')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -233,4 +259,162 @@
         </div>
     </form>
 </div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const password = document.getElementById('password');
+    const passwordConfirmation = document.getElementById('password_confirmation');
+    const telephone = document.getElementById('telephone');
+    const email = document.getElementById('email');
+    const username = document.getElementById('username');
+
+    // Validation en temps réel du mot de passe
+    function validatePassword(password) {
+        const minLength = password.length >= 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /\d/.test(password);
+        const hasSpecialChar = /[@$!%*?&]/.test(password);
+
+        return {
+            minLength,
+            hasUpperCase,
+            hasLowerCase,
+            hasNumbers,
+            hasSpecialChar,
+            isValid: minLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar
+        };
+    }
+
+    // Afficher les exigences du mot de passe
+    if (password) {
+        password.addEventListener('input', function() {
+            const validation = validatePassword(this.value);
+            const requirementsDiv = this.parentElement.querySelector('.text-xs.text-gray-500');
+
+            if (requirementsDiv) {
+                const requirements = requirementsDiv.querySelectorAll('li');
+                requirements[0].style.color = validation.minLength ? '#10b981' : '#6b7280';
+                requirements[1].style.color = validation.hasUpperCase ? '#10b981' : '#6b7280';
+                requirements[2].style.color = validation.hasLowerCase ? '#10b981' : '#6b7280';
+                requirements[3].style.color = validation.hasNumbers ? '#10b981' : '#6b7280';
+                requirements[4].style.color = validation.hasSpecialChar ? '#10b981' : '#6b7280';
+            }
+        });
+    }
+
+    // Validation de la confirmation du mot de passe
+    if (passwordConfirmation) {
+        passwordConfirmation.addEventListener('input', function() {
+            if (this.value !== password.value) {
+                this.setCustomValidity('Les mots de passe ne correspondent pas.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+
+    // Validation du format du téléphone
+    if (telephone) {
+        telephone.addEventListener('input', function() {
+            // Nettoyer le numéro de téléphone
+            let value = this.value.replace(/\s+/g, '');
+
+            // Vérifier si le format est valide
+            const phoneRegex = /^[+]?[0-9\-\(\)]+$/;
+            if (!phoneRegex.test(value) && value.length > 0) {
+                this.setCustomValidity('Veuillez entrer un numéro de téléphone valide.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+
+    // Validation de l'email
+    if (email) {
+        email.addEventListener('blur', function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(this.value) && this.value.length > 0) {
+                this.setCustomValidity('Veuillez entrer une adresse email valide.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+
+    // Validation du nom d'utilisateur
+    if (username) {
+        username.addEventListener('input', function() {
+            const usernameRegex = /^[a-zA-Z0-9_\-\.]+$/;
+            if (!usernameRegex.test(this.value) && this.value.length > 0) {
+                this.setCustomValidity('Le nom d\'utilisateur ne peut contenir que des lettres, chiffres, tirets, points et underscores.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+
+    // Validation du formulaire avant soumission
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            let isValid = true;
+
+            // Vérifier que tous les champs requis sont remplis
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('border-red-500');
+
+                    // Créer un message d'erreur s'il n'existe pas
+                    let errorMsg = field.parentElement.querySelector('.required-error');
+                    if (!errorMsg) {
+                        errorMsg = document.createElement('p');
+                        errorMsg.className = 'mt-1 text-sm text-red-600 required-error';
+                        errorMsg.textContent = 'Ce champ est obligatoire.';
+                        field.parentElement.appendChild(errorMsg);
+                    }
+                } else {
+                    field.classList.remove('border-red-500');
+                    const errorMsg = field.parentElement.querySelector('.required-error');
+                    if (errorMsg) {
+                        errorMsg.remove();
+                    }
+                }
+            });
+
+            // Vérifier la correspondance des mots de passe
+            if (password.value !== passwordConfirmation.value) {
+                isValid = false;
+                passwordConfirmation.classList.add('border-red-500');
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                // Scroll vers le premier champ en erreur
+                const firstError = form.querySelector('.border-red-500');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstError.focus();
+                }
+            }
+        });
+    }
+
+    // Nettoyer les erreurs lors de la saisie
+    const inputs = form.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            this.classList.remove('border-red-500');
+            const errorMsg = this.parentElement.querySelector('.required-error');
+            if (errorMsg) {
+                errorMsg.remove();
+            }
+        });
+    });
+});
+</script>
+@endpush
 @endsection

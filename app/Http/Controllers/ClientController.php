@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Investment;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +43,74 @@ class ClientController extends Controller
         $clients = $query->latest()->paginate(10);
 
         return view('clients.index', compact('clients'));
+    }
+
+    /**
+     * Display clients with their investment totals for admin.
+     */
+    public function adminIndex(Request $request)
+    {
+        $query = Client::clients()->with('investments');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nom', 'like', "%{$search}%")
+                    ->orWhere('prenom', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('username', 'like', "%{$search}%")
+                    ->orWhere('code_utilisateur', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('statut')) {
+            $query->where('statut', $request->statut === 'verified');
+        }
+
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'total_investments_desc':
+                    $query->orderByDesc(
+                        Investment::selectRaw('COALESCE(SUM(amount), 0)')
+                            ->whereColumn('user_id', 'users.id')
+                            ->where('status', 'Validé')
+                    );
+                    break;
+                case 'total_investments_asc':
+                    $query->orderBy(
+                        Investment::selectRaw('COALESCE(SUM(amount), 0)')
+                            ->whereColumn('user_id', 'users.id')
+                            ->where('status', 'Validé')
+                    );
+                    break;
+                case 'name_asc':
+                    $query->orderBy('nom', 'asc')->orderBy('prenom', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('nom', 'desc')->orderBy('prenom', 'desc');
+                    break;
+                default:
+                    $query->latest();
+            }
+        } else {
+            $query->latest();
+        }
+
+        $clients = $query->paginate(15);
+
+        // Calculate statistics
+        $totalClients = Client::clients()->count();
+        $verifiedClients = Client::clients()->where('statut', true)->count();
+        $totalInvestments = Investment::where('status', 'Validé')->sum('amount');
+        $totalInvestmentsCount = Investment::where('status', 'Validé')->count();
+
+        return view('clients.admin.index', compact(
+            'clients',
+            'totalClients',
+            'verifiedClients',
+            'totalInvestments',
+            'totalInvestmentsCount'
+        ));
     }
 
     /**
