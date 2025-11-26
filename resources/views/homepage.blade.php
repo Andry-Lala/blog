@@ -395,7 +395,7 @@
                             </span>
                         </div>
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500">Équivalent USD:</span>
+                            <span class="text-gray-500">USD Equivalent:</span>
                             <span class="font-medium text-gray-900">
                                 ${{ number_format($type->min_amount_usd, 0) }}
                                 @if($type->max_amount_usd)
@@ -433,6 +433,50 @@
                 <p class="mt-6 mb-4 text-white text-sm md:text-base">
                     Short-term contracts are ideal for urgent needs and rapid execution. They offer maximum flexibility and quick delivery, allowing clients to test our services, complete short missions, or react rapidly to business opportunities. This option is perfect for businesses seeking fast results without long commitments.
                 </p>
+            
+
+                <div class="flex justify-center mt-6">
+                    <a href="#short-term-details" class="open-popup inline-block bg-transparent text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:bg-transparent hover:text-white">
+                        More details 
+                        <span class="ml-2 inline-block transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </a>
+                </div>
+            <!-- Popup -->
+                <div id="short-term-details" class="popup mt-20 hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 pointer-events-auto px-4">
+                    <div class="popup-content bg-white rounded-2xl shadow-lg p-6 sm:p-8 md:p-12 lg:p-16 max-w-full sm:max-w-md md:max-w-lg lg:max-w-4xl w-full relative z-50 overflow-y-auto max-h-[90vh]">
+            <!-- Bouton fermeture en X -->
+                        <button class="popup-close absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl sm:text-3xl">&times;</button>
+
+            <!-- Contenu du popup statique -->
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-gray-800">Short-Term</h2>
+
+                        <p class="text-gray-700 mb-4 text-sm sm:text-base md:text-lg">
+                            Park your funds safely and earn quick returns with our ultra-short-term investment. 
+                            Designed for <strong>3 to 7 days</strong>, this option gives you fast access to your money, 
+                            low risk, and modest profits—perfect for managing temporary cash, emergency funds, or short-term financial goals.
+                        </p>
+
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-gray-800">Key Features:</h3>
+                        <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1 text-sm sm:text-base md:text-lg">
+                            <li><strong>Duration:</strong> 3–7 days</li>
+                            <li><strong>Liquidity:</strong> Instant access after maturity</li>
+                            <li><strong>Risk:</strong> Low-risk, capital preservation</li>
+                            <li><strong>Returns:</strong> Modest but reliable</li>
+                            <li><strong>Ideal for:</strong> Individuals or businesses needing quick, safe, and flexible investment options</li>
+                        </ul>
+
+                        <p class="text-gray-700 font-semibold text-sm sm:text-base md:text-lg">
+                            Take control of your short-term funds without locking them away for months—<span class="text-blue-600">invest smart, invest short!</span>
+                        </p>
+
+                        <div class="mt-4 text-right">
+                            <button class="popup-close-bottom bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         <!-- Mean-Term -->
@@ -446,6 +490,47 @@
                 <p class="mt-6 mb-4 text-white text-sm md:text-base">
                     Mean-term contracts provide a balanced solution between stability and speed. They allow for deeper work, better organization, and improved efficiency. This duration is suitable for projects requiring more coordination, follow-up, or continuous support while still remaining relatively flexible.
                 </p>
+                <div class="flex justify-center mt-6">
+                    <a href="#mean-term-details" class="open-popup inline-block bg-transparent text-white font-bold py-3 px-6 rounded-xl shadow-lg">
+                        More details 
+                        <span class="ml-2 inline-block transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </a>
+                </div>
+            <!-- Popup -->
+                <div id="mean-term-details" class="popup mt-20 hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 pointer-events-auto px-4">
+                    <div class="popup-content bg-white rounded-2xl shadow-lg p-6 sm:p-8 md:p-12 lg:p-16 max-w-full sm:max-w-md md:max-w-lg lg:max-w-4xl w-full relative z-50 overflow-y-auto max-h-[90vh]">
+            <!-- Bouton fermeture en X -->
+                        <button class="popup-close absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl sm:text-3xl">&times;</button>
+
+            <!-- Contenu du popup statique -->
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-gray-800">Mean-Term</h2>
+
+                        <p class="text-gray-700 mb-4 text-sm sm:text-base md:text-lg">
+                            Secure your funds while earning reliable returns with our mean-term investment. 
+                            Designed for <strong>7 to 15 days</strong>, this option provides quick access to your money, 
+                            low risk, and moderate profits—perfect for managing temporary cash, emergency funds, or mean-term financial objectives.
+                        </p>
+
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-gray-800">Key Features:</h3>
+                        <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1 text-sm sm:text-base md:text-lg">
+                            <li><strong>Duration:</strong> 7–15 days</li>
+                            <li><strong>Liquidity:</strong> Funds accessible after maturity</li>
+                            <li><strong>Risk:</strong> Low-risk, capital preservation</li>
+                            <li><strong>Returns:</strong> Moderate but consistent</li>
+                            <li><strong>Ideal for:</strong> Individuals or businesses planning for long-term financial objectives</li>
+                        </ul>
+
+                        <p class="text-gray-700 font-semibold text-sm sm:text-base md:text-lg">
+                            Manage your mid-term funds efficiently without long-term commitments—<span class="text-blue-600">invest smart, invest mean!</span>
+                        </p>
+
+                        <div class="mt-4 text-right">
+                            <button class="popup-close-bottom bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         <!-- Long-Term -->
@@ -459,9 +544,49 @@
                 <p class="mt-6 mb-4 text-white text-sm md:text-base">
                     Long-term contracts are designed for clients who want consistent results and long-lasting collaboration. They offer better planning, optimized performance, and stronger integration into your workflow. This is the best option for long projects, ongoing tasks, or when you need a dedicated and reliable team over an extended period.
                 </p>
+                <div class="flex justify-center mt-6">
+                    <a href="#long-term-details" class="open-popup inline-block bg-transparent text-white font-bold py-3 px-6 rounded-xl shadow-lg">
+                        More details 
+                        <span class="ml-2 inline-block transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </a>
+                </div>
             </div>
         </div>
+                    <!-- popup long term -->
+            <div id="long-term-details" class="popup mt-20 hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 pointer-events-auto px-4">
+                <div class="popup-content bg-white rounded-2xl shadow-lg p-6 sm:p-8 md:p-12 lg:p-16 max-w-full sm:max-w-md md:max-w-lg lg:max-w-4xl w-full relative z-50 overflow-y-auto max-h-[90vh]">
+                <!-- Bouton fermeture en X -->
+                    <button class="popup-close absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl sm:text-3xl">&times;</button>
 
+                    <!-- Contenu du popup statique -->
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-gray-800">Long-Term</h2>
+
+                    <p class="text-gray-700 mb-4 text-sm sm:text-base md:text-lg">
+                        Secure your funds for the long haul and earn stable, higher returns with our long-term investment option. 
+                        Designed for <strong>30 days or more</strong>, this option balances growth and stability, allowing you to plan ahead while enjoying reliable profits. 
+                        Perfect for building wealth, planning major expenses, or achieving long-term financial goals.
+                    </p>
+
+                    <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-gray-800">Key Features:</h3>
+                    <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1 text-sm sm:text-base md:text-lg">
+                        <li><strong>Duration:</strong> 1-2 months</li>
+                        <li><strong>Liquidity:</strong> Accessible at maturity</li>
+                        <li><strong>Risk:</strong> Low to moderate, capital growth focus</li>
+                        <li><strong>Returns:</strong> Higher and more reliable than short-term options</li>
+                        <li><strong>Ideal for:</strong> Individuals or businesses needing quick, safe, and flexible investment options</li>
+                    </ul>
+
+                    <p class="text-gray-700 font-semibold text-sm sm:text-base md:text-lg">
+                        Take control of your long-term funds with confidence—<span class="text-blue-600">invest smart, invest long!</span>
+                    </p>
+
+                    <div class="mt-4 text-right">
+                        <button class="popup-close-bottom bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">
+                        Close
+                        </button>
+                    </div>
+                </div>
+            </div>
 
 
         <!-- avis -->
@@ -568,10 +693,39 @@
                 para.classList.toggle('overflow-hidden'); // Active/désactive le masquage
             btn.textContent = para.classList.contains('h-auto') ? 'Read less' : 'Read more';
             });
+            
+
+            // Popup functionality for term of contract section
+            // Sélection des éléments
+            const popup = document.querySelector('.popup');
+            const openLinks = document.querySelectorAll('.open-popup');
+            const closeBtn = popup.querySelector('.popup-close');
+            const closeBottomBtn = popup.querySelector('.popup-close-bottom');
+
+            // Ouvrir le popup
+            openLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    const popupId = link.getAttribute('href'); // get href like "#mean-term-popup"
+                    const popup = document.querySelector(popupId);
+                    if (popup) popup.classList.remove('hidden');
+                });
+        });
 
 
+            // Fermer le popup
+            document.querySelectorAll('.popup').forEach(popup => {
+            // Close buttons (X and bottom)
+                popup.querySelectorAll('.popup-close, .popup-close-bottom').forEach(btn => {
+                    btn.addEventListener('click', () => popup.classList.add('hidden'));
+                });
 
-
+                // Close when clicking on overlay
+                popup.addEventListener('click', e => {
+                    if (e.target === popup) popup.classList.add('hidden');
+                    });
+                });
+        
         </script>
     </body>
 </html>
