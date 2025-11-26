@@ -41,7 +41,13 @@
                                         </div>
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
-                                                <dt class="text-sm font-medium text-gray-500 truncate">Total des investissements</dt>
+                                                <dt class="text-sm font-medium text-gray-500 truncate">
+                                                    @if($user->role === 'administrateur')
+                                                        Total des investissements
+                                                    @else
+                                                        Mes investissements
+                                                    @endif
+                                                </dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $totalInvestments }}</dd>
                                             </dl>
                                         </div>
@@ -91,7 +97,13 @@
                                         </div>
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
-                                                <dt class="text-sm font-medium text-gray-500 truncate">Validés</dt>
+                                                <dt class="text-sm font-medium text-gray-500 truncate">
+                                                    @if($user->role === 'administrateur')
+                                                        Validés
+                                                    @else
+                                                        Mes validés
+                                                    @endif
+                                                </dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $validatedInvestments }}</dd>
                                             </dl>
                                         </div>
@@ -196,23 +208,23 @@
                                         <div class="space-y-4">
                                             <div class="flex items-center justify-between">
                                                 <span class="text-sm text-gray-500">Total clients</span>
-                                                <span class="text-lg font-semibold text-blue-500">{{ $totalClients ?? 0 }}</span>
+                                                <span class="text-sm font-semibold text-blue-500">{{ $totalClients ?? 0 }}</span>
                                             </div>
                                             <div class="flex items-center justify-between">
                                                 <span class="text-sm text-gray-500">Montants validés</span>
-                                                <span class="text-lg font-semibold text-green-500">{{ number_format($totalValidatedAmount ?? 0, 2, ',', ' ') }} Ar</span>
+                                                <span class="text-sm font-semibold text-green-500">{{ number_format($totalValidatedAmount ?? 0, 2, ',', ' ') }} Ar</span>
                                             </div>
                                             <div class="flex items-center justify-between">
                                                 <span class="text-sm text-gray-500">Montants en attente</span>
-                                                <span class="text-lg font-semibold text-yellow-500">{{ number_format($totalPendingAmount ?? 0, 2, ',', ' ') }} Ar</span>
+                                                <span class="text-sm font-semibold text-yellow-500">{{ number_format($totalPendingAmount ?? 0, 2, ',', ' ') }} Ar</span>
                                             </div>
                                             <div class="flex items-center justify-between">
                                                 <span class="text-sm text-gray-500">Montants en cours</span>
-                                                <span class="text-lg font-semibold text-blue-500">{{ number_format($totalProcessingAmount ?? 0, 2, ',', ' ') }} Ar</span>
+                                                <span class="text-sm font-semibold text-blue-500">{{ number_format($totalProcessingAmount ?? 0, 2, ',', ' ') }} Ar</span>
                                             </div>
                                             <div class="flex items-center justify-between">
                                                 <span class="text-sm text-gray-500">Montants rejetés</span>
-                                                <span class="text-lg font-semibold text-red-500">{{ number_format($totalRejectedAmount ?? 0, 2, ',', ' ') }} Ar</span>
+                                                <span class="text-sm font-semibold text-red-500">{{ number_format($totalRejectedAmount ?? 0, 2, ',', ' ') }} Ar</span>
                                             </div>
                                         </div>
                                     </div>
@@ -430,134 +442,143 @@
     let currentView = 'count';
 
     document.addEventListener('DOMContentLoaded', function() {
-        const ctx = document.getElementById('investmentChart').getContext('2d');
+        const ctx = document.getElementById('investmentChart');
+        if (!ctx) {
+            console.error('Canvas element not found!');
+            return;
+        }
 
-        // Données pour le graphique de nombre d'investissements
+        const chartContext = ctx.getContext('2d');
+        if (!chartContext) {
+            console.error('Could not get canvas context!');
+            return;
+        }
+
+        const isAdmin = @json($user->role === 'administrateur');
+
+        // Préparer les données de base pour tous les utilisateurs
+        const baseDatasets = [
+            {
+                label: 'Investissements Validés',
+                data: @json($userValidatedData ?? $validatedData ?? []),
+                backgroundColor: 'rgba(74, 222, 128, 0.2)',
+                borderColor: 'rgba(74, 222, 128, 1)',
+                borderWidth: 2,
+                tension: 0.4
+            },
+            {
+                label: 'Investissements en Attente',
+                data: @json($userPendingData ?? $pendingData ?? []),
+                backgroundColor: 'rgba(250, 204, 21, 0.3)',
+                borderColor: 'rgba(250, 204, 21, 1)',
+                borderWidth: 2,
+                tension: 0.4
+            }
+        ];
+
+        // Ajouter les datasets supplémentaires uniquement pour l'admin
+        let datasets = [...baseDatasets];
+        if (isAdmin) {
+            datasets.push({
+                label: 'Investissements en Cours',
+                data: @json($processingData ?? []),
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 2,
+                tension: 0.4
+            });
+
+            datasets.push({
+                label: 'Investissements Rejetés',
+                data: @json($rejectedData ?? []),
+                backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                borderColor: 'rgba(239, 68, 68, 1)',
+                borderWidth: 2,
+                tension: 0.4
+            });
+        }
+
         const countData = {
             labels: @json($chartLabels ?? []),
-            datasets: [
-                {
-                    label: 'Investissements Validés',
-                    data: @json($userValidatedData ?? $validatedData ?? []),
-                    backgroundColor: 'rgba(74, 222, 128, 0.2)',
-                    borderColor: 'rgba(74, 222, 128, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
-                },
-                {
-                    label: 'Investissements en Attente',
-                    data: @json($userPendingData ?? $pendingData ?? []),
-                    backgroundColor: 'rgba(250, 204, 21, 0.3)',
-                    borderColor: 'rgba(250, 204, 21, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
-                }
-            ]
+            datasets: datasets
         };
 
-        // Données pour le graphique de montants d'investissements (uniquement pour les admins)
-        const amountData = {
-            labels: @json($chartLabels ?? []),
-            datasets: [
-                {
-                    label: 'Montants Validés',
-                    data: @json($validatedAmountData ?? []),
-                    backgroundColor: 'rgba(74, 222, 128, 0.2)',
-                    borderColor: 'rgba(74, 222, 128, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
-                },
-                {
-                    label: 'Montants en Attente',
-                    data: @json($pendingAmountData ?? []),
-                    backgroundColor: 'rgba(250, 204, 21, 0.3)',
-                    borderColor: 'rgba(250, 204, 21, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
-                }
-            ]
-        };
-
-        // Configuration du graphique
-        function createChart(data, isAmount = false) {
-            return {
-                type: 'line',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                color: '#475569',
-                                font: {
-                                    size: 12
-                                }
-                            }
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        if (isAmount) {
-                                            label += new Intl.NumberFormat('fr-FR').format(context.parsed.y) + ' Ar';
-                                        } else {
-                                            label += context.parsed.y + ' investissements';
-                                        }
-                                    }
-                                    return label;
-                                }
-                            }
+        // Configuration simplifiée du graphique
+        const chartConfig = {
+            type: 'line',
+            data: countData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#475569',
+                            font: { size: 12 }
                         }
                     },
-                    scales: {
-                        x: {
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            ticks: {
-                                color: '#64748b'
-                            }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            ticks: {
-                                color: '#64748b',
-                                callback: function(value) {
-                                    if (isAmount) {
-                                        return new Intl.NumberFormat('fr-FR', { notation: 'compact', compactDisplay: 'short' }).format(value) + ' Ar';
-                                    }
-                                    return value;
-                                }
-                            }
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        ticks: { color: '#64748b' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        ticks: {
+                            color: '#64748b',
+                            precision: 0
                         }
                     }
                 }
-            };
+            }
+        };
+
+        // Vérifier que Chart.js est disponible
+        if (typeof Chart === 'undefined') {
+            console.error('Chart.js is not loaded!');
+            return;
         }
 
-        // Créer le graphique initial
-        const isAdmin = @json($user->role === 'administrateur');
-        const initialData = isAdmin ? countData : countData;
-        investmentChart = new Chart(ctx, createChart(initialData, false));
+        try {
+            investmentChart = new Chart(chartContext, chartConfig);
+            console.log('Chart created successfully for', isAdmin ? 'admin' : 'client');
+        } catch (error) {
+            console.error('Error creating chart:', error);
+        }
 
         // Fonction pour basculer entre les vues (uniquement pour les admins)
         window.switchChart = function(view) {
             if (!isAdmin) return;
 
-            currentView = view;
+            const amountData = {
+                labels: @json($chartLabels ?? []),
+                datasets: [
+                    {
+                        label: 'Montants Validés',
+                        data: @json($validatedAmountData ?? []),
+                        backgroundColor: 'rgba(74, 222, 128, 0.2)',
+                        borderColor: 'rgba(74, 222, 128, 1)',
+                        borderWidth: 2,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Montants en Attente',
+                        data: @json($pendingAmountData ?? []),
+                        backgroundColor: 'rgba(250, 204, 21, 0.3)',
+                        borderColor: 'rgba(250, 204, 21, 1)',
+                        borderWidth: 2,
+                        tension: 0.4
+                    }
+                ]
+            };
 
-            // Mettre à jour les styles des onglets
             const countTab = document.getElementById('countTab');
             const amountTab = document.getElementById('amountTab');
 
@@ -565,12 +586,10 @@
                 countTab.className = 'py-2 px-1 border-b-2 border-blue-400 font-medium text-sm text-blue-500';
                 amountTab.className = 'py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-400 hover:text-gray-600 hover:border-gray-200';
                 investmentChart.data = countData;
-                investmentChart.options = createChart(countData, false).options;
             } else {
                 amountTab.className = 'py-2 px-1 border-b-2 border-blue-400 font-medium text-sm text-blue-500';
                 countTab.className = 'py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-400 hover:text-gray-600 hover:border-gray-200';
                 investmentChart.data = amountData;
-                investmentChart.options = createChart(amountData, true).options;
             }
 
             investmentChart.update();

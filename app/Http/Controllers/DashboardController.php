@@ -7,6 +7,7 @@ use App\Models\InvestmentType;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
@@ -14,13 +15,22 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Statistiques pour le tableau de bord
-        $totalInvestments = Investment::count();
-        $totalAmount = Investment::sum('amount');
-        $pendingInvestments = Investment::where('status', 'Envoyé')->count();
-        $validatedInvestments = Investment::where('status', 'Validé')->count();
+        // Statistiques pour le tableau de bord - différentes selon le rôle
+        if ($user->role === 'administrateur') {
+            // Pour l'administrateur : statistiques globales
+            $totalInvestments = Investment::count();
+            $totalAmount = Investment::sum('amount');
+            $pendingInvestments = Investment::where('status', 'Envoyé')->count();
+            $validatedInvestments = Investment::where('status', 'Validé')->count();
+        } else {
+            // Pour les clients : statistiques de l'utilisateur connecté uniquement
+            $totalInvestments = Investment::where('user_id', $user->id)->count();
+            $totalAmount = Investment::where('user_id', $user->id)->sum('amount');
+            $pendingInvestments = Investment::where('user_id', $user->id)->where('status', 'Envoyé')->count();
+            $validatedInvestments = Investment::where('user_id', $user->id)->where('status', 'Validé')->count();
+        }
 
-        // Statistiques pour l'utilisateur connecté
+        // Statistiques pour l'utilisateur connecté (utilisées pour la carte "Mes investissements")
         $userInvestments = Investment::where('user_id', $user->id)->count();
         $userTotalAmount = Investment::where('user_id', $user->id)->sum('amount');
 
@@ -69,10 +79,9 @@ class DashboardController extends Controller
         $userValidatedCount = Investment::where('user_id', $user->id)->where('status', 'Validé')->count();
         $userRejectedCount = Investment::where('user_id', $user->id)->where('status', 'Rejeté')->count();
 
-        // Pour les administrateurs, garder les données globales
+        // Pour les administrateurs, initialiser les données globales
         $recentInvestments = null;
         $recentClients = null;
-        $chartLabels = null;
         $validatedData = null;
         $pendingData = null;
         $validatedAmountData = null;
@@ -128,6 +137,8 @@ class DashboardController extends Controller
             $chartLabels = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
             $validatedData = array_fill(0, 12, 0);
             $pendingData = array_fill(0, 12, 0);
+            $processingData = array_fill(0, 12, 0); // Initialiser ici pour garantir l'existence
+            $rejectedData = array_fill(0, 12, 0); // Initialiser ici pour garantir l'existence
             $validatedAmountData = array_fill(0, 12, 0);
             $pendingAmountData = array_fill(0, 12, 0);
 
@@ -137,8 +148,21 @@ class DashboardController extends Controller
                     $validatedData[$monthIndex] = $investment->count;
                 } elseif ($investment->status === 'Envoyé') {
                     $pendingData[$monthIndex] = $investment->count;
+                } elseif ($investment->status === 'En cours de traitement') {
+                    $processingData[$monthIndex] = $investment->count;
+                } elseif ($investment->status === 'Rejeté') {
+                    $rejectedData[$monthIndex] = $investment->count;
                 }
             }
+
+            // Debug : Afficher les données pour vérification
+            Log::info('Monthly investments data for admin:', [
+                'validated' => $validatedData,
+                'pending' => $pendingData,
+                'processing' => $processingData,
+                'rejected' => $rejectedData,
+                'raw_data' => $monthlyInvestments->toArray()
+            ]);
 
             foreach ($monthlyAmounts as $amount) {
                 $monthIndex = $amount->month - 1;
@@ -170,7 +194,8 @@ class DashboardController extends Controller
             );
         }
 
-        return view('dashboard.index', compact(
+        // Préparer les variables à passer à la vue
+        $viewData = compact(
             'user',
             'totalInvestments',
             'totalAmount',
@@ -198,6 +223,17 @@ class DashboardController extends Controller
             'totalProcessingAmount',
             'totalRejectedAmount',
             'investmentTypes'
-        ));
+        );
+
+        // Ajouter les variables de traitement et rejeté uniquement pour l'admin
+        if ($user->role === 'administrateur') {
+            $viewData['processingData'] = $processingData ?? [];
+            $viewData['rejectedData'] = $rejectedData ?? [];
+        } else {
+            $viewData['processingData'] = [];
+            $viewData['rejectedData'] = [];
+        }
+
+        return view('dashboard.index', $viewData);
     }
 }
