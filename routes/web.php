@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AvisController;
+use App\Http\Controllers\LanguageController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -26,6 +27,8 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Language switching routes
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
 // API route for authentication check
 Route::get('/api/auth-check', function () {
@@ -113,6 +116,7 @@ Route::middleware(['auth', 'force.auth'])->group(function () {
     Route::get('/investments/history', [InvestmentController::class, 'history'])->name('investments.history');
     Route::get('/admin/investments/summary', [InvestmentController::class, 'summary'])->name('investments.summary')->middleware('admin');
     Route::get('/admin/investments/user/{user}', [InvestmentController::class, 'userInvestments'])->name('investments.user')->middleware('admin');
+    Route::get('/admin/investments/pending', [InvestmentController::class, 'pendingInvestments'])->name('investments.pending')->middleware('admin');
 
     // Investment image routes
     Route::get('/investments/{investment}/id-photo', [InvestmentImageController::class, 'showIdPhoto'])->name('investments.id_photo');

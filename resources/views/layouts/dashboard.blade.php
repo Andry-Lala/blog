@@ -61,6 +61,14 @@
                             Investissements
                         </a>
                         @if(Auth::user()->role === 'administrateur')
+                            <a href="{{ route('investments.pending') }}" class="{{ request()->routeIs('investments.pending') ? 'bg-blue-100 text-blue-900' : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                                <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Investissements en attente
+                            </a>
+                        @endif
+                        @if(Auth::user()->role === 'administrateur')
                             <a href="{{ route('clients.index') }}" class="{{ request()->routeIs('clients.*') ? 'bg-blue-100 text-blue-900' : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                                 <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -110,6 +118,9 @@
                             @yield('header')
                         </div>
                         <div class="flex items-center space-x-4">
+                            <!-- Language switcher -->
+                            <x-language-switcher />
+
                             <!-- Notifications dropdown -->
                             <div class="relative" x-data="{ open: false }">
                                 <button @click="open = !open" class="p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 relative" aria-label="Notifications">

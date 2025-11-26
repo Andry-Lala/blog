@@ -162,6 +162,34 @@ class InvestmentController extends Controller
     }
 
     /**
+     * Display all pending investments for administrators.
+     */
+    public function pendingInvestments()
+    {
+        // Vérifier que l'utilisateur est un administrateur
+        if (!Auth::user()->isAdmin) {
+            abort(403, 'Accès non autorisé.');
+        }
+
+        // Récupérer tous les investissements en attente avec pagination
+        $pendingInvestments = Investment::where('status', 'Envoyé')
+            ->with('user:id,nom,prenom,email')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+
+        // Calculer les statistiques globales pour les investissements en attente
+        $totalPendingAmount = Investment::where('status', 'Envoyé')->sum('amount');
+        $totalPendingCount = Investment::where('status', 'Envoyé')->count();
+
+        $statistics = [
+            'total_pending_amount' => $totalPendingAmount,
+            'total_pending_count' => $totalPendingCount,
+        ];
+
+        return view('investments.admin.pending', compact('pendingInvestments', 'statistics'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
