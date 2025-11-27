@@ -79,11 +79,7 @@
                     </div>
                 @endif
             </div>
-            @if($notifications->hasPages())
-                <div class="px-6 py-4 border-t border-gray-200">
-                    {{ $notifications->links() }}
-                </div>
-            @endif
+            {{-- La pagination n'est pas nécessaire pour les collections simples --}}
         </div>
     </div>
 </div>

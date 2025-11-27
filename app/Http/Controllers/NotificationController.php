@@ -65,7 +65,7 @@ class NotificationController extends Controller
         }
 
         return view('notifications.index', [
-            'notifications' => $unreadNotifications->paginate(10)
+            'notifications' => $unreadNotifications
         ]);
     }
 

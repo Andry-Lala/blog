@@ -19,12 +19,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'strict.auth' => \App\Http\Middleware\StrictAuthMiddleware::class,
             'force.auth' => \App\Http\Middleware\ForceAuthMiddleware::class,
             'cleanup.sessions' => \App\Http\Middleware\CleanupSessionsMiddleware::class,
+            'locale' => \App\Http\Middleware\SetLocale::class,
         ]);
 
         // Appliquer le middleware no-cache à toutes les routes web
         $middleware->web(append: [
             \App\Http\Middleware\NoCacheMiddleware::class,
             \App\Http\Middleware\CleanupSessionsMiddleware::class,
+            \App\Http\Middleware\SetLocale::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

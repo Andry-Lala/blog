@@ -86,6 +86,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Supported Locales
+    |--------------------------------------------------------------------------
+    |
+    | These are the locales that are supported by the application.
+    | This is used to validate the locale parameter and to show
+    | the language switcher.
+    |
+    */
+
+    'supported_locales' => [
+        'en' => 'English',
+        'fr' => 'Français',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |
