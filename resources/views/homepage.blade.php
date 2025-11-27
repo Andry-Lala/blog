@@ -39,7 +39,7 @@
         <!-- Navigation -->
         <nav class="navbar fixed-top">
             <div class="container sm:px-4 lg:px-8 flex flex-wrap items-center justify-between lg:flex-nowrap">
-                
+
                 <!-- Text Logo - Use this if you don't have a graphic logo -->
                 <!-- <a class="text-gray-800 font-semibold text-3xl leading-4 no-underline page-scroll" href="index.html">Pavo</a> -->
 
@@ -79,7 +79,11 @@
                             </div>
                         </li>
                         <li>
-                            <div class="flex space-x-4">
+                            <div class="flex space-x-4 items-center">
+                                <!-- Language switcher -->
+                                <div class="language-switcher-container">
+                                    <x-language-switcher />
+                                </div>
                                 <!-- Bouton Login -->
                                 <a href="/login" class="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition font-medium">Log In</a>
                             </div>
@@ -160,7 +164,7 @@
 
         <!-- Details About us -->
         <!-- box-dialog -->
-        
+
         <div id="details-about-us" class="lightbox-basic zoom-anim-dialog mfp-hide">
             <div class="flex items-center justify-center">
                 <img src="assets/images/logounicorn.png" alt="alternative" class="h-14 w-14" />
@@ -188,7 +192,7 @@
 
         <!-- Details terms of use -->
         <!-- box-dialog -->
-        
+
         <div id="details-term-of-use" class="lightbox-basic zoom-anim-dialog mfp-hide">
             <div class="lg:grid lg:grid-cols-12 lg:gap-x-8">
                 <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
@@ -317,14 +321,14 @@
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
         </div><!-- end of cookies policy pop up  -->
-        
+
         <!-- investment plan -->
         <div id="plan" class="cards-1 px-4 md:px-8 lg:px-16 my-20">
             <h1 class="text-5xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-pink-500 to-pink-400">
                 Investment Plan
             </h1>
 
-            
+
 
         <div class="p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -409,12 +413,12 @@
                 @endforeach
             </div>
         </div>
-        </div>   
+        </div>
         <!-- Contrat terms -->
         <div class="pt-4 pb-6 text-center">
             <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-pink-500 to-pink-400">
                 Terms of Contract
-            </h1> 
+            </h1>
         </div>
 
         <div class="flex flex-col md:flex-row gap-6 justify-center mx-4 md:mx-8 my-20">
@@ -470,12 +474,12 @@
         <!-- Email -->
         <div>
             <label for="email" class="block text-gray-700 font-medium mb-1">Your e-mail *</label>
-            <input 
-                type="email" 
-                id="email" 
+            <input
+                type="email"
+                id="email"
                 name="email"
-                placeholder="your@email.com" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none 
+                placeholder="your@email.com"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none
                        focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required>
         </div>
@@ -501,7 +505,7 @@
 </div>
 
 
-                
+
 
         <!-- Footer -->
         <div class="footer">
@@ -542,7 +546,7 @@
                     <li class="mb-2"><a class="popup-with-move-anim" href="#details-cookies">Cookies Policy</a></li>
                 </ul>
                 <p class="pb-2 p-small statement">Copyright © <a href="" class="no-underline">Unicorn Madagascar</a></p>
-            </div> 
+            </div>
 
         <!-- end of container -->
         </div> <!-- end of copyright -->

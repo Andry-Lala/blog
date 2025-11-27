@@ -92,6 +92,9 @@
                             @yield('header')
                         </div>
                         <div class="flex items-center space-x-4">
+                            <!-- Language switcher -->
+                            <x-language-switcher />
+
                             <!-- Notifications dropdown -->
                             <div class="relative" x-data="{ open: false }">
                                 <button @click="open = !open" class="p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 relative" aria-label="Notifications">

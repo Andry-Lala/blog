@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,12 @@
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .language-switcher-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
         .invoice-header {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
@@ -116,7 +122,13 @@
 <body>
     <div class="invoice-container">
         <div class="invoice-header">
-            <h1>UNICORN MADAGASCAR - FACTURE</h1>
+            <div class="flex justify-between items-center">
+                <h1>UNICORN MADAGASCAR - FACTURE</h1>
+                <!-- Language switcher -->
+                <div class="language-switcher-container">
+                    <x-language-switcher />
+                </div>
+            </div>
             <div class="invoice-info">
                 <div><strong>Numéro de facture:</strong> FAC-UM-{{ sprintf('%03d', $investment->id) }}</div>
                 <div><strong>Date:</strong> {{ $investment->created_at->format('d/m/Y') }}</div>

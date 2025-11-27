@@ -46,8 +46,11 @@
 <body class="bg-gray-50 text-gray-900">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full space-y-8">
-            <!-- Header -->
-            <div class="text-center">
+            <!-- Header with language switcher -->
+            <div class="text-center relative">
+                <div class="absolute top-0 right-0">
+                    <x-language-switcher />
+                </div>
                 <div class="flex items-center justify-center mb-4">
                     <img src="{{ asset('images/blog-logo.jpeg') }}" alt="Unicorn Madagascar" class="h-12 w-auto rounded mr-2">
                     <span class="text-xl font-semibold text-gray-800">Unicorn Madagascar</span>
