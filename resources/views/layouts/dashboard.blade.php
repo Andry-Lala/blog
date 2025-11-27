@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Tableau de bord') - Unicorn Madagascar</title>
+    <title>@yield('title', __('messages.dashboard')) - Unicorn Madagascar</title>
     <link rel="icon" type="image/jpeg" href="{{ asset('images/blog-logo.jpeg') }}">
 
     <!-- Prévenir la mise en cache -->
@@ -79,13 +79,13 @@
                                 <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                Gérer les Taux
+                                {{ __('messages.manage_rates') }}
                             </a>
                             <a href="{{ route('admin.avis.index') }}" class="{{ request()->routeIs('admin.avis.*') ? 'bg-blue-100 text-blue-900' : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                                 <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h8m-8 4h6m2-8v10a2 2 0 01-2 2H7l-4 4V6a2 2 0 012-2h10a2 2 0 012 2z" />
                                 </svg>
-                                Voir les Avis
+                                {{ __('messages.view_reviews') }}
                             </a>
                         @endif
                         <!-- Logout button -->
@@ -95,7 +95,7 @@
                                 <svg class="text-gray-400 group-hover:text-red-500 mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                                 </svg>
-                                Déconnexion
+                                {{ __('messages.logout') }}
                             </button>
                         </form>
                     </nav>
@@ -110,7 +110,7 @@
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between h-16">
                         <div class="flex items-center space-x-4">
-                            <button class="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="Ouvrir le menu" aria-expanded="false">
+                            <button class="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="{{ __('messages.open_menu') }}" aria-expanded="false">
                                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                                 </svg>
@@ -123,7 +123,7 @@
 
                             <!-- Notifications dropdown -->
                             <div class="relative" x-data="{ open: false }">
-                                <button @click="open = !open" class="p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 relative" aria-label="Notifications">
+                                <button @click="open = !open" class="p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 relative" aria-label="{{ __('messages.notifications') }}">
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                                     </svg>
@@ -152,7 +152,7 @@
                                         <div class="max-h-96 overflow-y-auto" id="notificationsList">
                                             <!-- Notifications will be loaded here -->
                                             <div class="px-4 py-8 text-center text-sm text-gray-500">
-                                                Chargement...
+                                                {{ __('messages.loading') }}
                                             </div>
                                         </div>
                                         <div class="px-4 py-2 border-t border-gray-200">
@@ -165,7 +165,7 @@
                             </div>
                             <div class="relative">
                                 <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-label="Menu utilisateur" aria-expanded="false">
-                                    <span class="sr-only">User menu</span>
+                                    <span class="sr-only">{{ __('messages.user_menu') }}</span>
                                     <div class="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center">
                                         <span class="text-white font-medium">{{ strtoupper(substr(auth()->user()->prenom ?? auth()->user()->username ?? 'U', 0, 1)) }}</span>
                                     </div>
@@ -211,7 +211,7 @@
                     updateNotificationsList(data.notifications);
                 })
                 .catch(error => {
-                    console.error('Erreur lors du chargement des notifications:', error);
+                    console.error('{{ __('messages.error_loading_notifications') }}:', error);
                 });
         }
 
@@ -273,10 +273,10 @@
             const now = new Date();
             const diff = Math.floor((now - date) / 1000); // diff in seconds
 
-            if (diff < 60) return 'à l\'instant';
-            if (diff < 3600) return `il y a ${Math.floor(diff / 60)} min`;
-            if (diff < 86400) return `il y a ${Math.floor(diff / 3600)} h`;
-            return `il y a ${Math.floor(diff / 86400)} j`;
+            if (diff < 60) return '{{ __('messages.just_now') }}';
+            if (diff < 3600) return `{{ __('messages.minutes_ago') }} ${Math.floor(diff / 60)}`;
+            if (diff < 86400) return `{{ __('messages.hours_ago') }} ${Math.floor(diff / 3600)}`;
+            return `{{ __('messages.days_ago') }} ${Math.floor(diff / 86400)}`;
         }
 
         function viewNotification(id) {
@@ -318,7 +318,7 @@
                 }
             })
             .catch(error => {
-                console.error('Erreur de vérification d\'authentification:', error);
+                console.error('{{ __('messages.auth_check_error') }}:', error);
                 // En cas d'erreur, rediriger vers login par sécurité
                 window.location.href = '/login';
             });
@@ -349,7 +349,7 @@
                 }
             })
             .catch(error => {
-                console.error('Erreur de vérification d\'authentification:', error);
+                console.error('{{ __('messages.auth_check_error') }}:', error);
                 // En cas d'erreur, rediriger vers login par sécurité
                 window.location.href = '/login';
             });

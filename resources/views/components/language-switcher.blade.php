@@ -141,7 +141,7 @@ function fastChangeLanguage(locale) {
         isProcessing = false;
 
         // Message de confirmation rapide
-        showFastToast(locale === 'fr' ? 'Langue changée en français' : 'Language changed to English');
+        showFastToast(locale === 'fr' ? __('messages.language_changed_to_french') : __('messages.language_changed_to_english'));
     });
 }
 

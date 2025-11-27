@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Tableau de bord')
+@section('title', __('messages.dashboard'))
 
 @section('header')
-    <h1 class="ml-4 text-2xl font-semibold text-gray-900">Tableau de bord</h1>
+    <h1 class="ml-4 text-2xl font-semibold text-gray-900">{{ __('messages.dashboard') }}</h1>
 @endsection
 
 @section('content')
@@ -12,17 +12,17 @@
                         <!-- Welcome section -->
                         <div class="mb-8">
                             <h2 class="text-2xl font-bold text-gray-900">
-                                Bon retour, {{ $user->prenom }} {{ $user->nom }}!
+                                {{ __('messages.welcome') }}, {{ $user->prenom }} {{ $user->nom }}!
                             </h2>
                             <p class="mt-1 text-sm text-gray-600">
-                                Vue d'ensemble de votre plateforme d'investissement.
+                                {{ __('messages.overview') }} {{ __('messages.of_your_investment_platform') }}.
                             </p>
                             <div class="mt-4">
                                 <a href="{{ route('informations.index') }}" class="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md transition-colors">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
-                                    Voir mes informations personnelles
+                                    {{ __('messages.personal_info') }}
                                 </a>
                             </div>
                         </div>
@@ -43,9 +43,9 @@
                                             <dl>
                                                 <dt class="text-sm font-medium text-gray-500 truncate">
                                                     @if($user->role === 'administrateur')
-                                                        Total des investissements
+                                                        {{ __('messages.total_investments') }}
                                                     @else
-                                                        Mes investissements
+                                                        {{ __('messages.my_investments') }}
                                                     @endif
                                                 </dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $totalInvestments }}</dd>
@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
-                                                <dt class="text-sm font-medium text-gray-500 truncate">En attente</dt>
+                                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('messages.pending') }}</dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $pendingInvestments }}</dd>
                                             </dl>
                                         </div>
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="bg-gray-50 px-5 py-3">
                                     <div class="text-sm">
-                                        <span class="text-yellow-600 font-medium">En cours de validation</span>
+                                        <span class="text-yellow-600 font-medium">{{ __('messages.in_validation') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -99,9 +99,9 @@
                                             <dl>
                                                 <dt class="text-sm font-medium text-gray-500 truncate">
                                                     @if($user->role === 'administrateur')
-                                                        Validés
+                                                        {{ __('messages.validated') }}
                                                     @else
-                                                        Mes validés
+                                                        {{ __('messages.my_validated') }}
                                                     @endif
                                                 </dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $validatedInvestments }}</dd>
@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="bg-gray-50 px-5 py-3">
                                     <div class="text-sm">
-                                        <span class="text-green-600 font-medium">Approuvés</span>
+                                        <span class="text-green-600 font-medium">{{ __('messages.approved') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                                         </div>
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
-                                                <dt class="text-sm font-medium text-gray-500 truncate">Mes investissements</dt>
+                                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('messages.my_investments') }}</dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $userInvestments }}</dd>
                                             </dl>
                                         </div>
@@ -149,9 +149,9 @@
                                 <div class="p-6">
                                     <h3 class="text-lg font-medium text-gray-900 mb-4">
                                         @if($user->role === 'administrateur')
-                                            Aperçu global des investissements
+                                            {{ __('messages.global_investment_overview') }}
                                         @else
-                                            Vos investissements cette année
+                                            {{ __('messages.your_investments_this_year') }}
                                         @endif
                                     </h3>
                                     @if($user->role === 'administrateur')
@@ -159,10 +159,10 @@
                                         <div class="mb-4 border-b border-gray-200">
                                             <nav class="-mb-px flex space-x-8">
                                                 <button class="py-2 px-1 border-b-2 border-blue-400 font-medium text-sm text-blue-500" id="countTab" onclick="switchChart('count')">
-                                                    Nombre d'investissements
+                                                    {{ __('messages.investment_count') }}
                                                 </button>
                                                 <button class="py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-400 hover:text-gray-600 hover:border-gray-200" id="amountTab" onclick="switchChart('amount')">
-                                                    Montants des investissements
+                                                    {{ __('messages.investment_amounts') }}
                                                 </button>
                                             </nav>
                                         </div>
@@ -177,22 +177,22 @@
                             @if($user->role !== 'administrateur')
                                 <div class="bg-white shadow rounded-lg">
                                     <div class="p-6">
-                                        <h3 class="text-lg font-medium text-gray-900 mb-4">Vos statistiques</h3>
+                                        <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('messages.your_statistics') }}</h3>
                                         <div class="space-y-4">
                                             <div class="flex items-center justify-between">
-                                                <span class="text-sm text-gray-500">En attente</span>
+                                                <span class="text-sm text-gray-500">{{ __('messages.pending') }}</span>
                                                 <span class="text-lg font-semibold text-yellow-500">{{ $userPendingCount }}</span>
                                             </div>
                                             <div class="flex items-center justify-between">
-                                                <span class="text-sm text-gray-500">En cours</span>
+                                                <span class="text-sm text-gray-500">{{ __('messages.processing') }}</span>
                                                 <span class="text-lg font-semibold text-blue-500">{{ $userProcessingCount }}</span>
                                             </div>
                                             <div class="flex items-center justify-between">
-                                                <span class="text-sm text-gray-500">Validés</span>
+                                                <span class="text-sm text-gray-500">{{ __('messages.validated') }}</span>
                                                 <span class="text-lg font-semibold text-green-500">{{ $userValidatedCount }}</span>
                                             </div>
                                             <div class="flex items-center justify-between">
-                                                <span class="text-sm text-gray-500">Rejetés</span>
+                                                <span class="text-sm text-gray-500">{{ __('messages.rejected') }}</span>
                                                 <span class="text-lg font-semibold text-red-500">{{ $userRejectedCount }}</span>
                                             </div>
                                         </div>
@@ -204,10 +204,10 @@
                             @if($user->role === 'administrateur')
                                 <div class="bg-white shadow rounded-lg">
                                     <div class="p-6">
-                                        <h3 class="text-lg font-medium text-gray-900 mb-4">Statistiques globales</h3>
+                                        <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('messages.global_statistics') }}</h3>
                                         <div class="space-y-4">
                                             <div class="flex items-center justify-between">
-                                                <span class="text-sm text-gray-500">Total clients</span>
+                                                <span class="text-sm text-gray-500">{{ __('messages.total_clients') }}</span>
                                                 <span class="text-sm font-semibold text-blue-500">{{ $totalClients ?? 0 }}</span>
                                             </div>
                                             <div class="flex items-center justify-between">
@@ -236,9 +236,9 @@
                                 <div class="p-6">
                                     <h3 class="text-lg font-medium text-gray-900 mb-4">
                                         @if($user->role === 'administrateur')
-                                            Activité récente globale
+                                            {{ __('messages.recent_global_activity') }}
                                         @else
-                                            Votre activité récente
+                                            {{ __('messages.your_recent_activity') }}
                                         @endif
                                     </h3>
                                     <div class="space-y-4">
@@ -256,9 +256,9 @@
                                                     <div class="ml-3">
                                                         <p class="text-sm text-gray-900">
                                                             @if($user->role === 'administrateur')
-                                                                Investissement de {{ $investment->user->prenom ?? '' }} {{ $investment->user->nom ?? '' }}
+                                                                {{ __('messages.investment_of') }} {{ $investment->user->prenom ?? '' }} {{ $investment->user->nom ?? '' }}
                                                             @else
-                                                                Votre investissement
+                                                                {{ __('messages.your_investment') }}
                                                             @endif
                                                             de {{ number_format($investment->amount, 2, ',', ' ') }} Ar
                                                             <span class="text-xs text-gray-500">({{ $investment->investment_type }})</span>
@@ -272,9 +272,9 @@
                                         @else
                                             <div class="text-center text-sm text-gray-500">
                                                 @if($user->role === 'administrateur')
-                                                    Aucune activité récente globale
+                                                    {{ __('messages.no_recent_global_activity') }}
                                                 @else
-                                                    Vous n'avez aucune activité récente
+                                                    {{ __('messages.no_recent_activity') }}
                                                 @endif
                                             </div>
                                         @endif
@@ -289,8 +289,8 @@
                                 <div class="px-4 sm:px-6 lg:px-8">
                                     <div class="bg-white shadow rounded-lg">
                                         <div class="px-6 py-4 border-b border-gray-200">
-                                            <h3 class="text-lg font-medium text-gray-900">Suggestions d'investissement</h3>
-                                            <p class="mt-1 text-sm text-gray-600">Choisissez le type d'investissement qui vous correspond</p>
+                                            <h3 class="text-lg font-medium text-gray-900">{{ __('messages.investment_suggestions') }}</h3>
+                                            <p class="mt-1 text-sm text-gray-600">{{ __('messages.choose_investment_type') }}</p>
                                         </div>
                                         <div class="p-6">
                                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -328,7 +328,7 @@
                                                     <div class="bg-gradient-to-br {{ $colorScheme['gradient'] }} rounded-lg p-6 border {{ $colorScheme['border'] }} hover:shadow-lg transition-all duration-300 {{ $index === 3 ? 'relative' : '' }}">
                                                         @if($index === 3)
                                                             <div class="absolute top-2 right-2">
-                                                                <span class="bg-red-400 text-white text-xs px-2 py-1 rounded-full font-semibold">Premium</span>
+                                                                <span class="bg-red-400 text-white text-xs px-2 py-1 rounded-full font-semibold">{{ __('messages.premium') }}</span>
                                                             </div>
                                                         @endif
                                                         <div class="flex items-center justify-center w-12 h-12 {{ $colorScheme['icon'] }} rounded-full mb-4">
@@ -340,33 +340,33 @@
                                                         <p class="text-sm text-gray-600 mb-4">{{ $type->description }}</p>
                                                         <div class="space-y-2 mb-4">
                                                             <div class="flex justify-between text-sm">
-                                                                <span class="text-gray-500">Montant minimum:</span>
+                                                                <span class="text-gray-500">{{ __('messages.minimum_amount') }}</span>
                                                                 <span class="font-medium text-gray-900">{{ number_format($amountsInAriary['min_ariary'], 0, ',', ' ') }} Ar</span>
                                                             </div>
                                                             <div class="flex justify-between text-sm">
-                                                                <span class="text-gray-500">Montant maximum:</span>
+                                                                <span class="text-gray-500">{{ __('messages.maximum_amount') }}</span>
                                                                 <span class="font-medium text-gray-900">
                                                                     @if($amountsInAriary['max_ariary'])
                                                                         {{ number_format($amountsInAriary['max_ariary'], 0, ',', ' ') }} Ar
                                                                     @else
-                                                                        Illimité
+                                                                        {{ __('messages.unlimited') }}
                                                                     @endif
                                                                 </span>
                                                             </div>
                                                             <div class="flex justify-between text-sm">
-                                                                <span class="text-gray-500">Équivalent USD:</span>
+                                                                <span class="text-gray-500">{{ __('messages.usd_equivalent') }}</span>
                                                                 <span class="font-medium text-gray-900">
                                                                     ${{ number_format($type->min_amount_usd, 0) }}
                                                                     @if($type->max_amount_usd)
                                                                         - ${{ number_format($type->max_amount_usd, 0) }}
                                                                     @else
-                                                                        et plus
+                                                                        {{ __('messages.and_more') }}
                                                                     @endif
                                                                 </span>
                                                             </div>
                                                         </div>
                                                         <a href="{{ route('investments.create') }}?type={{ $type->slug }}" class="w-full {{ $colorScheme['button'] }} text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center block">
-                                                            Investir
+                                                            {{ __('messages.invest') }}
                                                         </a>
                                                     </div>
                                                 @endforeach
@@ -382,9 +382,9 @@
                             <div class="px-6 py-4 border-b border-gray-200">
                                 <h3 class="text-lg font-medium text-gray-900">
                                     @if($user->role === 'administrateur')
-                                        Investissements récents globaux
+                                        {{ __('messages.recent_global_investments') }}
                                     @else
-                                        Vos investissements récents
+                                        {{ __('messages.your_recent_investments') }}
                                     @endif
                                 </h3>
                             </div>
@@ -424,9 +424,9 @@
                                 @else
                                     <div class="px-6 py-4 text-center text-sm text-gray-500">
                                         @if($user->role === 'administrateur')
-                                            Aucun investissement récent global
+                                            {{ __('messages.no_recent_global_investments') }}
                                         @else
-                                            Vous n'avez aucun investissement récent
+                                            {{ __('messages.no_recent_investments') }}
                                         @endif
                                     </div>
                                 @endif

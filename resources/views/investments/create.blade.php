@@ -1,10 +1,10 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Nouvel Investissement')
+@section('title', __('messages.new_investment'))
 
 @section('header')
     <div class="ml-4 flex items-center justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">Nouvel Investissement</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">{{ __('messages.new_investment') }}</h1>
         {{-- <a href="{{ route('investments.index') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
             {{-- <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -25,10 +25,10 @@
                     <!-- Colonne de gauche -->
                     <div class="space-y-6">
                         <div>
-                            <label for="operator" class="block text-sm font-medium text-gray-700">Opérateur *</label>
+                            <label for="operator" class="block text-sm font-medium text-gray-700">{{ __('messages.operator') }} *</label>
                             <select id="operator" name="operator" required
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">Sélectionner un opérateur</option>
+                                <option value="">{{ __('messages.select_operator') }}</option>
                                 @foreach(\App\Models\Investment::getOperators() as $operator)
                                     <option value="{{ $operator }}">{{ $operator }}</option>
                                 @endforeach
@@ -49,10 +49,10 @@
                         </div>
 
                         <div>
-                            <label for="investment_type" class="block text-sm font-medium text-gray-700">Type d'investissement *</label>
+                            <label for="investment_type" class="block text-sm font-medium text-gray-700">{{ __('messages.investment_type') }} *</label>
                             <select id="investment_type" name="investment_type" required
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">Sélectionner un type</option>
+                                <option value="">{{ __('messages.select_type') }}</option>
                                 @foreach(\App\Models\Investment::getInvestmentTypes() as $type)
                                     <option value="{{ $type }}">{{ $type }}</option>
                                 @endforeach
@@ -60,21 +60,21 @@
                         </div>
 
                         <div>
-                            <label for="last_name" class="block text-sm font-medium text-gray-700">Nom *</label>
+                            <label for="last_name" class="block text-sm font-medium text-gray-700">{{ __('messages.last_name') }} *</label>
                             <input type="text" id="last_name" name="last_name" required
                                    value="{{ old('last_name', $user->nom ?? '') }}"
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-700">Prénom *</label>
+                            <label for="first_name" class="block text-sm font-medium text-gray-700">{{ __('messages.first_name') }} *</label>
                             <input type="text" id="first_name" name="first_name" required
                                    value="{{ old('first_name', $user->prenom ?? '') }}"
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="address" class="block text-sm font-medium text-gray-700">Adresse *</label>
+                            <label for="address" class="block text-sm font-medium text-gray-700">{{ __('messages.address') }} *</label>
                             <textarea id="address" name="address" rows="3" required
                                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">{{ old('address', $user->adresse ?? '') }}</textarea>
                         </div>
@@ -83,34 +83,34 @@
                     <!-- Colonne de droite -->
                     <div class="space-y-6">
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700">Numéro de téléphone *</label>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">{{ __('messages.phone_number') }} *</label>
                             <input type="tel" id="phone" name="phone" required
                                    value="{{ old('phone', $user->telephone ?? '') }}"
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="id_number" class="block text-sm font-medium text-gray-700">Numéro de la pièce d'identité (CIN ou Passeport) *</label>
+                            <label for="id_number" class="block text-sm font-medium text-gray-700">{{ __('messages.id_number') }} *</label>
                             <input type="text" id="id_number" name="id_number" required
                                    value="{{ old('id_number', $user->numero_piece ?? '') }}"
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="id_photo" class="block text-sm font-medium text-gray-700">Photo de la pièce d'identité *</label>
+                            <label for="id_photo" class="block text-sm font-medium text-gray-700">{{ __('messages.id_photo') }} *</label>
                             <input type="file" id="id_photo" name="id_photo" accept="image/*" required
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <p class="mt-1 text-sm text-gray-500">Formats acceptés: JPG, PNG, GIF (Max: 2MB)</p>
+                            <p class="mt-1 text-sm text-gray-500">{{ __('messages.accepted_formats') }}</p>
                         </div>
 
                         <div>
-                            <label for="transaction_phone" class="block text-sm font-medium text-gray-700">Numéro de téléphone utilisé pour la transaction *</label>
+                            <label for="transaction_phone" class="block text-sm font-medium text-gray-700">{{ __('messages.transaction_phone') }} *</label>
                             <input type="tel" id="transaction_phone" name="transaction_phone" required
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
                         <div>
-                            <label for="amount" class="block text-sm font-medium text-gray-700">Montant *</label>
+                            <label for="amount" class="block text-sm font-medium text-gray-700">{{ __('messages.amount') }} *</label>
                             <input type="number" id="amount" name="amount" step="0.01" min="0" required
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <p id="amount-error" class="mt-1 text-sm text-red-600 hidden"></p>
@@ -118,10 +118,10 @@
                         </div>
 
                         <div>
-                            <label for="transaction_proof" class="block text-sm font-medium text-gray-700">Capture de la transaction *</label>
+                            <label for="transaction_proof" class="block text-sm font-medium text-gray-700">{{ __('messages.transaction_proof') }} *</label>
                             <input type="file" id="transaction_proof" name="transaction_proof" accept="image/*" required
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <p class="mt-1 text-sm text-gray-500">Formats acceptés: JPG, PNG, GIF (Max: 2MB)</p>
+                            <p class="mt-1 text-sm text-gray-500">{{ __('messages.accepted_formats') }}</p>
                         </div>
                     </div>
                 </div>
@@ -131,13 +131,13 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
-                        Retour
+                        {{ __('messages.back') }}
                     </a>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg text-sm font-medium transition-colors flex items-center">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                         </svg>
-                        Soumettre la demande
+                        {{ __('messages.submit_request') }}
                     </button>
                 </div>
             </form>
@@ -228,14 +228,14 @@ window.addEventListener('load', function() {
         }
 
         if (amount < range.min) {
-            amountError.textContent = `Le montant minimum pour ce type est ${range.min.toLocaleString('fr-FR')} Ar (${range.minUsd} USD)`;
+            amountError.textContent = `{{ __('messages.amount_minimum_for_type') }} ${range.min.toLocaleString('fr-FR')} Ar (${range.minUsd} USD)`;
             amountError.classList.remove('hidden');
             amountInput.classList.add('border-red-500');
             return false;
         }
 
         if (range.max && amount > range.max) {
-            amountError.textContent = `Le montant maximum pour ce type est ${range.max.toLocaleString('fr-FR')} Ar (${range.maxUsd} USD)`;
+            amountError.textContent = `{{ __('messages.amount_maximum_for_type') }} ${range.max.toLocaleString('fr-FR')} Ar (${range.maxUsd} USD)`;
             amountError.classList.remove('hidden');
             amountInput.classList.add('border-red-500');
             return false;
@@ -245,9 +245,9 @@ window.addEventListener('load', function() {
         amountInput.classList.remove('border-red-500');
 
         if (range.max) {
-            amountInfo.textContent = `Plage: ${range.min.toLocaleString('fr-FR')} - ${range.max.toLocaleString('fr-FR')} Ar (${range.minUsd} - ${range.maxUsd} USD)`;
+            amountInfo.textContent = `{{ __('messages.range') }} ${range.min.toLocaleString('fr-FR')} - ${range.max.toLocaleString('fr-FR')} Ar (${range.minUsd} - ${range.maxUsd} USD)`;
         } else {
-            amountInfo.textContent = `Minimum: ${range.min.toLocaleString('fr-FR')} Ar (${range.minUsd} USD)`;
+            amountInfo.textContent = `{{ __('messages.minimum') }} ${range.min.toLocaleString('fr-FR')} Ar (${range.minUsd} USD)`;
         }
 
         return true;
@@ -267,7 +267,7 @@ window.addEventListener('load', function() {
                 };
 
                 if (operatorPhones[selectedOperator]) {
-                    operatorText.textContent = `Veuillez envoyer l'argent au numéro ${operatorPhones[selectedOperator]}, au nom de Harifidy Razafindranaivo, puis suivre les instructions jusqu'à confirmation de l'envoi.`;
+                    operatorText.textContent = `{{ __('messages.send_money_to') }} ${operatorPhones[selectedOperator]}{{ __('messages.in_the_name_of') }} Harifidy Razafindranaivo{{ __('messages.then_follow_instructions') }}`;
                     operatorMessage.classList.remove('hidden');
                     operatorMessage.classList.add('block');
                     console.log('Message affiché pour:', selectedOperator);

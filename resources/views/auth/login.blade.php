@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 
-@section('title', 'Connexion')
+@section('title', __('messages.login'))
 
-@section('subtitle', 'Connectez-vous à votre compte')
+@section('subtitle', __('messages.connect_to_account'))
 
 @section('content')
     <div class="bg-white shadow rounded-lg p-8 max-w-md mx-auto">
@@ -12,7 +12,7 @@
             <!-- Username/Email -->
             <div>
                 <label for="username" class="block text-sm font-medium text-gray-600">
-                    Nom d'utilisateur ou Email
+                    {{ __('messages.username_or_email') }}
                 </label>
                 <div class="mt-1">
                     <input id="username" name="username" type="text" autocomplete="username" required
@@ -24,7 +24,7 @@
             <!-- Password -->
             <div>
                 <label for="password" class="block text-sm font-medium text-gray-600">
-                    Mot de passe
+                    {{ __('messages.password') }}
                 </label>
                 <div class="mt-1">
                     <input id="password" name="password" type="password" autocomplete="current-password" required
@@ -38,7 +38,7 @@
                     <input id="remember" name="remember" type="checkbox"
                         class="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded">
                     <label for="remember" class="ml-2 block text-sm text-gray-800">
-                        Se souvenir de moi
+                        {{ __('messages.remember_me') }}
                     </label>
                 </div>
 
@@ -46,7 +46,7 @@
                     <div class="text-sm">
                         <a href="{{ route('password.request') }}"
                             class="font-medium text-blue-500 hover:text-blue-600">
-                            Mot de passe oublié?
+                            {{ __('messages.forgot_password') }}
                         </a>
                     </div>
                 @endif
@@ -64,17 +64,17 @@
                             </path>
                         </svg>
                     </span>
-                    Se connecter
+                    {{ __('messages.sign_in') }}
                 </button>
             </div>
 
             <!-- Register link -->
             <div class="text-center">
                 <span class="text-sm text-gray-500">
-                    Pas encore de compte?
+                    {{ __('messages.no_account_yet') }}
                     <a href="{{ route('register') }}"
                         class="font-medium text-blue-500 hover:text-blue-600">
-                        S'inscrire
+                        {{ __('messages.register') }}
                     </a>
                 </span>
             </div>

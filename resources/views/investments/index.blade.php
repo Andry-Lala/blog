@@ -1,10 +1,10 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Mes Investissements')
+@section('title', __('messages.my_investments'))
 
 @section('header')
     <div class="ml-4 flex items-center">
-        <h1 class="text-2xl font-semibold text-gray-900">Mes Investissements</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">{{ __('messages.my_investments') }}</h1>
     </div>
 @endsection
 
@@ -13,12 +13,12 @@
     <div class="px-4 sm:px-6 lg:px-8">
         <!-- Actions Header -->
         <div class="mb-6 flex items-center justify-between">
-            <h2 class="text-lg font-medium text-gray-900">Liste de mes investissements</h2>
+            <h2 class="text-lg font-medium text-gray-900">{{ __('messages.investment_list') }}</h2>
             <a href="{{ route('investments.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                 <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
-                Nouvel Investissement
+                {{ __('messages.new_investment') }}
             </a>
         </div>
         @if(session('success'))
@@ -52,12 +52,12 @@
                     <table id="investmentsTable" class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Opérateur</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.date') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.operator') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.type') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.amount') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.status') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -69,19 +69,19 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ number_format($investment->amount, 2, ',', ' ') }} Ar</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($investment->status === 'Validé')
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-50 text-green-600">Validé</span>
+                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-50 text-green-600">{{ __('messages.approved') }}</span>
                                         @elseif($investment->status === 'Rejeté')
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-50 text-red-600">Rejeté</span>
+                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-50 text-red-600">{{ __('messages.rejected') }}</span>
                                         @elseif($investment->status === 'En cours de traitement')
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-50 text-yellow-600">En cours</span>
+                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-50 text-yellow-600">{{ __('messages.processing') }}</span>
                                         @else
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-50 text-blue-600">Envoyé</span>
+                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-50 text-blue-600">{{ __('messages.pending') }}</span>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex items-center space-x-2">
                                             <a href="{{ route('investments.show', $investment) }}"
-                                               class="text-blue-500 hover:text-blue-600" title="Voir les détails">
+                                               class="text-blue-500 hover:text-blue-600" title="{{ __('messages.view_details') }}">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -91,7 +91,7 @@
                                             @if($investment->status === 'Validé')
                                                 <button onclick="generateInvoice({{ $investment->id }})"
                                                         class="text-green-500 hover:text-green-600"
-                                                        title="Générer la facture PDF">
+                                                        title="{{ __('messages.generate_invoice_pdf') }}">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                                     </svg>
@@ -110,14 +110,14 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">Aucun investissement</h3>
-                <p class="mt-1 text-sm text-gray-500">Commencez par créer votre premier investissement.</p>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('messages.no_investments') }}</h3>
+                <p class="mt-1 text-sm text-gray-500">{{ __('messages.start_first_investment') }}</p>
                 <div class="mt-6">
                     <a href="{{ route('investments.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>
-                        Créer un investissement
+                        {{ __('messages.create_investment') }}
                     </a>
                 </div>
             </div>
@@ -135,9 +135,9 @@ $(document).ready(function() {
     $('#investmentsTable').DataTable({
         language: {
             url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
-            search: "Rechercher:",
-            lengthMenu: "Afficher _MENU_ entrées",
-            info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+            search: "{{ __('messages.search_placeholder') }}",
+            lengthMenu: "{{ __('messages.show') }} _MENU_ {{ __('messages.entries') }}",
+            info: "{{ __('messages.showing_to_of_total_entries') }}",
             paginate: {
                 first: '<i class="fas fa-angle-double-left"></i>',
                 last: '<i class="fas fa-angle-double-right"></i>',
@@ -152,17 +152,17 @@ $(document).ready(function() {
         buttons: [
             {
                 extend: 'excel',
-                text: '<i class="fas fa-file-excel"></i> Excel',
+                text: '<i class="fas fa-file-excel"></i> {{ __('messages.excel') }}',
                 className: 'bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
             },
             {
                 extend: 'pdf',
-                text: '<i class="fas fa-file-pdf"></i> PDF',
+                text: '<i class="fas fa-file-pdf"></i> {{ __('messages.pdf') }}',
                 className: 'bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
             },
             {
                 extend: 'print',
-                text: '<i class="fas fa-print"></i> Imprimer',
+                text: '<i class="fas fa-print"></i> {{ __('messages.print') }}',
                 className: 'bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mb-2 md:mb-0'
             }
         ],

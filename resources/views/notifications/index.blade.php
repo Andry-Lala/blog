@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Notifications')
+@section('title', __('messages.notifications'))
 
 @section('header')
-    <h1 class="ml-4 text-2xl font-semibold text-gray-900">Mes notifications</h1>
+    <h1 class="ml-4 text-2xl font-semibold text-gray-900">{{ __('messages.my_notifications') }}</h1>
 @endsection
 
 @section('content')
@@ -12,10 +12,10 @@
         <div class="bg-white shadow rounded-lg">
             <div class="px-6 py-4 border-b border-gray-200">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-medium text-gray-900">Liste des notifications</h3>
+                    <h3 class="text-lg font-medium text-gray-900">{{ __('messages.notification_list') }}</h3>
                     <div class="flex items-center space-x-2">
                         <button onclick="markAllAsRead()" class="text-sm text-blue-600 hover:text-blue-800">
-                            Tout marquer comme lu
+                            {{ __('messages.mark_all_read') }}
                         </button>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                                             {{ $notification->title }}
                                             @if(!$notification->is_read)
                                                 <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                                                    Nouveau
+                                                    {{ __('messages.new_notification') }}
                                                 </span>
                                             @endif
                                         </h4>
@@ -61,7 +61,7 @@
                                             <a href="{{ getNotificationLink($notification) }}"
                                                class="text-sm text-blue-600 hover:text-blue-800"
                                                onclick="event.stopPropagation()">
-                                                Voir les détails →
+                                                {{ __('messages.view_details') }} →
                                             </a>
                                         </div>
                                     @endif
@@ -74,8 +74,8 @@
                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                         </svg>
-                        <h3 class="mt-2 text-sm font-medium text-gray-900">Aucune notification</h3>
-                        <p class="mt-1 text-sm text-gray-500">Vous n'avez aucune notification pour le moment.</p>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('messages.no_notifications') }}</h3>
+                        <p class="mt-1 text-sm text-gray-500">{{ __('messages.no_notifications_currently') }}</p>
                     </div>
                 @endif
             </div>
@@ -168,7 +168,7 @@
             })
             .catch(error => {
                 console.error('Erreur:', error);
-                showToast('Une erreur est survenue lors du chargement des détails de la notification.', 'error');
+                showToast('{{ __('messages.error_loading_notification') }}', 'error');
             });
         }
     }
@@ -184,14 +184,14 @@
             const viewButton = document.createElement('a');
             viewButton.href = `/investments/${notification.related_id}`;
             viewButton.className = 'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500';
-            viewButton.textContent = 'Voir l\'investissement';
+            viewButton.textContent = '{{ __('messages.view_investment') }}';
             modalActions.appendChild(viewButton);
         }
 
         const closeButton = document.createElement('button');
         closeButton.onclick = closeNotificationModal;
         closeButton.className = 'inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500';
-        closeButton.textContent = 'Fermer';
+        closeButton.textContent = '{{ __('messages.close') }}';
         modalActions.appendChild(closeButton);
 
         notificationModal.classList.remove('hidden');
@@ -249,12 +249,12 @@
                     }
                 }
                 updateNotificationCount(data.unread_count);
-                showToast('Notification marquée comme lue', 'success');
+                showToast('{{ __('messages.notification_marked_as_read') }}', 'success');
             }
         })
         .catch(error => {
             console.error('Erreur:', error);
-            showToast('Erreur lors du marquage comme lu', 'error');
+            showToast('{{ __('messages.error_marking_as_read') }}', 'error');
         });
     }
 
@@ -275,12 +275,12 @@
         })
         .catch(error => {
             console.error('Erreur:', error);
-            showToast('Erreur lors du marquage de toutes les notifications comme lues', 'error');
+            showToast('{{ __('messages.error_marking_all_as_read') }}', 'error');
         });
     }
 
     function deleteNotification(notificationId) {
-        if (confirm('Êtes-vous sûr de vouloir supprimer cette notification ?')) {
+        if (confirm('{{ __('messages.confirm_delete_notification') }}')) {
             fetch(`/notifications/${notificationId}`, {
                 method: 'DELETE',
                 headers: {
@@ -297,12 +297,12 @@
                         notificationItem.remove();
                     }
                     updateNotificationCount(data.unread_count);
-                    showToast('Notification supprimée', 'success');
+                    showToast('{{ __('messages.notification_deleted') }}', 'success');
                 }
             })
             .catch(error => {
                 console.error('Erreur:', error);
-                showToast('Erreur lors de la suppression', 'error');
+                showToast('{{ __('messages.error_deleting') }}', 'error');
             });
         }
     }
