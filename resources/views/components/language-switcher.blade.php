@@ -181,8 +181,8 @@ function updateTextsInstant(translations) {
 }
 
 function sendLanguageUpdate(locale) {
-    // Envoyer la requête sans bloquer l'interface
-    fetch(`{{ route('language.switch', '__locale__') }}`.replace('__locale__', locale), {
+    // Envoyer la requête et retourner une Promise
+    return fetch(`{{ route('language.switch', '__locale__') }}`.replace('__locale__', locale), {
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -190,10 +190,19 @@ function sendLanguageUpdate(locale) {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
-    .then(response => response.json())
-    .catch(() => {
-        // Silencieux en cas d'erreur
-        console.log('Language update sent');
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Language switch failed');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Language changed successfully:', data);
+        return data;
+    })
+    .catch(error => {
+        console.error('Language update error:', error);
+        throw error;
     });
 }
 
