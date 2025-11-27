@@ -324,89 +324,92 @@
                 Investment Plan
             </h1>
 
-            <div class="flex flex-col md:flex-row gap-6 justify-center">
-                <!-- Card 1 -->
-                <div class="card transform transition-transform duration-300 hover:scale-105 bg-gradient-to-br from-black via-gray-500 to-black rounded-lg overflow-hidden flex-1 w-full min-w-0">
-                    <div class="card-image p-4">
-                        <span class="px-6 py-3 rounded-xl font-bold text-lg text-white bg-gradient-to-r from-red-500 via-pink-500 to-pink-400">
-                            20%
-                        </span>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="text-center text-2xl font-bold text-red-500 mb-2">50 - 499 USD</div>
-                        <p class="mb-4 text-white text-sm md:text-base">
-                            Earn 20 % of your capital everyday and let your money growing as long as you decide to withdraw your big profits.
-                        </p>
-                        <a class="btn-solid-lg secondary block text-center w-full mb-4 py-2 rounded bg-red-500 hover:bg-red-600 text-white font-bold" href="{{ route('login', ['redirect' => '/investments/create?type=silver']) }}">
-                            Invest now
-                        </a>
-                        <div class="text-center inline-block px-6 py-3 bg-gray-200 text-gray-800 font-bold text-xl rounded-2xl shadow-lg w-full">
-                            Silver
-                        </div>
-                    </div>
-                </div>
+            
 
-                <!-- Card 2 -->
-                <div class="card transform transition-transform duration-300 hover:scale-105 bg-gradient-to-br from-black via-gray-500 to-black rounded-lg overflow-hidden flex-1 w-full min-w-0">
-                    <div class="card-image p-4">
-                        <span class="px-6 py-3 rounded-xl font-bold text-lg text-white bg-gradient-to-r from-red-500 via-orange-400 to-pink-400">30%</span>
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                @php
+                    $investmentTypes = \App\Models\InvestmentType::getActiveTypes();
+                @endphp
+                @foreach($investmentTypes as $index => $type)
+                @php
+                $amountsInAriary = $type->getAmountsInAriary();
+                $colorSchemes = [
+                    [
+                        'gradient' => 'from-gray-100 to-gray-200',
+                        'border' => 'border-gray-300',
+                        'icon' => 'bg-gray-300',
+                        'button' => 'bg-gray-500 hover:bg-gray-600'
+                    ],
+                    [
+                        'gradient' => 'from-yellow-100 to-yellow-200',
+                        'border' => 'border-yellow-300',
+                        'icon' => 'bg-yellow-400',
+                        'button' => 'bg-yellow-500 hover:bg-yellow-600'
+                    ],
+                    [
+                        'gradient' => 'from-purple-100 to-purple-200',
+                        'border' => 'border-purple-300',
+                        'icon' => 'bg-purple-400',
+                        'button' => 'bg-purple-500 hover:bg-purple-600'
+                    ],
+                    [
+                        'gradient' => 'from-blue-100 to-blue-200',
+                        'border' => 'border-blue-300',
+                        'icon' => 'bg-blue-400',
+                        'button' => 'bg-blue-500 hover:bg-blue-600'
+                    ]
+                    ];
+                $colorScheme = $colorSchemes[$index % count($colorSchemes)];
+                @endphp
+                <div class="bg-gradient-to-br {{ $colorScheme['gradient'] }} rounded-lg p-6 border {{ $colorScheme['border'] }} hover:shadow-lg transition-all duration-300 {{ $index === 3 ? 'relative' : '' }}">
+                    @if($index === 3)
+                    <div class="absolute top-2 right-2">
+                        <span class="bg-red-400 text-white text-xs px-2 py-1 rounded-full font-semibold">Premium</span>
                     </div>
-                    <div class="card-body p-4">
-                        <div class="text-center text-2xl font-bold text-red-400 mb-2">500 - 699 USD</div>
-                        <p class="mb-4 text-white text-sm md:text-base">
-                            Earn 30 % of your capital everyday and win a maximum of profit only every single day. Let us do your job with our trading robot.
-                        </p>
-                        <a class="btn-solid-lg secondary block text-center w-full mb-4 py-2 rounded bg-yellow-400 hover:bg-yellow-500 text-white font-bold" href="{{ route('login', ['redirect' => '/investments/create?type=gold']) }}">
-                            Invest now
-                        </a>
-                        <div class="text-center inline-block px-6 py-3 font-bold text-xl rounded-2xl text-gray-800 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 shadow-lg w-full">
-                            Gold
+                    @endif
+                    <div class="flex items-center justify-center w-12 h-12 {{ $colorScheme['icon'] }} rounded-full mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-900 mb-2">{{ $type->name }}</h4>
+                    <p class="text-sm text-gray-600 mb-4">{{ $type->description }}</p>
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Min Amount:</span>
+                            <span class="font-medium text-gray-900">{{ number_format($amountsInAriary['min_ariary'], 0, ',', ' ') }} Ar</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Max Amount:</span>
+                            <span class="font-medium text-gray-900">
+                                @if($amountsInAriary['max_ariary'])
+                                    {{ number_format($amountsInAriary['max_ariary'], 0, ',', ' ') }} Ar
+                                @else
+                                    Unlimited
+                                @endif
+                            </span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Équivalent USD:</span>
+                            <span class="font-medium text-gray-900">
+                                ${{ number_format($type->min_amount_usd, 0) }}
+                                @if($type->max_amount_usd)
+                                    - ${{ number_format($type->max_amount_usd, 0) }}
+                                @else
+                                    or more
+                                @endif
+                            </span>
                         </div>
                     </div>
+                    <a href="{{ route('investments.create') }}?type={{ $type->slug }}" class="w-full {{ $colorScheme['button'] }} text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center block">
+                        Invest now
+                    </a>
                 </div>
-
-                <!-- Card 3 -->
-                <div class="card transform transition-transform duration-300 hover:scale-105 bg-gradient-to-br from-black via-gray-500 to-black rounded-lg overflow-hidden flex-1 w-full min-w-0">
-                    <div class="card-image p-4">
-                        <span class="px-6 py-3 rounded-xl font-bold text-lg text-white bg-gradient-to-r from-red-500 via-orange-400 to-pink-400">40%</span>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="text-center text-2xl font-bold text-red-400 mb-2">700 - 999 USD</div>
-                        <p class="mb-4 text-white text-sm md:text-base">
-                            Earn 40 % of your investment funds and gain a maximum of profit everyday. Our robots function with a minimal risk.
-                        </p>
-                        <a class="btn-solid-lg secondary block text-center w-full mb-4 py-2 rounded bg-pink-500 hover:bg-pink-600 text-white font-bold" href="{{ route('login', ['redirect' => '/investments/create?type=platinum']) }}">
-                            Invest now
-                        </a>
-                        <div class="text-center inline-block px-6 py-3 font-bold text-xl rounded-2xl text-gray-800 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 shadow-lg w-full">
-                            Platinum
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="card transform transition-transform duration-300 hover:scale-105 bg-gradient-to-br from-black via-gray-500 to-black rounded-lg overflow-hidden flex-1 w-full min-w-0">
-                    <div class="card-image p-4">
-                        <span class="px-6 py-3 rounded-xl font-bold text-lg text-white bg-gradient-to-r from-red-500 via-orange-400 to-green-400">50%</span>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="text-center text-2xl font-bold text-red-400 mb-2">>1000 USD</div>
-                        <p class="mb-4 text-white text-sm md:text-base">
-                            Earn 50 % of your capital everyday and gain a maximum of profit. Our robots function with a minimum risk.
-                        </p>
-                        <a class="btn-solid-lg secondary block text-center w-full mb-4 py-2 rounded bg-green-400 hover:bg-green-500 text-white font-bold" href="{{ route('login', ['redirect' => '/investments/create?type=diamond']) }}">
-                            Invest now
-                        </a>
-                        <div class="text-center inline-block px-6 py-3 font-bold text-xl rounded-2xl text-gray-800 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-200 shadow-lg w-full">
-                            Diamond
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
-
-
-        
+        </div>   
         <!-- Contrat terms -->
         <div class="pt-4 pb-6 text-center">
             <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-pink-500 to-pink-400">
@@ -459,33 +462,44 @@
 
         <!-- avis -->
         <div class="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-lg mt-10 mb-10">
-            <h2 class="text-2xl font-bold mb-4 text-gray-800">Your opinion</h2>
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Your opinion</h2>
 
-            <form id="form-avis" class="space-y-4">
+    <form action="{{ route('envoyer.avis') }}" method="POST" class="space-y-4">
+        @csrf
 
-                <!-- Email -->
-                <div>
-                    <label for="email" class="block text-gray-700 font-medium mb-1">Your e-mail *</label>
-                    <input type="email" id="email" placeholder="your@email.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
-                </div>
-
-                <!-- Avis -->
-                <div>
-                    <label for="message" class="block text-gray-700 font-medium mb-1">Your opinion</label>
-                    <textarea id="message" rows="4" placeholder="Your opinion here..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
-                </div>
-
-                <!-- Bouton Envoyer -->
-                <div>
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl shadow-lg transition">
-                        Send
-                    </button>
-                </div>
-
-                <p id="message-success" class="text-green-600 mt-2 hidden">Merci pour votre avis !</p>
-
-            </form>
+        <!-- Email -->
+        <div>
+            <label for="email" class="block text-gray-700 font-medium mb-1">Your e-mail *</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email"
+                placeholder="your@email.com" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none 
+                       focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required>
         </div>
+
+        <!-- Avis -->
+        <div id="opinion">
+            <label for="avis" class="block text-gray-700 font-medium mb-1">Your opinion</label>
+            <textarea id="avis" name="avis"  rows="4" placeholder="Your opinion here..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" required></textarea>
+        </div>
+
+        <!-- Bouton Envoyer -->
+        <div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl shadow-lg transition">
+                Send
+            </button>
+        </div>
+
+        @if(session('success'))
+            <p class="text-green-600 mt-2">{{ session('success') }}</p>
+        @endif
+
+    </form>
+</div>
+
 
                 
 
@@ -552,28 +566,7 @@
             });
 
 
-            document.getElementById('form-avis').addEventListener('submit', function(e) {
-                e.preventDefault();
 
-                const email = document.getElementById('email').value;
-                const avis = document.getElementById('message').value;
-                const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-                fetch('/envoyer-avis', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    },
-                    body: JSON.stringify({ email, avis })
-                })
-            .then(response => response.json())
-            .then(data => {
-            document.getElementById('message-success').classList.remove('hidden');
-            document.getElementById('form-avis').reset();
-            })
-            .catch(error => console.error(error));
-            });
 
         </script>
     </body>

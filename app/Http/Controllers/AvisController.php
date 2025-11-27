@@ -20,7 +20,7 @@ class AvisController extends Controller
             'avis' => $request->avis,
         ]);
 
-        return response()->json(['message' => 'Merci pour votre avis !']);
+        return redirect()->to(url()->previous() . '#opinion')->with('success', 'Thank you for your opinion !');
     }
 
     public function index()
