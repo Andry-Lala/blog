@@ -30,16 +30,19 @@ class LanguageController extends Controller
         // Set the locale for current request
         App::setLocale($locale);
 
+        // Store in cookie for persistence (30 days)
+        cookie()->queue('locale', $locale, 43200); // 30 days in minutes
+
         // Check if it's an AJAX request
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'locale' => $locale,
                 'message' => $locale === 'fr' ? 'Langue changée en français' : 'Language changed to English'
-            ]);
+            ])->withCookie(cookie('locale', $locale, 43200));
         }
 
         // Redirect back to previous page for non-AJAX requests
-        return redirect()->back();
+        return redirect()->back()->withCookie(cookie('locale', $locale, 43200));
     }
 }

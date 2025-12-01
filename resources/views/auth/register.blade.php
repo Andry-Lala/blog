@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 
-@section('title', 'Inscription')
+@section('title', __('messages.register'))
 
-@section('subtitle', 'Créez votre compte client')
+@section('subtitle', __('messages.create_account'))
 
 @section('content')
 <div class="bg-white shadow rounded-lg w-full max-w-7xl mx-auto">
@@ -11,71 +11,71 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Informations de base -->
             <div>
-                <h3 class="text-lg font-medium text-gray-900 mb-6 pb-2 border-b border-gray-200">Informations de base</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-6 pb-2 border-b border-gray-200">{{ __('messages.basic_information') }}</h3>
 
                 <div class="space-y-4">
                     <div>
-                        <label for="nom" class="block text-sm font-medium text-gray-600">Nom *</label>
+                        <label for="nom" class="block text-sm font-medium text-gray-600">{{ __('messages.last_name') }} *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('nom') border-red-500 @enderror"
                                id="nom" name="nom" value="{{ old('nom') }}" required minlength="2" maxlength="255"
-                               pattern="[a-zA-ZÀ-ÿ\s\-\'\.]+" placeholder="RAKOTOARISOA">
+                               pattern="[a-zA-ZÀ-ÿ\s\-\'\.]+" placeholder="{{ __('messages.name_placeholder') }}">
                         @error('nom')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="prenom" class="block text-sm font-medium text-gray-600">Prénom *</label>
+                        <label for="prenom" class="block text-sm font-medium text-gray-600">{{ __('messages.first_name') }} *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('prenom') border-red-500 @enderror"
                                id="prenom" name="prenom" value="{{ old('prenom') }}" required minlength="2" maxlength="255"
-                               pattern="[a-zA-ZÀ-ÿ\s\-\'\.]+" placeholder="Jean">
+                               pattern="[a-zA-ZÀ-ÿ\s\-\'\.]+" placeholder="{{ __('messages.firstname_placeholder') }}">
                         @error('prenom')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="username" class="block text-sm font-medium text-gray-600">Nom d'utilisateur *</label>
+                        <label for="username" class="block text-sm font-medium text-gray-600">{{ __('messages.username') }} *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('username') border-red-500 @enderror"
                                id="username" name="username" value="{{ old('username') }}" required minlength="3" maxlength="255"
-                               pattern="[a-zA-Z0-9_\-\.]+" placeholder="jean_rakoto">
+                               pattern="[a-zA-Z0-9_\-\.]+" placeholder="{{ __('messages.username_placeholder') }}">
                         @error('username')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-600">Email *</label>
+                        <label for="email" class="block text-sm font-medium text-gray-600">{{ __('messages.email') }} *</label>
                         <input type="email"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('email') border-red-500 @enderror"
                                id="email" name="email" value="{{ old('email') }}" required maxlength="255"
-                               placeholder="jean.rakoto@example.com">
+                               placeholder="{{ __('messages.email_placeholder') }}">
                         @error('email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="telephone" class="block text-sm font-medium text-gray-600">Téléphone *</label>
+                        <label for="telephone" class="block text-sm font-medium text-gray-600">{{ __('messages.phone') }} *</label>
                         <input type="tel"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('telephone') border-red-500 @enderror"
                                id="telephone" name="telephone" value="{{ old('telephone') }}"
                                required minlength="10" maxlength="20" pattern="[+]?[0-9\s\-\(\)]+"
-                               placeholder="+261 34 12 345 67">
+                               placeholder="{{ __('messages.phone_placeholder') }}">
                         @error('telephone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="adresse" class="block text-sm font-medium text-gray-600">Adresse *</label>
+                        <label for="adresse" class="block text-sm font-medium text-gray-600">{{ __('messages.address') }} *</label>
                         <textarea
                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('adresse') border-red-500 @enderror"
                                   id="adresse" name="adresse" rows="3" required minlength="5" maxlength="500"
-                                  placeholder="Entrez votre adresse complète">{{ old('adresse') }}</textarea>
+                                  placeholder="{{ __('messages.address_placeholder') }}">{{ old('adresse') }}</textarea>
                         @error('adresse')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -85,11 +85,11 @@
 
             <!-- Informations personnelles -->
             <div>
-                <h3 class="text-lg font-medium text-gray-900 mb-6 pb-2 border-b border-gray-200">Informations personnelles</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-6 pb-2 border-b border-gray-200">{{ __('messages.personal_information') }}</h3>
 
                 <div class="space-y-4">
                     <div>
-                        <label for="date_naissance" class="block text-sm font-medium text-gray-600">Date de naissance</label>
+                        <label for="date_naissance" class="block text-sm font-medium text-gray-600">{{ __('messages.birth_date') }}</label>
                         <input type="date"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('date_naissance') border-red-500 @enderror"
                                id="date_naissance" name="date_naissance" value="{{ old('date_naissance') }}"
@@ -100,7 +100,7 @@
                     </div>
 
                     <div>
-                        <label for="lieu_naissance" class="block text-sm font-medium text-gray-600">Lieu de naissance</label>
+                        <label for="lieu_naissance" class="block text-sm font-medium text-gray-600">{{ __('messages.birth_place') }}</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('lieu_naissance') border-red-500 @enderror"
                                id="lieu_naissance" name="lieu_naissance" value="{{ old('lieu_naissance') }}"
@@ -111,7 +111,7 @@
                     </div>
 
                     <div>
-                        <label for="nationalite" class="block text-sm font-medium text-gray-600">Nationalité</label>
+                        <label for="nationalite" class="block text-sm font-medium text-gray-600">{{ __('messages.nationality') }}</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('nationalite') border-red-500 @enderror"
                                id="nationalite" name="nationalite" value="{{ old('nationalite') }}"
@@ -122,7 +122,7 @@
                     </div>
 
                     <div>
-                        <label for="profession" class="block text-sm font-medium text-gray-600">Profession</label>
+                        <label for="profession" class="block text-sm font-medium text-gray-600">{{ __('messages.profession') }}</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('profession') border-red-500 @enderror"
                                id="profession" name="profession" value="{{ old('profession') }}"
@@ -133,11 +133,11 @@
                     </div>
                 </div>
 
-                <h3 class="text-lg font-medium text-black mb-6 mt-8 pb-2 border-b border-gray-200">Pièce d'identité</h3>
+                <h3 class="text-lg font-medium text-black mb-6 mt-8 pb-2 border-b border-gray-200">{{ __('messages.identity_document') }}</h3>
 
                 <div class="space-y-4">
                     <div>
-                        <label for="piece_identite" class="block text-sm font-medium text-black">Type de pièce *</label>
+                        <label for="piece_identite" class="block text-sm font-medium text-black">{{ __('messages.document_type') }} *</label>
                         <select
                                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('piece_identite') border-red-500 @enderror"
                                 id="piece_identite" name="piece_identite" required>
@@ -152,7 +152,7 @@
                     </div>
 
                     <div>
-                        <label for="numero_piece" class="block text-sm font-medium text-black">Numéro de pièce *</label>
+                        <label for="numero_piece" class="block text-sm font-medium text-black">{{ __('messages.document_number') }} *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('numero_piece') border-red-500 @enderror"
                                id="numero_piece" name="numero_piece" value="{{ old('numero_piece') }}"
@@ -163,7 +163,7 @@
                     </div>
 
                     <div>
-                        <label for="date_delivrance" class="block text-sm font-medium text-black">Date de délivrance *</label>
+                        <label for="date_delivrance" class="block text-sm font-medium text-black">{{ __('messages.issue_date') }} *</label>
                         <input type="date"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('date_delivrance') border-red-500 @enderror"
                                id="date_delivrance" name="date_delivrance" value="{{ old('date_delivrance') }}"
@@ -174,7 +174,7 @@
                     </div>
 
                     <div>
-                        <label for="lieu_delivrance" class="block text-sm font-medium text-black">Lieu de délivrance *</label>
+                        <label for="lieu_delivrance" class="block text-sm font-medium text-black">{{ __('messages.issue_place') }} *</label>
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('lieu_delivrance') border-red-500 @enderror"
                                id="lieu_delivrance" name="lieu_delivrance" value="{{ old('lieu_delivrance') }}"
@@ -189,23 +189,23 @@
 
         <!-- Mot de passe -->
         <div class="mt-8">
-            <h3 class="text-lg font-medium text-gray-900 mb-6 pb-2 border-b border-gray-200">Mot de passe</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-6 pb-2 border-b border-gray-200">{{ __('messages.password_section') }}</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label for="password" class="block text-sm font-medium text-gray-600">Mot de passe *</label>
+                    <label for="password" class="block text-sm font-medium text-gray-600">{{ __('messages.password') }} *</label>
                     <input type="password"
                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('password') border-red-500 @enderror"
                            id="password" name="password" required minlength="8"
                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
-                           title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)">
+                           title="{{ __('messages.password_helper') }}">
                     <div class="mt-2 text-xs text-gray-500">
-                        <p>Le mot de passe doit contenir :</p>
+                        <p>{{ __('messages.password_requirements') }}</p>
                         <ul class="list-disc list-inside mt-1">
-                            <li>Au moins 8 caractères</li>
-                            <li>Une lettre majuscule</li>
-                            <li>Une lettre minuscule</li>
-                            <li>Un chiffre</li>
-                            <li>Un caractère spécial (@$!%*?&)</li>
+                            <li>{{ __('messages.at_least_8_chars') }}</li>
+                            <li>{{ __('messages.one_uppercase') }}</li>
+                            <li>{{ __('messages.one_lowercase') }}</li>
+                            <li>{{ __('messages.one_number') }}</li>
+                            <li>{{ __('messages.one_special') }}</li>
                         </ul>
                     </div>
                     @error('password')
@@ -213,7 +213,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-600">Confirmer le mot de passe *</label>
+                    <label for="password_confirmation" class="block text-sm font-medium text-gray-600">{{ __('messages.confirm_password') }} *</label>
                     <input type="password"
                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('password_confirmation') border-red-500 @enderror"
                            id="password_confirmation" name="password_confirmation" required minlength="8">
@@ -226,7 +226,7 @@
 
         <!-- Notes -->
         <div class="mt-8">
-            <label for="notes" class="block text-sm font-medium text-gray-600">Notes</label>
+            <label for="notes" class="block text-sm font-medium text-gray-600">{{ __('messages.notes') }}</label>
             <textarea
                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('notes') border-red-500 @enderror"
                       id="notes" name="notes" rows="3">{{ old('notes') }}</textarea>
@@ -244,15 +244,15 @@
                 <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                 </svg>
-                Créer mon compte
+                {{ __('messages.create_my_account') }}
             </button>
 
             <!-- Login link -->
             <div class="text-center">
                 <span class="text-sm text-gray-500">
-                    Déjà un compte?
+                    {{ __('messages.already_have_account') }}
                     <a href="{{ route('login') }}" class="font-medium text-blue-500 hover:text-blue-600">
-                        Se connecter
+                        {{ __('messages.sign_in') }}
                     </a>
                 </span>
             </div>
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (passwordConfirmation) {
         passwordConfirmation.addEventListener('input', function() {
             if (this.value !== password.value) {
-                this.setCustomValidity('Les mots de passe ne correspondent pas.');
+                this.setCustomValidity('{{ __("messages.passwords_do_not_match") }}');
             } else {
                 this.setCustomValidity('');
             }
@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Vérifier si le format est valide
             const phoneRegex = /^[+]?[0-9\-\(\)]+$/;
             if (!phoneRegex.test(value) && value.length > 0) {
-                this.setCustomValidity('Veuillez entrer un numéro de téléphone valide.');
+                this.setCustomValidity('{{ __("messages.invalid_phone_number") }}');
             } else {
                 this.setCustomValidity('');
             }
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
         email.addEventListener('blur', function() {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(this.value) && this.value.length > 0) {
-                this.setCustomValidity('Veuillez entrer une adresse email valide.');
+                this.setCustomValidity('{{ __("messages.invalid_email_address") }}');
             } else {
                 this.setCustomValidity('');
             }
@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
         username.addEventListener('input', function() {
             const usernameRegex = /^[a-zA-Z0-9_\-\.]+$/;
             if (!usernameRegex.test(this.value) && this.value.length > 0) {
-                this.setCustomValidity('Le nom d\'utilisateur ne peut contenir que des lettres, chiffres, tirets, points et underscores.');
+                this.setCustomValidity('{{ __("messages.invalid_username_format") }}');
             } else {
                 this.setCustomValidity('');
             }
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!errorMsg) {
                         errorMsg = document.createElement('p');
                         errorMsg.className = 'mt-1 text-sm text-red-600 required-error';
-                        errorMsg.textContent = 'Ce champ est obligatoire.';
+                        errorMsg.textContent = '{{ __("messages.field_required") }}';
                         field.parentElement.appendChild(errorMsg);
                     }
                 } else {

@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Détails de la notification')
+@section('title', __('messages.notification_details'))
 
 @section('header')
-    <h1 class="ml-4 text-2xl font-semibold text-gray-900">Détails de la notification</h1>
+    <h1 class="ml-4 text-2xl font-semibold text-gray-900">{{ __('messages.notification_details') }}</h1>
 @endsection
 
 @section('content')
@@ -12,11 +12,11 @@
         <div class="bg-white shadow rounded-lg">
             <div class="px-6 py-4 border-b border-gray-200">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-medium text-gray-900">Détails</h3>
+                    <h3 class="text-lg font-medium text-gray-900">{{ __('messages.details') }}</h3>
                     <div class="flex items-center space-x-2">
                         <a href="{{ route('notifications.index') }}"
                            class="text-sm text-blue-600 hover:text-blue-800">
-                            Retour à la liste
+                            {{ __('messages.back_to_list') }}
                         </a>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                                 {{ $notification->title }}
                                 @if(!$notification->is_read)
                                     <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                                        Nouveau
+                                        {{ __('messages.new_notification') }}
                                     </span>
                                 @endif
                             </h4>
@@ -50,31 +50,31 @@
 
                         <div class="flex items-center justify-between mb-4">
                             <div class="text-sm text-gray-500">
-                                Type: <span class="font-medium">{{ ucfirst($notification->type) }}</span>
+                                {{ __('messages.type') }}: <span class="font-medium">{{ ucfirst($notification->type) }}</span>
                             </div>
                             <div class="text-sm text-gray-500">
-                                Statut:
+                                {{ __('messages.status') }}:
                                 @if($notification->is_read)
-                                    <span class="text-green-600 font-medium">Lu</span>
+                                    <span class="text-green-600 font-medium">{{ __('messages.read') }}</span>
                                 @else
-                                    <span class="text-blue-600 font-medium">Non lu</span>
+                                    <span class="text-blue-600 font-medium">{{ __('messages.unread') }}</span>
                                 @endif
                             </div>
                         </div>
 
                         @if($notification->related)
                             <div class="border-t border-gray-200 pt-4">
-                                <h5 class="text-sm font-medium text-gray-900 mb-2">Élément associé</h5>
+                                <h5 class="text-sm font-medium text-gray-900 mb-2">{{ __('messages.related_item') }}</h5>
                                 <a href="{{ getNotificationLink($notification) }}"
                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    Voir les détails →
+                                    {{ __('messages.view_details') }} →
                                 </a>
                             </div>
                         @endif
 
                         @if($notification->data && !empty($notification->data))
                             <div class="border-t border-gray-200 pt-4 mt-4">
-                                <h5 class="text-sm font-medium text-gray-900 mb-2">Informations supplémentaires</h5>
+                                <h5 class="text-sm font-medium text-gray-900 mb-2">{{ __('messages.additional_information') }}</h5>
                                 <div class="bg-gray-50 rounded-lg p-3">
                                     <pre class="text-xs text-gray-600 overflow-x-auto">{{ json_encode($notification->data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</pre>
                                 </div>
@@ -95,18 +95,18 @@
                                 @csrf
                                 <button type="submit"
                                         class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                    Marquer comme lu
+                                    {{ __('messages.mark_as_read') }}
                                 </button>
                             </form>
                         @endif
                         <form method="POST" action="{{ route('notifications.destroy', $notification->id) }}"
                               class="inline"
-                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette notification ?')">
+                              onsubmit="return confirm('{{ __('messages.confirm_delete_notification') }}')">
                             @csrf
                             @method('DELETE')
                             <button type="submit"
                                     class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                Supprimer
+                                {{ __('messages.delete') }}
                             </button>
                         </form>
                     </div>

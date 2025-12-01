@@ -1,10 +1,10 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Gestion des Avis')
+@section('title', __('messages.manage_reviews'))
 
 @section('header')
     <div class="ml-4 flex items-center">
-        <h1 class="text-2xl font-semibold text-gray-900">Gestion des Avis</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">{{ __('messages.manage_reviews') }}</h1>
     </div>
 @endsection
 
@@ -43,10 +43,10 @@
                     <table id="avisAdminTable" class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avis</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.date') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.email') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.review') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.action') }}</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -56,7 +56,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->email }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->avis }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        <form action="{{ route('avis.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis ?');">
+                                        <form action="{{ route('avis.destroy', $item->id) }}" method="POST" onsubmit="return confirm('{{ __('messages.confirm_delete_review') }}');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm">
@@ -75,8 +75,8 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">Aucun avis disponible</h3>
-                <p class="mt-1 text-sm text-gray-500">Il n'y a actuellement aucun avis à afficher.</p>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('messages.no_reviews_available') }}</h3>
+                <p class="mt-1 text-sm text-gray-500">{{ __('messages.no_reviews_to_display') }}</p>
             </div>
         @endif
     </div>

@@ -28,20 +28,20 @@ if (!function_exists('createNotificationForInvestment')) {
     function createNotificationForInvestment($userId, $investment, $action, $message = null)
     {
         $title = match($action) {
-            'created' => 'Nouvel investissement créé',
-            'approved' => 'Investissement approuvé',
-            'rejected' => 'Investissement rejeté',
-            'processing' => 'Investissement en cours de traitement',
-            default => 'Mise à jour d\'investissement'
+            'created' => __('messages.notification_investment_created'),
+            'approved' => __('messages.notification_investment_approved'),
+            'rejected' => __('messages.notification_investment_rejected'),
+            'processing' => __('messages.notification_investment_processing'),
+            default => __('messages.notification_investment_updated')
         };
 
         if (!$message) {
             $message = match($action) {
-                'created' => "Votre investissement de {$investment->amount} Ar a été créé avec succès.",
-                'approved' => "Votre investissement de {$investment->amount} Ar a été approuvé.",
-                'rejected' => "Votre investissement de {$investment->amount} Ar a été rejeté.",
-                'processing' => "Votre investissement de {$investment->amount} Ar est en cours de traitement.",
-                default => "Votre investissement a été mis à jour."
+                'created' => __('messages.notification_investment_created_message', ['amount' => $investment->amount]),
+                'approved' => __('messages.notification_investment_approved_message', ['amount' => $investment->amount]),
+                'rejected' => __('messages.notification_investment_rejected_message', ['amount' => $investment->amount]),
+                'processing' => __('messages.notification_investment_processing_message', ['amount' => $investment->amount]),
+                default => __('messages.notification_investment_updated_message')
             };
         }
 
@@ -71,18 +71,18 @@ if (!function_exists('createNotificationForUser')) {
     function createNotificationForUser($userId, $user, $action, $message = null)
     {
         $title = match($action) {
-            'verified' => 'Compte vérifié',
-            'unverified' => 'Compte non vérifié',
-            'registered' => 'Nouveau client inscrit',
-            default => 'Mise à jour du compte'
+            'verified' => __('messages.notification_user_verified'),
+            'unverified' => __('messages.notification_user_unverified'),
+            'registered' => __('messages.notification_new_user_registered'),
+            default => __('messages.notification_user_updated')
         };
 
         if (!$message) {
             $message = match($action) {
-                'verified' => 'Votre compte a été vérifié avec succès.',
-                'unverified' => 'Votre compte n\'est plus vérifié.',
-                'registered' => "Un nouveau client {$user->prenom} {$user->nom} s'est inscrit.",
-                default => 'Votre compte a été mis à jour.'
+                'verified' => __('messages.notification_user_verified_message'),
+                'unverified' => __('messages.notification_user_unverified_message'),
+                'registered' => __('messages.notification_new_user_registered_message', ['firstName' => $user->prenom, 'lastName' => $user->nom]),
+                default => __('messages.notification_user_updated_message')
             };
         }
 

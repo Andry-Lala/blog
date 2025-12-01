@@ -1,10 +1,10 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Gestion des Investissements')
+@section('title', __('messages.manage_clients'))
 
 @section('header')
     <div class="ml-4 flex items-center">
-        <h1 class="text-2xl font-semibold text-gray-900">Gestion des Investissements</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">{{ __('messages.manage_clients') }}</h1>
     </div>
 @endsection
 
@@ -42,11 +42,11 @@
                     <table id="investmentsAdminTable" class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre d'investissements</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant total validé</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dernier investissement</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.client') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.investment_count') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.validated_amounts') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.last_investment') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -58,7 +58,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                            {{ $client['validated_investments_count'] }} investissement(s)
+                                            {{ $client['validated_investments_count'] }} {{ __('messages.investment') }}(s)
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -76,7 +76,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
                                             <a href="{{ route('investments.user', $client['id']) }}"
-                                               class="text-blue-600 hover:text-blue-800" title="Voir tous les investissements du client">
+                                               class="text-blue-600 hover:text-blue-800" title="{{ __('messages.view_all_client_investments') }}">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -84,7 +84,7 @@
                                             </a>
                                             @if($client['validated_investments_count'] > 0)
                                                 <button type="button" class="text-green-600 hover:text-green-800"
-                                                        title="Voir les détails des investissements"
+                                                        title="{{ __('messages.view_investment_details') }}"
                                                         onclick="toggleInvestments({{ $client['id'] }})">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
@@ -103,7 +103,7 @@
                 <div id="investments-details" class="hidden mt-6">
                     <div class="bg-white shadow rounded-lg overflow-hidden">
                         <div class="px-4 py-5 sm:px-6">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">Détails des investissements validés</h3>
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('messages.validated_investments_details') }}</h3>
                             <button onclick="closeInvestmentsDetails()" class="float-right text-gray-500 hover:text-gray-700">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -123,8 +123,8 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">Aucun investissement validé</h3>
-                <p class="mt-1 text-sm text-gray-500">Il n'y a actuellement aucun investissement validé par les clients.</p>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('messages.no_validated_investments') }}</h3>
+                <p class="mt-1 text-sm text-gray-500">{{ __('messages.no_validated_investments_description') }}</p>
             </div>
         @endif
     </div>
@@ -161,7 +161,7 @@ function toggleInvestments(clientId) {
                         ${new Date(investment.created_at).toLocaleDateString('fr-FR')} ${new Date(investment.created_at).toLocaleTimeString('fr-FR')}
                     </div>
                     <div class="mt-2">
-                        <a href="/investments/${investment.id}" class="text-blue-500 hover:text-blue-700 text-xs">Voir les détails</a>
+                        <a href="/investments/${investment.id}" class="text-blue-500 hover:text-blue-700 text-xs">{{ __('messages.view_details') }}</a>
                     </div>
                 </div>
             `;
@@ -186,51 +186,65 @@ function closeInvestmentsDetails() {
 
 @push('scripts')
 <script>
-$(document).ready(function() {
-    $('#investmentsAdminTable').DataTable({
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
-            search: "Rechercher:",
-            lengthMenu: "Afficher _MENU_ entrées",
-            info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
-            paginate: {
-                first: '<i class="fas fa-angle-double-left"></i>',
-                last: '<i class="fas fa-angle-double-right"></i>',
-                next: '<i class="fas fa-angle-right"></i>',
-                previous: '<i class="fas fa-angle-left"></i>'
-            }
-        },
-        pageLength: 25,
-        responsive: true,
-        order: [[2, 'desc']], // Trier par montant total validé (décroissant)
-        dom: '<"flex flex-col md:flex-row justify-between items-center mb-4"lBfr>t<"flex flex-col md:flex-row justify-between items-center mt-4"ip>',
-        buttons: [
-            {
-                extend: 'excel',
-                text: '<i class="fas fa-file-excel"></i> Excel',
-                className: 'bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
-            },
-            {
-                extend: 'pdf',
-                text: '<i class="fas fa-file-pdf"></i> PDF',
-                className: 'bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
-            },
-            {
-                extend: 'print',
-                text: '<i class="fas fa-print"></i> Imprimer',
-                className: 'bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mb-2 md:mb-0'
-            }
-        ],
-        initComplete: function() {
-            // Masquer la pagination par défaut
-            $('.pagination').hide();
+// Initialiser DataTable quand le document est prêt
+document.addEventListener('DOMContentLoaded', function() {
+    // S'assurer que jQuery est chargé
+    if (typeof $ !== 'undefined') {
+        $(document).ready(function() {
+            try {
+                $('#investmentsAdminTable').DataTable({
+                    language: {
+                        url: app()->getLocale() === 'fr' ? '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json' : '//cdn.datatables.net/plug-ins/1.13.7/i18n/en-GB.json',
+                        search: "{{ __('messages.search_placeholder') }}",
+                        lengthMenu: "{{ __('messages.show') }} _MENU_ {{ __('messages.entries') }}",
+                        info: "{{ __('messages.showing_to_of_total_entries') }}",
+                        paginate: {
+                            first: '<i class="fas fa-angle-double-left"></i>',
+                            last: '<i class="fas fa-angle-double-right"></i>',
+                            next: '<i class="fas fa-angle-right"></i>',
+                            previous: '<i class="fas fa-angle-left"></i>'
+                        }
+                    },
+                    pageLength: 25,
+                    responsive: true,
+                    order: [[2, 'desc']], // Trier par montant total validé (décroissant)
+                    dom: '<"row mb-4"<"col-md-6"l><"col-md-6 text-right"B>>rt<"row mt-4"<"col-md-6"i><"col-md-6"p>>',
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            text: '<i class="fas fa-file-excel"></i> {{ __('messages.excel') }}',
+                            className: 'btn btn-success btn-sm mr-2'
+                        },
+                        {
+                            extend: 'pdf',
+                            text: '<i class="fas fa-file-pdf"></i> {{ __('messages.pdf') }}',
+                            className: 'btn btn-danger btn-sm mr-2'
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fas fa-print"></i> {{ __('messages.print') }}',
+                            className: 'btn btn-primary btn-sm'
+                        }
+                    ],
+                    initComplete: function() {
+                        // Améliorer le design de la recherche
+                        $('.dataTables_filter label').contents().filter(function() {
+                            return this.nodeType === 3;
+                        }).remove();
 
-            // Améliorer le design de la recherche
-            $('.dataTables_filter label').contents().filter(function() {
-                return this.nodeType === 3;
-            }).remove();
-        }
-    });
+                        // Ajouter des classes Bootstrap pour le style
+                        $('.dataTables_filter input').addClass('form-control form-control-sm');
+                        $('.dataTables_length select').addClass('form-control form-control-sm');
+                        $('.dataTables_paginate .pagination').addClass('pagination-sm');
+                    }
+                });
+            } catch (error) {
+                console.error('Erreur lors de l\'initialisation du DataTable:', error);
+            }
+        });
+    } else {
+        console.error('jQuery n\'est pas chargé');
+    }
 });
 </script>
 @endpush

@@ -68,11 +68,11 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $investment->investment_type }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ number_format($investment->amount, 2, ',', ' ') }} Ar</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @if($investment->status === 'Validé')
+                                        @if($investment->status === 'Validé' || $investment->status === 'Approved')
                                             <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-50 text-green-600">{{ __('messages.approved') }}</span>
-                                        @elseif($investment->status === 'Rejeté')
+                                        @elseif($investment->status === 'Rejeté' || $investment->status === 'Rejected')
                                             <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-50 text-red-600">{{ __('messages.rejected') }}</span>
-                                        @elseif($investment->status === 'En cours de traitement')
+                                        @elseif($investment->status === 'En cours de traitement' || $investment->status === 'Processing')
                                             <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-50 text-yellow-600">{{ __('messages.processing') }}</span>
                                         @else
                                             <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-50 text-blue-600">{{ __('messages.pending') }}</span>
@@ -88,7 +88,7 @@
                                                 </svg>
                                             </a>
 
-                                            @if($investment->status === 'Validé')
+                                            @if($investment->status === 'Validé' || $investment->status === 'Approved')
                                                 <button onclick="generateInvoice({{ $investment->id }})"
                                                         class="text-green-500 hover:text-green-600"
                                                         title="{{ __('messages.generate_invoice_pdf') }}">
@@ -127,55 +127,70 @@
 
 @push('scripts')
 <script>
+// Fonction pour générer une facture
 function generateInvoice(investmentId) {
     window.open(`/investments/${investmentId}/invoice`, '_blank');
 }
 
-$(document).ready(function() {
-    $('#investmentsTable').DataTable({
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
-            search: "{{ __('messages.search_placeholder') }}",
-            lengthMenu: "{{ __('messages.show') }} _MENU_ {{ __('messages.entries') }}",
-            info: "{{ __('messages.showing_to_of_total_entries') }}",
-            paginate: {
-                first: '<i class="fas fa-angle-double-left"></i>',
-                last: '<i class="fas fa-angle-double-right"></i>',
-                next: '<i class="fas fa-angle-right"></i>',
-                previous: '<i class="fas fa-angle-left"></i>'
-            }
-        },
-        pageLength: 10,
-        responsive: true,
-        order: [[0, 'desc']],
-        dom: '<"flex flex-col md:flex-row justify-between items-center mb-4"lBfr>t<"flex flex-col md:flex-row justify-between items-center mt-4"ip>',
-        buttons: [
-            {
-                extend: 'excel',
-                text: '<i class="fas fa-file-excel"></i> {{ __('messages.excel') }}',
-                className: 'bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
-            },
-            {
-                extend: 'pdf',
-                text: '<i class="fas fa-file-pdf"></i> {{ __('messages.pdf') }}',
-                className: 'bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2 mb-2 md:mb-0'
-            },
-            {
-                extend: 'print',
-                text: '<i class="fas fa-print"></i> {{ __('messages.print') }}',
-                className: 'bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md mb-2 md:mb-0'
-            }
-        ],
-        initComplete: function() {
-            // Masquer la pagination par défaut
-            $('.pagination').hide();
+// Initialiser DataTable quand le document est prêt
+document.addEventListener('DOMContentLoaded', function() {
+    // S'assurer que jQuery est chargé
+    if (typeof $ !== 'undefined') {
+        $(document).ready(function() {
+            try {
+                $('#investmentsTable').DataTable({
+                    language: {
+                        url: app()->getLocale() === 'fr' ? '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json' : '//cdn.datatables.net/plug-ins/1.13.7/i18n/en-GB.json',
+                        search: "{{ __('messages.search_placeholder') }}",
+                        lengthMenu: "{{ __('messages.show') }} _MENU_ {{ __('messages.entries') }}",
+                        info: "{{ __('messages.showing_to_of_total_entries') }}",
+                        paginate: {
+                            first: '<i class="fas fa-angle-double-left"></i>',
+                            last: '<i class="fas fa-angle-double-right"></i>',
+                            next: '<i class="fas fa-angle-right"></i>',
+                            previous: '<i class="fas fa-angle-left"></i>'
+                        }
+                    },
+                    pageLength: 10,
+                    responsive: true,
+                    order: [[0, 'desc']],
+                    dom: '<"row mb-4"<"col-md-6"l><"col-md-6 text-right"B>>rt<"row mt-4"<"col-md-6"i><"col-md-6"p>>',
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            text: '<i class="fas fa-file-excel"></i> {{ __('messages.excel') }}',
+                            className: 'btn btn-success btn-sm mr-2'
+                        },
+                        {
+                            extend: 'pdf',
+                            text: '<i class="fas fa-file-pdf"></i> {{ __('messages.pdf') }}',
+                            className: 'btn btn-danger btn-sm mr-2'
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fas fa-print"></i> {{ __('messages.print') }}',
+                            className: 'btn btn-primary btn-sm'
+                        }
+                    ],
+                    initComplete: function() {
+                        // Améliorer le design de la recherche
+                        $('.dataTables_filter label').contents().filter(function() {
+                            return this.nodeType === 3;
+                        }).remove();
 
-            // Améliorer le design de la recherche
-            $('.dataTables_filter label').contents().filter(function() {
-                return this.nodeType === 3;
-            }).remove();
-        }
-    });
+                        // Ajouter des classes Bootstrap pour le style
+                        $('.dataTables_filter input').addClass('form-control form-control-sm');
+                        $('.dataTables_length select').addClass('form-control form-control-sm');
+                        $('.dataTables_paginate .pagination').addClass('pagination-sm');
+                    }
+                });
+            } catch (error) {
+                console.error('Erreur lors de l\'initialisation du DataTable:', error);
+            }
+        });
+    } else {
+        console.error('jQuery n\'est pas chargé');
+    }
 });
 </script>
 @endpush
