@@ -81,7 +81,7 @@ class NotificationController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Notification marquée comme lue',
+            'message' => __('messages.notification_marked_as_read'),
             'unread_count' => Notification::getUnreadCountForUser(Auth::id())
         ]);
     }
@@ -97,7 +97,7 @@ class NotificationController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Toutes les notifications ont été marquées comme lues',
+            'message' => __('messages.mark_all_read'),
             'unread_count' => 0
         ]);
     }
@@ -114,7 +114,7 @@ class NotificationController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Notification supprimée',
+            'message' => __('messages.notification_deleted'),
             'unread_count' => Notification::getUnreadCountForUser(Auth::id())
         ]);
     }

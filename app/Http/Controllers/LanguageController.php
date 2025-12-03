@@ -38,6 +38,7 @@ class LanguageController extends Controller
             return response()->json([
                 'success' => true,
                 'locale' => $locale,
+                'reload' => true,
                 'message' => $locale === 'fr' ? 'Langue changée en français' : 'Language changed to English'
             ])->withCookie(cookie('locale', $locale, 43200));
         }

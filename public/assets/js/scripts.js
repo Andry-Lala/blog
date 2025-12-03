@@ -3,16 +3,16 @@
 */
 
 (function($) {
-    "use strict"; 
-	
+    "use strict";
+
     /* Navbar Scripts */
     // jQuery to collapse the navbar on scroll
     $(window).on('scroll load', function() {
-		
+
 			$(".fixed-top").addClass("top-nav-collapse");
-		
+
     });
-    
+
 	// jQuery for page scrolling feature - requires jQuery Easing plugin
 	$(function() {
 		$(document).on('click', 'a.page-scroll', function(event) {
@@ -57,7 +57,7 @@
 		removalDelay: 300,
 		mainClass: 'my-mfp-slide-bottom'
     });
-    
+
 
     /* Card Slider - Swiper */
 	var cardSlider = new Swiper('.card-slider', {
@@ -89,7 +89,7 @@
     /* Counter - CountTo */
 	var a = 0;
 	$(window).scroll(function() {
-		if ($('#counter').length) { // checking if CountTo section exists in the page, if not it will not run the script and avoid errors	
+		if ($('#counter').length) { // checking if CountTo section exists in the page, if not it will not run the script and avoid errors
 			var oTop = $('#counter').offset().top - window.innerHeight;
 			if (a == 0 && $(window).scrollTop() > oTop) {
 			$('.counter-value').each(function() {
@@ -127,7 +127,7 @@
 			$(this).removeClass('notEmpty');
 		}
 	});
-	
+
 
     /* Back To Top Button */
     // create the back to top button
@@ -156,13 +156,19 @@
 				menuItems.push(hash);
 		})
 		return menuItems;
-	}	
+	}
 
 	/* Prevents adding of # at the end of URL on click of non-pagescroll links */
 	$('.nav-link').click(function (e) {
 		var hash = $(this).attr('href').substr(1);
 		if(hash == "")
 			e.preventDefault();
+	});
+
+	// Ignorer les liens avec data-no-jquery="true" pour éviter les conflits avec Alpine.js
+	$('a[data-no-jquery="true"]').off('click').on('click', function(e) {
+		// Laisser Alpine.js gérer ces liens
+		return true;
 	});
 
 	/* Checks page scroll offset and changes active link on page load */
@@ -172,19 +178,19 @@
 	$(document).scroll(function(){
 		changeActive();
 	});
-	
+
 	/* Function to change the active link */
 	function changeActive() {
 		const menuItems = getMenuItems();
 		$.each(menuItems, function(index, value){
 			var offsetSection = $('#' + value).offset().top;
 			var docScroll = $(document).scrollTop();
-			var docScroll1 = docScroll + 1; 
-			
+			var docScroll1 = docScroll + 1;
+
 			if ( docScroll1 >= offsetSection ){
 				$('.nav-link').removeClass('active');
 				$('.nav-link[href$="#'+value+'"]').addClass('active');
-			}  
+			}
 		});
 	}
 

@@ -104,7 +104,7 @@
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('lieu_naissance') border-red-500 @enderror"
                                id="lieu_naissance" name="lieu_naissance" value="{{ old('lieu_naissance') }}"
-                               minlength="2" maxlength="255" placeholder="Antananarivo">
+                               minlength="2" maxlength="255" placeholder="{{ __('messages.birth_place_placeholder') }}">
                         @error('lieu_naissance')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -115,7 +115,7 @@
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('nationalite') border-red-500 @enderror"
                                id="nationalite" name="nationalite" value="{{ old('nationalite') }}"
-                               minlength="2" maxlength="255" placeholder="Malagasy">
+                               minlength="2" maxlength="255" placeholder="{{ __('messages.nationality_placeholder') }}">
                         @error('nationalite')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -126,7 +126,7 @@
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('profession') border-red-500 @enderror"
                                id="profession" name="profession" value="{{ old('profession') }}"
-                               minlength="2" maxlength="255" placeholder="Développeur">
+                               minlength="2" maxlength="255" placeholder="{{ __('messages.profession_placeholder') }}">
                         @error('profession')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -156,7 +156,7 @@
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('numero_piece') border-red-500 @enderror"
                                id="numero_piece" name="numero_piece" value="{{ old('numero_piece') }}"
-                               required minlength="5" maxlength="50" placeholder="1234567890123">
+                               required minlength="5" maxlength="50" placeholder="{{ __('messages.document_number_placeholder') }}">
                         @error('numero_piece')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -178,7 +178,7 @@
                         <input type="text"
                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 @error('lieu_delivrance') border-red-500 @enderror"
                                id="lieu_delivrance" name="lieu_delivrance" value="{{ old('lieu_delivrance') }}"
-                               required minlength="2" maxlength="255" placeholder="Antananarivo">
+                               required minlength="2" maxlength="255" placeholder="{{ __('messages.birth_place_placeholder') }}">
                         @error('lieu_delivrance')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
