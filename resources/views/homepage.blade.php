@@ -98,19 +98,118 @@
         <!-- Header -->
         <header id="header" class="header py-28 text-center md:pt-36 lg:text-left xl:pt-44 xl:pb-32">
             <div class="container px-4 sm:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
-                <div class="mb-16 lg:mt-20 xl:mt-24 xl:mr-12">
+                <div class="mb-16  xl:mr-12">
+                    <!-- Badge security payment and transfer -->
+                    <div class="grid grid-rows-1 gap-3 p-3 lg:-ml-10 lg:-mt-16">
+                        <div class="grid grid-cols-3 gap-8">
+
+                        <!-- Sécurité Paiement -->
+                            <div class="group flex flex-col items-center text-center lg:items-start lg:text-left">
+                                <div class="w-20 h-20 rounded-full bg-blue-500 flex items-center justify-center shadow-md group-hover:bg-teal-600 group-hover:shadow-xl transition-all duration-300 border-blue-500 border-2">
+                                    <h3 class=" text-sm font-semibold text-white">PAYMENT</h3>
+                                </div>
+                                <p class="mt-1 text-sm text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                     Your transactions are protected by an advanced security system.
+                                </p>
+                            </div>
+
+                        <!-- Fiabilité -->
+                            <div class="group flex flex-col items-center text-center lg:items-start lg:text-left">
+                                <div class="w-20 h-20 rounded-full bg-blue-500 flex items-center justify-center shadow-md group-hover:bg-teal-600 group-hover:shadow-xl transition-all duration-300 border-blue-500 border-2">
+                                    <h3 class="text-sm font-semibold text-white">SECURITY</h3>
+                                </div>
+                                <p class="mt-1 text-sm text-gray-500 opacity-0 group-hover:opacity-100  transition-opacity duration-300">
+                                    A stable, reliable, and thoroughly tested platform for your needs.
+                                </p>
+                            </div>
+
+                        <!-- Rapidité Transfert -->
+                            <div class="group flex flex-col items-center text-center lg:items-start lg:text-left">
+                                <div class="w-20 h-20 rounded-full bg-blue-500 flex items-center justify-center shadow-md group-hover:bg-teal-500 group-hover:shadow-xl transition-all duration-300 border-blue-500 border-2">
+                                    <h3 class="text-sm font-semibold text-white">TRANSFER</h3>
+                                </div>
+                                <p class="mt-1 text-sm text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    Make your transfers in just a few seconds.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
                     <h1 class="h1-large mb-5 ">Invest <span class="text-red-500 font-bold">in</span> <br>Earn <span class="text-red-500 font-bold">Money</span> <br>Get <span class="text-red-500 font-bold">Paid</span></h1>
                     <p class="p-large mb-8">Come in to check out our online offers</p>
                     <a class="btn-solid-lg px-4 py-2 text-sm" href="/register"><i class="fas fa-user-plus fa-sm mr-2"></i>Sign up now</a>
                 </div>
                 <div class="xl:text-right">
                     <div class="grid grid-rows-1 gap-3 p-3">
-                         <img class="mt-5 rounded" style="height:100%;width:100%"  src="assets/images/pctrade.png" alt="alternative" />
+                         <img class="mt-5 rounded" src="assets/images/pctrade.png" alt="alternative" />
                     </div>
                 </div>
             </div> <!-- end of container -->
         </header> <!-- end of header -->
         <!-- end of header -->
+
+        <div class="flex justify-center bg-gray-300 lg:-mt-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 p-4 justify-items-center">
+                <div class="flex flex-col items-center w-3/4">    
+                    <img src="assets/images/alphaCapital.jpeg" alt="Alpha Capital" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(0)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Alpha Capital</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">
+                    <img src="assets/images/deriv.jpeg" alt="Deriv" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(1)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Deriv</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">
+                    <img src="assets/images/exness.jpeg" alt="Exness" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(2)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Exness</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">
+                    <img src="assets/images/FBS.jpeg" alt="FBS" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(3)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">FBS</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">
+                    <img src="assets/images/fusionMarket.jpeg" alt="Fusion Markets" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(4)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Fusion Markets</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">    
+                    <img src="assets/images/grandCapital.jpeg" alt="Grand Capital" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(5)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Grand Capital</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">
+                    <img src="assets/images/interactiveBrokers.jpeg" alt="Interactive Brokers" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(6)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Interactive Brokers</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">
+                    <img src="assets/images/octaFX.jpeg" alt="Octa FX" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(7)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Octa FX</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">
+                    <img src="assets/images/onFin.jpeg" alt="On Fin" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(8)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">On Fin</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">    
+                    <img src="assets/images/raiseFX.jpeg" alt="Raise FX" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(9)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Raise FX</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">
+                    <img src="assets/images/vantageFoundation.jpeg" alt="Vantage Foundation" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(10)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Vantage Foundation</span>
+                </div>
+                <div class="flex flex-col items-center w-3/4">
+                    <img src="assets/images/welTrade.jpeg" alt="WELTRADE" class="w-full h-24 object-cover cursor-pointer" onclick="openLightbox(11)">
+                    <span class="w-full px-2 py-1 bg-gray-200 text-gray-800 font-semibold text-center">Weltrade</span>
+                </div>
+            </div>
+        </div>
+        <!-- Lightbox pour image broker-->
+        <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+            <span class="absolute top-4 right-6 text-white text-3xl cursor-pointer" onclick="closeLightbox()">&times;</span>
+            <span class="absolute left-6 text-gray-400 text-4xl cursor-pointer select-none" onclick="prevImage()">&#10094;</span>
+            <span class="absolute right-6 text-gray-400 text-4xl cursor-pointer select-none" onclick="nextImage()">&#10095;</span>
+            <div class="flex flex-col items-center">
+                <img id="lightboxImg" src="" class="max-w-full lg:max-w-3xl max-h-[80vh] rounded-lg shadow-lg">
+                <span id="lightboxName" class="mt-4 text-white text-xl font-semibold text-center"></span>
+            </div>
+        </div>
 
 
         <!-- Introduction -->
@@ -118,7 +217,7 @@
             <div class="container px-4 sm:px-8 lg:grid lg:grid-cols-12 lg:gap-x-12" >
                 <div class="lg:col-span-7">
                     <div class="mb-12 lg:mb-0 xl:mr-14">
-                        <img class="inline" src="assets/images/trade-agent.avif" alt="alternative" id="services" />
+                        <img class="inline" src="assets/images/trade-agent.avif" alt="trade-agent" id="services" />
                     </div>
                 </div> <!-- end of col -->
                 <div class="lg:col-span-5">
@@ -710,7 +809,7 @@
                     const popup = document.querySelector(popupId);
                     if (popup) popup.classList.remove('hidden');
                 });
-        });
+            });
 
 
             // Fermer le popup
@@ -725,7 +824,85 @@
                     if (e.target === popup) popup.classList.add('hidden');
                     });
                 });
-        
+
+            // Fermer le popup avec la touche Échap
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.popup').forEach(popup => {
+                        popup.classList.add('hidden');
+                    });
+                }
+            }); 
+
+            // End of popup functionality
+
+            // broker image toggle
+            const images = [
+                "assets/images/alphaCapital.jpeg",
+                "assets/images/deriv.jpeg",
+                "assets/images/exness.jpeg",
+                "assets/images/FBS.jpeg",
+                "assets/images/fusionMarket.jpeg",
+                "assets/images/grandCapital.jpeg",
+                "assets/images/interactiveBrokers.jpeg",
+                "assets/images/octaFX.jpeg",
+                "assets/images/onFin.jpeg",
+                "assets/images/raiseFX.jpeg",
+                "assets/images/vantageFoundation.jpeg",
+                "assets/images/welTrade.jpeg"
+            ];
+
+            const names = [
+                "Alpha Capital",
+                "Deriv",
+                "Exness",
+                "FBS",
+                "Fusion Market",
+                "Grand Capital",
+                "Interactive Brokers",
+                "OctaFX",
+                "OnFin",
+                "Raise FX",
+                "Vantage Foundation",
+                "WelTrade"
+            ];
+
+            let currentIndex = 0;
+
+            function openLightbox(index) {
+                currentIndex = index;
+                document.getElementById('lightboxImg').src = images[currentIndex];
+                document.getElementById('lightboxName').innerText = names[currentIndex];
+                document.getElementById('lightbox').classList.remove('hidden');
+                document.getElementById('lightbox').classList.add('flex');
+
+                //desactiver le scroll de la page principale
+                document.body.style.overflow = 'hidden';
+                //desactiver le navbar
+                const navbar = document.querySelector('.navbar.fixed-top');
+                if (navbar) navbar.style.display = 'none';
+            }
+            function closeLightbox() {
+                document.getElementById('lightbox').classList.add('hidden');
+                document.getElementById('lightbox').classList.remove('flex');
+
+                //reactiver le scroll de la page principale
+                document.body.style.overflow = 'auto';
+
+                // Afficher la navbar
+                const navbar = document.querySelector('.navbar.fixed-top');
+                if (navbar) navbar.style.display = 'flex';
+            }
+            function nextImage() {
+                currentIndex = (currentIndex + 1) % images.length;
+                document.getElementById('lightboxImg').src = images[currentIndex];
+                document.getElementById('lightboxName').innerText = names[currentIndex];    
+            }
+            function prevImage() {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                document.getElementById('lightboxImg').src = images[currentIndex];
+                document.getElementById('lightboxName').innerText = names[currentIndex];
+            }
         </script>
     </body>
 </html>
