@@ -1,0 +1,437 @@
+const translations = {
+     en: {
+          //nav-links
+          home_nav_link: "Home",
+          service_nav_link: "Services",
+          plan_nav_link: "Investment Plan",
+          dropdown01: "Others",
+          about_us_drop: "About Us",
+          terms_of_use_drop: "Terms of Use",
+          privacy_policy_drop: "Privacy Policy",
+          cookies_policy_drop: "Cookies Policy",
+          login: "Log In",
+          
+          //payment section
+          payment_badge: "PAYMENT",
+          payment_text: "Your transactions are protected by an advanced security system.",
+
+          //security-badge section
+          security_badge: "SECURITY",
+          security_text: "A stable, reliable, and thoroughly tested platform for your needs.",
+
+          //transfer-badge section
+          transfer_badge: "TRANSFER",
+          transfer_text: "Make your transfers in just a few seconds.",
+
+          //home section
+          home_title: "Invest <span class='text-red-500 font-bold'>in</span> <br>Earn <span class='text-red-500 font-bold'>Money</span> <br>Get <span class='text-red-500 font-bold'>Paid</span>",
+          home_text: "Come in to check out our online offers",
+          sign_up: "<i class='fas fa-user-plus fa-sm mr-2'></i>Sign up now",
+
+          //service section
+          service_title: "Our Services",
+          text_paragraph: "Unicorn Madagascar offers a cutting-edge investment plan focused on synthetic indices, designed for investors seeking high returns in a controlled market environment. Our strategy leverages the unique characteristics of synthetic indices, which mimic real-world market volatility without being affected by external events like economic shifts or geopolitical tensions. With 24/7 availability and a transparent pricing model, our synthetic indices investment plan provides flexibility and consistent opportunities for growth. Investors benefit from advanced market insights and risk management tools, ensuring a well-balanced portfolio tailored to their risk tolerance. At Unicorn Madagascar, we help you navigate the dynamic world of synthetic indices with confidence and precision.",
+          service_btn_more: "Learn more about our service",
+          service_title_details: "Our Services",
+          title_serv_1: "Unicorn Madagascar's Synthetic Indices Investment Service",
+          p_serv_1: "Unicorn Madagascar offers a specialized investment service focused on synthetic indices, designed to provide investors with exposure to market-like conditions in a controlled and transparent environment. Synthetic indices replicate the volatility and movement patterns of real financial markets, yet remain insulated from external factors such as geopolitical events or economic shifts. This makes them an attractive option for investors seeking stability and predictability while still capitalizing on market movements. Our team of financial experts provides tailored guidance, ensuring that every investor's portfolio is optimized to meet their specific financial goals.",
+          title_serv_2: "Innovative and Consistent Investment Opportunities",
+          p_serv_2: "At Unicorn Madagascar, we believe in creating innovative solutions for forward-thinking investors. With our synthetic indices, trading is available 24/7, offering continuous access to market opportunities without the restrictions of traditional markets. This round-the-clock availability enables investors to react to price movements at any time, creating more opportunities to maximize returns. The price movements in these indices are based on a carefully designed algorithm that mirrors the randomness and volatility of real markets, providing consistent opportunities for growth.",
+          title_serv_3: "Tailored Investment Plans for Diverse Risk Profiles",
+          p_serv_3: "Our investment plans are designed to cater to a range of risk appetites. Whether you are a conservative investor looking for steady returns or a high-risk investor aiming for rapid growth, Unicorn Madagascar has a plan for you. Each plan includes a combination of synthetic indices that are tailored to your personal financial objectives. We also provide real-time updates, detailed performance tracking, and advanced risk management tools to help you stay informed and make the best investment decisions possible.",
+          title_serv_4: "Expert Support and Transparent Pricing",
+          p_serv_4: "Transparency is at the core of our service. Unicorn Madagascar offers clear and competitive pricing models with no hidden fees, ensuring that you know exactly what you are paying for. Our platform is supported by a team of financial analysts and customer support professionals who are available around the clock to answer any questions and provide personalized advice. By choosing our synthetic indices investment service, you are partnering with a company committed to helping you succeed in the ever-evolving world of financial markets.",
+          btn_back: "Back",
+
+          //about us section
+          about_us_title: "About Us",
+          p_about_us_1: "Unicorn Madagascar is a forward-thinking investment platform specializing in synthetic indices. We are committed to providing investors with innovative and stable investment opportunities that mimic real market conditions without the influence of external factors like economic or political events. With a focus on transparency and accessibility, our synthetic indices are available for trading 24/7, offering consistent opportunities for growth in a secure and predictable environment. Our mission is to empower investors with the tools and knowledge needed to navigate the complexities of these unique financial instruments.",
+          title_about_us_1: "Our Expertise in Synthetic Indices",
+          p_about_us_2: "At Unicorn Madagascar, we pride ourselves on our deep understanding of synthetic indices and the value they offer to modern investors. These indices simulate real-world market volatility, offering a unique investment vehicle for those seeking diversification beyond traditional assets. Our team of financial experts continuously monitors market trends and developments to ensure our platform delivers up-to-date, high-quality investment opportunities. Whether you’re new to synthetic indices or an experienced trader, we provide the insights and guidance necessary to make informed decisions and optimize your returns.",
+          title_about_us_2: "Affiliations with Leading Online Work Platforms",
+          p_about_us_3: "In addition to our synthetic indices offerings, Unicorn Madagascar has developed strategic affiliations with leading online work platforms and financial advisors. These partnerships allow us to expand our network and offer our clients access to a wealth of resources and professional guidance. By collaborating with well-established platforms and certified experts, we ensure that our investors receive trusted advice and access to a broader range of investment options. Our affiliates provide essential tools and insights to help you achieve your financial goals efficiently and responsibly.",
+          title_about_us_3: "A Commitment to Your Success", 
+          p_about_us_4: "At Unicorn Madagascar, our success is measured by the success of our clients. We believe in building long-term relationships based on trust, transparency, and personalized service. Whether you’re looking to diversify your portfolio with synthetic indices or explore additional opportunities through our affiliated advisors, we are here to support your financial journey. Our platform is built with user-friendly technology, detailed performance tracking, and dedicated customer service to help you make the most of your investments. Join Unicorn Madagascar today and discover a world of innovative investment solutions tailored to your needs.",
+          btn_back_about_us: "Back",
+
+          //terms of use section
+          term_of_use_title: "Terms of Use",
+          tou_h1: "1. Acceptance of Terms :",
+          tou_p1: "By accessing or using the online job portal, you agree to comply with and be bound by these Terms of Use. If you do not agree with these terms, please do not use the Website.",
+          tou_h2: "2. User Accounts :",
+          tou_p2_1: "2.1 You may need to create a user account to access certain features of the Website. You are responsible for maintaining the confidentiality of your account information and agree to accept responsibility for all activities that occur under your account.",
+          tou_p2_2: "2.2 You must provide accurate and complete information when creating an account.",
+          tou_h3: "3. User Conduct :",
+          tou_p3_1: "3.1 You agree to use the Website only for lawful purposes and in a manner that does not infringe upon the rights of others or restrict their use and enjoyment of the Website.",
+          tou_p3_2: "3.2 You agree not to engage in any unauthorized access, data mining, or any activity that disrupts or interferes with the Website's functionality.",
+          tou_h4: "4. Content :",
+          tou_p4_1: "4.1 Users may submit content, including job postings, resumes, and reviews. By submitting content, you grant the Online Job Portal a non-exclusive, royalty-free, perpetual, and worldwide license to use, modify, and distribute the content.",
+          tou_p4_2: "4.2 You agree not to submit false, misleading, or offensive content.",
+          tou_h5: "5. Intellectual Property :",
+          tou_p5_1: "5.1 The Website and its original content (excluding user-generated content) are owned by us and are protected by intellectual property laws.",
+          tou_p5_2: "5.2 You may not use the Website's content without explicit permission from us.",
+          tou_h6: "6. Privacy :",
+          tou_p6_1: "6.1 Your use of the Website is also governed by our Privacy Policy.",
+          tou_h7: "7. Limitation of Liability :",
+          tou_p7_1: "7.1 We are not responsible for any damages, direct or indirect, arising from your use of the Website.",
+          tou_p7_2: "7.2 The Website may include links to third-party websites. We are not responsible for the content or actions of these third parties.",
+          tou_h8: "8. Indemnification :",
+          tou_p8: "You agree to indemnify and hold us harmless from any claims, losses, or damages arising out of your use of the Website or violation of these Terms of Use.",
+          tou_h9: "9. Termination :",
+          tou_p9: "We reserve the right to terminate or suspend your account and access to the Website at our sole discretion.",
+          tou_h10: "10. Governing Law :",
+          tou_p10: "These Terms of Use are governed by the laws of the relevant jurisdiction, without regard to its conflict of law principles.",
+          tou_h11: "11. Changes to Terms :",
+          tou_p11: "We reserve the right to update or modify these Terms of Use at any time without prior notice.",
+          tou_h12: "12. Contact Us :",
+          tou_p12: "If you have any questions about these Terms of Use, please contact us at: e.serasera.malalaka@gmail.com",
+          tou_accept_btn: "I Accept",
+
+          //privacy policy section
+          pp_title: "Privacy Policy",
+          pp_lastUp: "Last updated: 08/22/2023",
+          pp_h0: "Introduction :",
+          pp_welcome: "Welcome to our website. This Privacy Policy is intended to inform you about how we collect, use, disclose, and protect your personal information when you use our website [www.yourjobportalwebsite.com] and the services provided through it. By accessing or using the Website, you consent to the practices described in this policy.",
+          pp_h1: "Information We Collect :",
+          pp_li1_1: "Personal Information: We may collect personal information from you when you register an account, submit a job application, post a job listing, or communicate with us. This may include your name, email address, phone number, resume, and other relevant details.",
+          pp_li1_2: "Usage Information: We collect information about how you interact with the Website, including the pages you visit, the jobs you view, and the actions you take. This data helps us improve the user experience and tailor our services to your preferences.",
+          pp_li1_3: "Device and Log Information: We automatically collect information about the device you use to access the Website and your usage of the Website. This includes your IP address, browser type, operating system, and other technical information.",
+          pp_h2: "How We Use Your Information :",
+          pp_p1: "We use the information we collect for various purposes, including:",
+          pp_li2_1: "Providing Services: To facilitate job searches, match job seekers with employers, and enable communication between users.",
+          pp_li2_2: "Improving User Experience: To personalize your experience on the Website, optimize content, and provide relevant recommendations.",
+          pp_li2_3: "Communication: To send you notifications, updates, and promotional materials related to our services.",
+          pp_li2_4: "Analytics: To analyze trends, track usage patterns, and gather statistical data to improve our offerings.",
+          pp_h3: "Sharing Your Information :",
+          pp_p2: "We may share your information with the following parties:",
+          pp_li3_1: "Employers and Job Seekers: Depending on your user role, we may share your information with employers or job seekers to facilitate job matching and communication.",
+          pp_li3_2: "Service Providers: We may engage third-party service providers to assist with various aspects of our services, such as analytics, hosting, and customer support.",
+          pp_li3_3: "Legal Compliance: We may disclose information if required by law, to protect our rights, or in response to legal requests.",
+          pp_h4: "Your Choices :",
+          pp_li4_1: "Access and Update: You can access and update your personal information through your account settings on the Website.",
+          pp_li4_2: "Opt-Out: You can opt out of receiving promotional emails by following the instructions provided in the email.",
+          pp_li4_3: "Cookies: You can manage your cookie preferences through your browser settings.",
+          pp_h5: "Security :",
+          pp_p3: "We implement security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, so we cannot guarantee absolute security.",
+          pp_h6: "Children's Privacy :",
+          pp_p4: "Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have inadvertently collected such information, please contact us.",
+          pp_h7: "Changes to this Policy :",
+          pp_p5: "We may update this Privacy Policy to reflect changes in our practices or applicable laws. We will notify you of any material changes via the Website or other communication methods.",
+          pp_h8: "Contact Us :",
+          pp_p6: "If you have any questions about this Privacy Policy, please contact us at [contact@yourjobportalwebsite.com].",
+          pp_accept: "Accept Privacy",
+
+          //cookies policy section
+          cp_title: "Cookies Policy",
+          cp_lastUp: "Last updated: 08/22/2023",
+          cp_h0: "Introduction :",
+          cp_welcome: "Welcome to Online Job Portal. This Cookies Policy is designed to help you understand how we use cookies, web beacons, and similar technologies on our website [www.yourjobportalwebsite.com] to enhance your experience and provide you with relevant information and services. By continuing to use our Website, you consent to the use of these technologies as described in this policy.",
+          cp_h1: "What Are Cookies?",
+          cp_p1: "Cookies are small text files that are stored on your device (computer, tablet, or mobile phone) when you visit certain websites. They are commonly used to remember your preferences, keep you logged in, and provide anonymized tracking data to help website owners understand how users interact with their sites.",
+          cp_h2: "How We Use Cookies ?",
+          cp_p2: "We use cookies for various purposes on Online Job Portal:",
+          cp_li1: "Essential Cookies: These cookies are necessary for the basic functionality of our Website. They allow you to navigate the site, log in to your account, and access secure areas. Without these cookies, certain features of the Website may not function properly.",
+          cp_li2: "Analytics and Performance Cookies: These cookies help us analyze how visitors use our Website. They provide us with valuable information about which pages are visited most often, how users navigate through the site, and if they encounter any errors. This data helps us improve the overall user experience.",
+          cp_li3: "Functionality Cookies: Functionality cookies allow the Website to remember your preferences and choices, such as your preferred language, location, and job search settings. This enables us to provide you with a more personalized experience.",
+          cp_li4: "Advertising and Targeting Cookies: These cookies are used to deliver relevant advertisements to you based on your interests and browsing behavior. They also help us measure the effectiveness of our advertising campaigns.",
+          cp_h3: "Third-Party Cookies",
+          cp_p3: "We may also allow third-party service providers to place cookies on your device through our Website to help us analyze usage statistics, provide you with social sharing features, and deliver advertisements tailored to your interests. These providers have their own privacy policies and may collect your information, including personal data, through the cookies they set.",
+          cp_h4: "Managing Cookies",
+          cp_p4: "Most web browsers allow you to manage your cookie preferences. You can usually set your browser to refuse cookies or to alert you when cookies are being sent. However, please note that blocking or deleting cookies may impact your ability to use certain features of our Website.",
+          cp_h5: "Updates to this Policy",
+          cp_p5: "We may update this Cookies Policy from time to time to reflect changes in technology or applicable laws. When we make changes, we will revise the 'Last updated' date at the beginning of this policy. We encourage you to review this policy periodically to stay informed about how we use cookies.",
+          cp_h6: "Contact Us",
+          cp_p6: "If you have any questions about our Cookies Policy, please contact us at [contact@yourjobportalwebsite.com]. Remember to customize the placeholders and details in the policy to match your website and its practices. Also, consult with legal professionals to ensure that your Cookies Policy complies with relevant laws and regulations.",
+          cp_accept: "Accept Cookies",
+
+          //investment plan section
+          plan_title: "Investment Plan",
+
+          //term of contract section
+          toc_title: "Terms of Contract",
+
+          //short-term popup section
+          sTerm_title: "Short - Term",
+          sTerm_duration: "3 to 7 days",
+          sTerm_p1: "Short-term contracts are ideal for urgent needs and rapid execution. They offer maximum flexibility and quick delivery, allowing clients to test our services, complete short missions, or react rapidly to business opportunities. This option is perfect for businesses seeking fast results without long commitments.",
+          sTerm_a: "More details",
+          sTerm_h1: "Short-Term",
+          sTerm_p2: "Park your funds safely and earn quick returns with our ultra-short-term investment. Designed for <strong>3 to 7 days</strong>, this option gives you fast access to your money, low risk, and modest profits—perfect for managing temporary cash, emergency funds, or short-term financial goals.",
+          sTerm_h2: "Key Features:",
+          sTerm_li1: "<strong>Duration:</strong> 3–7 days",
+          sTerm_li2: "<strong>Liquidity:</strong> Instant access after maturity",
+          sTerm_li3: "<strong>Risk:</strong> Low-risk, capital preservation",
+          sTerm_li4: "<strong>Returns:</strong> Modest but reliable",
+          sTerm_li5: "<strong>Ideal for:</strong> Individuals or businesses needing quick, safe, and flexible investment options",
+          sTerm_p3: "Take control of your short-term funds without locking them away for months—<span class=\"text-blue-600\">invest smart, invest short!</span>",
+          sTerm_cls: "Close",
+
+          //mean-term popup section
+          mTerm_title0: "Mean - Term",
+          mTerm_duration: "7 to 15 days",
+          mTerm_p0: "Mean-term contracts provide a balanced solution between stability and speed. They allow for deeper work, better organization, and improved efficiency. This duration is suitable for projects requiring more coordination, follow-up, or continuous support while still remaining relatively flexible.",
+          mTerm_a: "More details",
+          mTerm_title: "Mean-Term",
+          mTerm_p1: "Secure your funds while earning reliable returns with our mean-term investment. Designed for <strong>7 to 15 days</strong>, this option provides quick access to your money, low risk, and moderate profits—perfect for managing temporary cash, emergency funds, or mean-term financial objectives.",
+          mTerm_h1: "Key Features:",
+          mTerm_li1: "<strong>Duration:</strong> 7–15 days",
+          mTerm_li2: "<strong>Liquidity:</strong> Funds accessible after maturity",
+          mTerm_li3: "<strong>Risk:</strong> Low-risk, capital preservation",
+          mTerm_li4: "<strong>Returns:</strong> Moderate but consistent",
+          mTerm_li5: "<strong>Ideal for:</strong> Individuals or businesses planning for long-term financial objectives",
+          mTerm_p2: "Manage your mid-term funds efficiently without long-term commitments—<span class=\"text-blue-600\">invest smart, invest mean!</span>",
+          mTerm_cls: "Close",
+
+          //long-term popup section
+          lTerm_title: "Long - Term",
+          lTerm_duration: "1 to 2 months",
+          lTerm_p1: "Long-term contracts are designed for clients who want consistent results and long-lasting collaboration. They offer better planning, optimized performance, and stronger integration into your workflow. This is the best option for long projects, ongoing tasks, or when you need a dedicated and reliable team over an extended period.",
+          lTerm_a: "More details",
+          lTerm_h1: "Long-Term",
+          lTerm_p2: "Secure your funds for the long haul and earn stable, higher returns with our long-term investment option. Designed for <strong>30 days or more</strong>, this option balances growth and stability, allowing you to plan ahead while enjoying reliable profits. Perfect for building wealth, planning major expenses, or achieving long-term financial goals.",
+          lTerm_h2: "Key Features:",
+          lTerm_li1: "<strong>Duration:</strong> 1-2 months",
+          lTerm_li2: "<strong>Liquidity:</strong> Accessible at maturity",
+          lTerm_li3: "<strong>Risk:</strong> Low to moderate, capital growth focus",
+          lTerm_li4: "<strong>Returns:</strong> Higher and more reliable than short-term options",
+          lTerm_li5: "<strong>Ideal for:</strong> Individuals or businesses needing quick, safe, and flexible investment options",
+          lTerm_p3: "Take control of your long-term funds with confidence—<span class=\"text-blue-600\">invest smart, invest long!</span>",
+          lTerm_cls: "Close",
+
+          //opinions section
+          op_title: "Your opinion",
+          op_email_label: "Your e-mail*",
+          op_opinion_label: "Your opinion",
+          op_email_placeholder: "your@email.com",
+          op_opinion_placeholder: "Your opinion here...",
+          op_send: "Send",
+
+          //footer section
+          footer_p1: "Unicorn Madagascar is a web platform of investment and you can reach the team at <a class='text-indigo-600 hover:text-gray-500' href='mailto::e.serasera.malalaka@gmail.com'>e.serasera.malalaka@gmail.com</a>",     
+     },
+     fr: {
+          //nav-links
+          home_nav_link: "Accueil",
+          service_nav_link: "Services",
+          plan_nav_link: "Plan d'Investissement",
+          dropdown01: "Autres",
+          about_us_drop: "À Propos de Nous",
+          terms_of_use_drop: "Conditions d'Utilisation",
+          privacy_policy_drop: "Politique de Confidentialité",
+          cookies_policy_drop: "Politique de Cookies",
+          login: "Se Connecter",
+
+          //payment-badge section
+          payment_badge: "PAIEMENT",
+          payment_text: "Vos transactions sont protégées par un système de sécurité avancé.",
+
+          //security-badge section
+          security_badge: "SÉCURITÉ",
+          security_text: "Une plateforme stable, fiable et rigoureusement testée pour vos besoins.",
+
+          //transfer-badge section
+          transfer_badge: "TRANSFERT",
+          transfer_text: "Effectuez vos transferts en quelques secondes seulement.",
+
+          //home section
+          home_title: "Investissez <br>Gagnez de <span class='text-red-500 font-bold'>l'argent</span> <br> Recevez vos <span class='text-red-500 font-bold'>gains</span>",
+          home_text: "Venez découvrir nos offres en ligne",
+          sign_up: "<i class='fas fa-user-plus fa-sm mr-2'></i>S'inscrire maintenant",
+
+          //service section
+          service_title: "Nos Services",
+          text_paragraph: "Unicorn Madagascar propose un plan d'investissement de pointe axé sur les indices synthétiques, conçu pour les investisseurs recherchant des rendements élevés dans un environnement de marché contrôlé. Notre stratégie exploite les caractéristiques uniques des indices synthétiques, qui imitent la volatilité du marché réel sans être affectés par des événements externes tels que les changements économiques ou les tensions géopolitiques. Avec une disponibilité 24h/24 et 7j/7 et un modèle de tarification transparent, notre plan d'investissement en indices synthétiques offre flexibilité et opportunités de croissance constantes. Les investisseurs bénéficient d'informations avancées sur le marché et d'outils de gestion des risques, garantissant un portefeuille bien équilibré adapté à leur tolérance au risque. Chez Unicorn Madagascar, nous vous aidons à naviguer dans le monde dynamique des indices synthétiques avec confiance et précision.",
+          service_btn_more: "En savoir plus sur notre service",
+          service_title_details: "Nos Services",
+          title_serv_1: "Service d'Investissement en Indices Synthétiques d'Unicorn Madagascar",
+          p_serv_1: "Unicorn Madagascar propose un service d'investissement spécialisé axé sur les indices synthétiques, conçu pour offrir aux investisseurs une exposition à des conditions de marché dans un environnement contrôlé et transparent. Les indices synthétiques reproduisent la volatilité et les modèles de mouvement des marchés financiers réels, tout en restant isolés des facteurs externes tels que les événements géopolitiques ou les changements économiques. Cela en fait une option attrayante pour les investisseurs recherchant stabilité et prévisibilité tout en capitalisant sur les mouvements du marché. Notre équipe d'experts financiers fournit des conseils personnalisés, garantissant que le portefeuille de chaque investisseur est optimisé pour atteindre ses objectifs financiers spécifiques.",
+          title_serv_2: "Opportunités d'Investissement Innovantes et Cohérentes",
+          p_serv_2: "Chez Unicorn Madagascar, nous croyons en la création de solutions innovantes pour les investisseurs avant-gardistes. Avec nos indices synthétiques, le trading est disponible 24h/24 et 7j/7, offrant un accès continu aux opportunités du marché sans les restrictions des marchés traditionnels. Cette disponibilité permanente permet aux investisseurs de réagir aux mouvements de prix à tout moment, créant ainsi plus d'opportunités pour maximiser les rendements. Les mouvements de prix de ces indices sont basés sur un algorithme soigneusement conçu qui reflète l'aléatoire et la volatilité des marchés réels, offrant des opportunités de croissance cohérentes.",
+          title_serv_3: "Plans d'Investissement Personnalisés pour Divers Profils de Risque",
+          p_serv_3: "Nos plans d'investissement sont conçus pour répondre à une gamme d'appétits pour le risque. Que vous soyez un investisseur conservateur recherchant des rendements stables ou un investisseur à haut risque visant une croissance rapide, Unicorn Madagascar a un plan pour vous. Chaque plan comprend une combinaison d'indices synthétiques adaptés à vos objectifs financiers personnels. Nous fournissons également des mises à jour en temps réel, un suivi détaillé des performances et des outils avancés de gestion des risques pour vous aider à rester informé et à prendre les meilleures décisions d'investissement possibles.",
+          title_serv_4: "Support Expert et Tarification Transparente",
+          p_serv_4: "La transparence est au cœur de notre service. Unicorn Madagascar offre des modèles de tarification clairs et compétitifs sans frais cachés, garantissant que vous savez exactement ce que vous payez. Notre plateforme est soutenue par une équipe d'analystes financiers et de professionnels du support client disponibles 24h/24 pour répondre à toutes vos questions et fournir des conseils personnalisés. En choisissant notre service d'investissement en indices synthétiques, vous vous associez à une entreprise engagée à vous aider à réussir dans le monde en constante évolution des marchés financiers.",
+          btn_back: "Retour",
+
+          //about us section
+          about_us_title: "À propos de nous",
+          p_about_us_1: "Unicorn Madagascar est une plateforme d'investissement innovante, spécialisée dans les indices synthétiques. Nous nous engageons à offrir aux investisseurs des opportunités d’investissement stables et innovantes qui reproduisent les conditions réelles du marché sans l’influence de facteurs externes tels que les événements économiques ou politiques. Axés sur la transparence et l’accessibilité, nos indices synthétiques sont disponibles pour le trading 24h/24 et 7j/7, offrant des opportunités de croissance constantes dans un environnement sécurisé et prévisible. Notre mission est d’accompagner les investisseurs avec les outils et les connaissances nécessaires pour naviguer dans la complexité de ces instruments financiers uniques.",
+          title_about_us_1: "Notre expertise en indices synthétiques",
+          p_about_us_2: "Chez Unicorn Madagascar, nous sommes fiers de notre compréhension approfondie des indices synthétiques et de la valeur qu’ils apportent aux investisseurs modernes. Ces indices simulent la volatilité réelle des marchés, offrant une opportunité d’investissement unique pour ceux qui recherchent une diversification au-delà des actifs traditionnels. Notre équipe d'experts financiers surveille continuellement les tendances du marché et les évolutions pour garantir que notre plateforme propose des opportunités d’investissement de haute qualité, actuelles et pertinentes. Que vous soyez novice ou trader expérimenté, nous vous fournissons les informations et les conseils nécessaires pour prendre des décisions éclairées et optimiser vos rendements.",
+          title_about_us_2: "Affiliations avec des plateformes de travail en ligne reconnues",
+          p_about_us_3: "En plus de nos offres liées aux indices synthétiques, Unicorn Madagascar a développé des affiliations stratégiques avec des plateformes de travail en ligne renommées ainsi que des conseillers financiers professionnels. Ces partenariats nous permettent d'élargir notre réseau et d'offrir à nos clients un accès à un large éventail de ressources et de conseils spécialisés. En collaborant avec des plateformes reconnues et des experts certifiés, nous garantissons à nos investisseurs des recommandations fiables ainsi qu’un accès à davantage d’options d’investissement. Nos partenaires fournissent des outils essentiels et des analyses pour vous aider à atteindre vos objectifs financiers de manière efficace et responsable.",
+          title_about_us_3: "Un engagement envers votre réussite",
+          p_about_us_4: "Chez Unicorn Madagascar, notre réussite repose sur celle de nos clients. Nous croyons en l'établissement de relations à long terme basées sur la confiance, la transparence et un service personnalisé. Que vous souhaitiez diversifier votre portefeuille avec des indices synthétiques ou explorer d'autres opportunités via nos conseillers affiliés, nous sommes là pour accompagner votre parcours financier. Notre plateforme intègre une technologie conviviale, un suivi détaillé des performances et un service client dédié pour vous aider à tirer le meilleur parti de vos investissements. Rejoignez Unicorn Madagascar dès aujourd’hui et découvrez un univers de solutions d’investissement innovantes adaptées à vos besoins.",
+          btn_back_about_us: "Retour",
+          
+          //terms of use section
+          term_of_use_title: "Conditions d'utilisation",
+          tou_h1: "1. Acceptation des conditions :",
+          tou_p1: "En accédant ou en utilisant le portail d'emploi en ligne, vous acceptez de respecter et d’être lié par ces Conditions d'utilisation. Si vous n'êtes pas d'accord avec ces conditions, veuillez ne pas utiliser le site.",
+          tou_h2: "2. Comptes utilisateur :",
+          tou_p2_1: "2.1 Vous devrez peut-être créer un compte utilisateur pour accéder à certaines fonctionnalités du site. Vous êtes responsable de la confidentialité de vos informations de compte et acceptez d’assumer la responsabilité de toutes les activités effectuées sous votre compte.",
+          tou_p2_2: "2.2 Vous devez fournir des informations exactes et complètes lors de la création d'un compte.",
+          tou_h3: "3. Conduite de l'utilisateur :",
+          tou_p3_1: "3.1 Vous acceptez d'utiliser le site uniquement à des fins légales et d'une manière qui ne porte pas atteinte aux droits des autres ni n'entrave leur utilisation du site.",
+          tou_p3_2: "3.2 Vous acceptez de ne pas vous engager dans tout accès non autorisé, extraction de données ou toute activité perturbant ou interférant avec le fonctionnement du site.",
+          tou_h4: "4. Contenu :",
+          tou_p4_1: "4.1 Les utilisateurs peuvent soumettre du contenu, notamment des offres d'emploi, des CV et des avis. En soumettant du contenu, vous accordez au portail d'emploi en ligne une licence non exclusive, libre de droits, perpétuelle et mondiale pour utiliser, modifier et distribuer le contenu.",
+          tou_p4_2: "4.2 Vous acceptez de ne pas soumettre de contenu faux, trompeur ou offensant.",
+          tou_h5: "5. Propriété intellectuelle :",
+          tou_p5_1: "5.1 Le site et son contenu original (hors contenu généré par les utilisateurs) nous appartiennent et sont protégés par les lois sur la propriété intellectuelle.",
+          tou_p5_2: "5.2 Vous ne pouvez pas utiliser le contenu du site sans notre autorisation explicite.",
+          tou_h6: "6. Confidentialité :",
+          tou_p6_1: "6.1 Votre utilisation du site est également régie par notre Politique de confidentialité.",
+          tou_h7: "7. Limitation de responsabilité :",
+          tou_p7_1: "7.1 Nous ne sommes pas responsables des dommages, directs ou indirects, découlant de votre utilisation du site.",
+          tou_p7_2: "7.2 Le site peut inclure des liens vers des sites tiers. Nous ne sommes pas responsables du contenu ou des actions de ces tiers.",
+          tou_h8: "8. Indemnisation :",
+          tou_p8: "Vous acceptez de nous indemniser et de nous dégager de toute responsabilité en cas de réclamations, pertes ou dommages découlant de votre utilisation du site ou de la violation de ces Conditions d'utilisation.",
+          tou_h9: "9. Résiliation :",
+          tou_p9: "Nous nous réservons le droit de résilier ou de suspendre votre compte et votre accès au site à notre seule discrétion.",
+          tou_h10: "10. Droit applicable :",
+          tou_p10: "Ces Conditions d'utilisation sont régies par les lois de la juridiction concernée, sans tenir compte de ses principes de conflit de lois.",
+          tou_h11: "11. Modifications des conditions :",
+          tou_p11: "Nous nous réservons le droit de mettre à jour ou de modifier ces Conditions d'utilisation à tout moment sans préavis.",
+          tou_h12: "12. Contactez-nous :",
+          tou_p12: "Si vous avez des questions concernant ces Conditions d'utilisation, veuillez nous contacter à l'adresse suivante : e.serasera.malalaka@gmail.com",
+          tou_accept_btn: "J'accepte",
+
+          //privacy policy section
+          pp_title: "Politique de Confidentialité",
+          pp_lastUp: "Dernière mise à jour : 22/08/2023",
+          pp_h0: "Introduction :",
+          pp_welcome: "Bienvenue sur notre site. Cette Politique de Confidentialité a pour but de vous informer sur la collecte, l'utilisation, la divulgation et la protection de vos informations personnelles lorsque vous utilisez notre site [www.yourjobportalwebsite.com] et les services fournis. En accédant au site ou en l'utilisant, vous consentez aux pratiques décrites dans cette politique.",
+          pp_h1: "Informations que nous collectons :",
+          pp_li1_1: "Informations personnelles : Nous pouvons collecter vos informations personnelles lorsque vous créez un compte, soumettez une candidature, publiez une offre d'emploi ou communiquez avec nous. Cela peut inclure votre nom, adresse e-mail, numéro de téléphone, CV et autres informations pertinentes.",
+          pp_li1_2: "Informations d'utilisation : Nous collectons des informations sur la façon dont vous utilisez le site, y compris les pages que vous consultez, les offres d'emploi que vous visualisez et les actions que vous effectuez. Ces données nous aident à améliorer l'expérience utilisateur et à adapter nos services à vos préférences.",
+          pp_li1_3: "Informations sur l'appareil et les journaux : Nous collectons automatiquement des informations sur l'appareil que vous utilisez pour accéder au site et sur votre utilisation du site. Cela inclut votre adresse IP, type de navigateur, système d'exploitation et autres informations techniques.",
+          pp_h2: "Comment nous utilisons vos informations :",
+          pp_p1: "Nous utilisons les informations collectées à diverses fins, notamment :",
+          pp_li2_1: "Fourniture de services : Pour faciliter la recherche d'emploi, mettre en relation les candidats et les employeurs, et permettre la communication entre les utilisateurs.",
+          pp_li2_2: "Amélioration de l'expérience utilisateur : Pour personnaliser votre expérience sur le site, optimiser le contenu et fournir des recommandations pertinentes.",
+          pp_li2_3: "Communication : Pour vous envoyer des notifications, mises à jour et documents promotionnels relatifs à nos services.",
+          pp_li2_4: "Analyse : Pour analyser les tendances, suivre les habitudes d'utilisation et collecter des données statistiques afin d'améliorer nos offres.",
+          pp_h3: "Partage de vos informations :",
+          pp_p2: "Nous pouvons partager vos informations avec les parties suivantes :",
+          pp_li3_1: "Employeurs et candidats : Selon votre rôle, nous pouvons partager vos informations avec les employeurs ou les candidats pour faciliter la mise en relation et la communication.",
+          pp_li3_2: "Fournisseurs de services : Nous pouvons faire appel à des prestataires tiers pour aider à différents aspects de nos services, tels que l'analyse, l'hébergement et le support client.",
+          pp_li3_3: "Conformité légale : Nous pouvons divulguer des informations si la loi l'exige, pour protéger nos droits ou en réponse à des demandes légales.",
+          pp_h4: "Vos choix :",
+          pp_li4_1: "Accès et mise à jour : Vous pouvez accéder et mettre à jour vos informations personnelles via les paramètres de votre compte sur le site.",
+          pp_li4_2: "Désinscription : Vous pouvez vous désinscrire des e-mails promotionnels en suivant les instructions fournies dans le message.",
+          pp_li4_3: "Cookies : Vous pouvez gérer vos préférences en matière de cookies via les paramètres de votre navigateur.",
+          pp_h5: "Sécurité :",
+          pp_p3: "Nous mettons en œuvre des mesures de sécurité pour protéger vos informations personnelles contre tout accès, altération, divulgation ou destruction non autorisé. Cependant, aucun mode de transmission sur Internet ou de stockage électronique n'est sûr à 100%, nous ne pouvons donc garantir une sécurité absolue.",
+          pp_h6: "Confidentialité des enfants :",
+          pp_p4: "Nos services ne s'adressent pas aux personnes de moins de 18 ans. Nous ne collectons pas sciemment des informations personnelles auprès d'enfants. Si vous pensez que nous avons recueilli de telles informations par inadvertance, veuillez nous contacter.",
+          pp_h7: "Modifications de cette politique :",
+          pp_p5: "Nous pouvons mettre à jour cette Politique de Confidentialité pour refléter les changements dans nos pratiques ou les lois applicables. Nous vous informerons de tout changement important via le site ou d'autres moyens de communication.",
+          pp_h8: "Nous contacter :",
+          pp_p6: "Si vous avez des questions concernant cette Politique de Confidentialité, veuillez nous contacter à [contact@yourjobportalwebsite.com].",
+          pp_accept: "Accepter la confidentialité",
+
+          //cookies policy section 
+          cp_title: "Politique de Cookies",
+          cp_lastUp: "Dernière mise à jour : 22/08/2023",
+          cp_h0: "Introduction :",
+          cp_welcome: "Bienvenue sur Online Job Portal. Cette Politique de Cookies est conçue pour vous aider à comprendre comment nous utilisons les cookies, les balises web et des technologies similaires sur notre site [www.yourjobportalwebsite.com] pour améliorer votre expérience et vous fournir des informations et services pertinents. En continuant à utiliser notre site, vous consentez à l'utilisation de ces technologies telles que décrites dans cette politique.",
+          cp_h1: "Que sont les cookies ?",
+          cp_p1: "Les cookies sont de petits fichiers texte qui sont stockés sur votre appareil (ordinateur, tablette ou téléphone mobile) lorsque vous visitez certains sites web. Ils sont couramment utilisés pour se souvenir de vos préférences, vous garder connecté et fournir des données de suivi anonymisées pour aider les propriétaires de sites à comprendre comment les utilisateurs interagissent avec leurs sites.",
+          cp_h2: "Comment utilisons-nous les cookies ?",
+          cp_p2: "Nous utilisons des cookies à diverses fins sur Online Job Portal :",
+          cp_li1: "Cookies essentiels : Ces cookies sont nécessaires au bon fonctionnement de notre site. Ils vous permettent de naviguer sur le site, de vous connecter à votre compte et d'accéder aux zones sécurisées. Sans ces cookies, certaines fonctionnalités du site peuvent ne pas fonctionner correctement.",
+          cp_li2: "Cookies d'analyse et de performance : Ces cookies nous aident à analyser la façon dont les visiteurs utilisent notre site. Ils nous fournissent des informations précieuses sur les pages les plus visitées, la navigation des utilisateurs sur le site et les éventuelles erreurs rencontrées. Ces données nous aident à améliorer l'expérience utilisateur globale.",
+          cp_li3: "Cookies de fonctionnalité : Les cookies de fonctionnalité permettent au site de se souvenir de vos préférences et choix, tels que votre langue préférée, votre emplacement et vos paramètres de recherche d'emploi. Cela nous permet de vous offrir une expérience plus personnalisée.",
+          cp_li4: "Cookies publicitaires et de ciblage : Ces cookies sont utilisés pour vous diffuser des publicités pertinentes en fonction de vos intérêts et de votre comportement de navigation. Ils nous aident également à mesurer l'efficacité de nos campagnes publicitaires.",
+          cp_h3: "Cookies tiers",
+          cp_p3: "Nous pouvons également permettre à des prestataires de services tiers de placer des cookies sur votre appareil via notre site pour nous aider à analyser les statistiques d'utilisation, vous fournir des fonctionnalités de partage social et diffuser des publicités adaptées à vos intérêts. Ces prestataires ont leurs propres politiques de confidentialité et peuvent collecter vos informations, y compris des données personnelles, via les cookies qu'ils installent.",
+          cp_h4: "Gestion des cookies",
+          cp_p4: "La plupart des navigateurs web vous permettent de gérer vos préférences en matière de cookies. Vous pouvez généralement configurer votre navigateur pour refuser les cookies ou pour vous alerter lorsqu'ils sont envoyés. Cependant, veuillez noter que le blocage ou la suppression des cookies peut affecter votre capacité à utiliser certaines fonctionnalités de notre site.",
+          cp_h5: "Mises à jour de cette politique",
+          cp_p5: "Nous pouvons mettre à jour cette Politique de Cookies de temps à autre pour refléter les changements technologiques ou les lois applicables. Lorsque nous apportons des modifications, nous réviserons la date de 'Dernière mise à jour' au début de cette politique. Nous vous encourageons à consulter périodiquement cette politique pour rester informé de la manière dont nous utilisons les cookies.",
+          cp_h6: "Nous contacter",
+          cp_p6: "Si vous avez des questions concernant notre Politique de Cookies, veuillez nous contacter à [contact@yourjobportalwebsite.com]. N’oubliez pas de personnaliser les informations et détails de la politique pour correspondre à votre site et à ses pratiques. Consultez également des professionnels du droit pour vous assurer que votre politique de cookies est conforme aux lois et réglementations en vigueur.",
+          cp_accept: "Accepter les cookies",
+
+          //investment plan section
+          plan_title: "Plan d'Investissement",
+
+          //term of contract section
+          toc_title: "Conditions du Contrat",
+
+          //short-term popup section
+          sTerm_title: "Court Terme",
+          sTerm_duration: "3 à 7 jours",
+          sTerm_p1: "Les contrats à court terme sont idéaux pour des besoins urgents et une exécution rapide. Ils offrent une flexibilité maximale et une livraison rapide, permettant aux clients de tester nos services, de réaliser des missions courtes ou de réagir rapidement aux opportunités commerciales. Cette option est parfaite pour les entreprises recherchant des résultats rapides sans engagement à long terme.",
+          sTerm_a: "Plus de détails",
+          sTerm_h1: "Court Terme",
+          sTerm_p2: "Placez vos fonds en toute sécurité et obtenez des rendements rapides avec notre investissement ultra-court terme. Conçu pour <strong>3 à 7 jours</strong>, cette option vous permet d'accéder rapidement à votre argent, avec un faible risque et des profits modestes—parfait pour gérer des liquidités temporaires, des fonds d'urgence ou des objectifs financiers à court terme.",
+          sTerm_h2: "Caractéristiques clés :",
+          sTerm_li1: "<strong>Durée :</strong> 3–7 jours",
+          sTerm_li2: "<strong>Liquidité :</strong> Accès instantané après échéance",
+          sTerm_li3: "<strong>Risque :</strong> Faible risque, préservation du capital",
+          sTerm_li4: "<strong>Rendement :</strong> Modeste mais fiable",
+          sTerm_li5: "<strong>Idéal pour :</strong> Particuliers ou entreprises ayant besoin d'investissements rapides, sûrs et flexibles",
+          sTerm_p3: "Prenez le contrôle de vos fonds à court terme sans les bloquer pendant des mois—<span class=\"text-blue-600\">investissez intelligemment, investissez court !</span>",
+          sTerm_cls: "Fermer",
+
+          //mean-term popup section
+          mTerm_title0: "Moyen Terme",
+          mTerm_duration: "7 à 15 jours",
+          mTerm_p0: "Les contrats à moyen terme offrent une solution équilibrée entre stabilité et rapidité. Ils permettent un travail plus approfondi, une meilleure organisation et une efficacité accrue. Cette durée convient aux projets nécessitant plus de coordination, de suivi ou de support continu tout en restant relativement flexible.",
+          mTerm_a: "Plus de détails",
+          mTerm_title: "Moyen Terme",
+          mTerm_p1: "Sécurisez vos fonds tout en obtenant des rendements fiables avec notre investissement à moyen terme. Conçu pour <strong>7 à 15 jours</strong>, cette option offre un accès rapide à votre argent, un faible risque et des profits modérés—parfait pour gérer des liquidités temporaires, des fonds d'urgence ou des objectifs financiers à moyen terme.",
+          mTerm_h1: "Caractéristiques clés :",
+          mTerm_li1: "<strong>Durée :</strong> 7–15 jours",
+          mTerm_li2: "<strong>Liquidité :</strong> Fonds accessibles après échéance",
+          mTerm_li3: "<strong>Risque :</strong> Faible risque, préservation du capital",
+          mTerm_li4: "<strong>Rendement :</strong> Modéré mais constant",
+          mTerm_li5: "<strong>Idéal pour :</strong> Particuliers ou entreprises planifiant des objectifs financiers à long terme",
+          mTerm_p2: "Gérez vos fonds à moyen terme efficacement sans engagements à long terme—<span class=\"text-blue-600\">investissez intelligemment, investissez moyen !</span>",
+          mTerm_cls: "Fermer",
+
+          //long-term popup section
+          lTerm_title: "Long Terme",
+          lTerm_duration: "1 à 2 mois",
+          lTerm_p1: "Les contrats à long terme sont conçus pour les clients qui souhaitent des résultats constants et une collaboration durable. Ils offrent une meilleure planification, des performances optimisées et une intégration plus forte dans votre flux de travail. C’est la meilleure option pour les projets longs, les tâches continues ou lorsque vous avez besoin d’une équipe dédiée et fiable sur une période prolongée.",
+          lTerm_a: "Plus de détails",
+          lTerm_h1: "Long Terme",
+          lTerm_p2: "Sécurisez vos fonds sur le long terme et obtenez des rendements stables et plus élevés avec notre option d'investissement à long terme. Conçue pour <strong>30 jours ou plus</strong>, cette option équilibre croissance et stabilité, vous permettant de planifier à l'avance tout en profitant de profits fiables. Parfait pour constituer un patrimoine, planifier des dépenses importantes ou atteindre des objectifs financiers à long terme.",
+          lTerm_h2: "Caractéristiques clés :",
+          lTerm_li1: "<strong>Durée :</strong> 1-2 mois",
+          lTerm_li2: "<strong>Liquidité :</strong> Accessible à l'échéance",
+          lTerm_li3: "<strong>Risque :</strong> Faible à modéré, focus sur la croissance du capital",
+          lTerm_li4: "<strong>Rendements :</strong> Plus élevés et plus fiables que les options à court terme",
+          lTerm_li5: "<strong>Idéal pour :</strong> Particuliers ou entreprises ayant besoin d’options d’investissement rapides, sûres et flexibles",
+          lTerm_p3: "Prenez le contrôle de vos fonds à long terme en toute confiance—<span class=\"text-blue-600\">investissez intelligemment, investissez long !</span>",
+          lTerm_cls: "Fermer",
+
+          //opinions section
+          op_title: "Votre avis",
+          op_email_label: "Votre e-mail*",
+          op_opinion_label: "Votre avis",
+          email: "votre@email.com",
+          avis: "Votre avis ici...",
+          op_send: "Envoyer",
+
+          //footer section
+          footer_p1: "Unicorn Madagascar est une plateforme web d'investissement et vous pouvez contacter l'équipe à <a class='text-indigo-600 hover:text-gray-500' href='mailto:e.serasera.malalaka@gmail.com'>e.serasera.malalaka@gmail.com</a>.",
+     }
+}
+
+// Fonction pour changer la langue
+function setLanguage(lang) {
+  for (const key in translations[lang]) {
+    const element = document.getElementById(key);
+    if (element) {
+      // Si c'est un input ou textarea, on change le placeholder
+      if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
+        element.placeholder = translations[lang][key];
+      } else {
+        element.innerHTML = translations[lang][key];
+      }
+    }
+  }
+}
