@@ -49,7 +49,7 @@
         @if($investments->count() > 0)
             <div class="bg-white shadow rounded-lg overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table id="investmentsTable" class="min-w-full divide-y divide-gray-200">
+                    <table id="investmentsTable" class="display min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.date') }}</th>
@@ -178,10 +178,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             return this.nodeType === 3;
                         }).remove();
 
-                        // Ajouter des classes Bootstrap pour le style
-                        $('.dataTables_filter input').addClass('form-control form-control-sm');
-                        $('.dataTables_length select').addClass('form-control form-control-sm');
-                        $('.dataTables_paginate .pagination').addClass('pagination-sm');
+                        // Ajouter des classes Tailwind pour le style
+                        $('.dataTables_filter input').addClass('border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500');
+                        $('.dataTables_length select').addClass('border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500');
+                        $('.dataTables_paginate .pagination').addClass('flex items-center space-x-2');
+
+                        // Améliorer l'affichage mobile
+                        if ($(window).width() < 768) {
+                            $('.dataTables_wrapper').addClass('text-sm');
+                        }
                     }
                 });
             } catch (error) {
@@ -192,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('jQuery n\'est pas chargé');
     }
 });
+<script src="{{ Vite::asset('resources/js/datatable-improvements.js') }}" defer></script>
 </script>
 @endpush
 @endsection
