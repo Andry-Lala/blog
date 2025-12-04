@@ -11,6 +11,9 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- SUPPRIMER language-switcher.js car il bloque le dropdown Alpine.js -->
+    <!-- Le composant language-switcher utilise déjà Alpine.js correctement -->
     <script>
         // Protection de base contre l'accès non autorisé après déconnexion
         (function() {

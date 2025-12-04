@@ -25,7 +25,7 @@
 @section('content')
 <div class="py-6">
     <div class="px-4 sm:px-6 lg:px-8">
-        <!-- Statistiques globales -->
+        <!-- {{ __('messages.global_statistics') }} -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="p-5">
@@ -39,7 +39,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Total clients</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('messages.total_clients') }}</dt>
                                 <dd class="text-lg font-semibold text-gray-900">{{ $clientsWithInvestments->count() }}</dd>
                             </dl>
                         </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Total investi</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('messages.validated_amounts') }}</dt>
                                 <dd class="text-lg font-semibold text-gray-900">
                                     {{ number_format($clientsWithInvestments->sum(function($client) {
                                         return $client->investments->sum('total_amount') ?? 0;
@@ -83,7 +83,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Moyenne par client</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('messages.average_per_client') }}</dt>
                                 <dd class="text-lg font-semibold text-gray-900">
                                     {{ $clientsWithInvestments->count() > 0 ? number_format($clientsWithInvestments->sum(function($client) {
                                         return $client->investments->sum('total_amount') ?? 0;
@@ -108,7 +108,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Plus gros investisseur</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('messages.largest_investor') }}</dt>
                                 <dd class="text-lg font-semibold text-gray-900">
                                     @if($clientsWithInvestments->isNotEmpty())
                                         {{ number_format($clientsWithInvestments->max(function($client) {
@@ -129,7 +129,7 @@
         <div class="bg-white shadow rounded-lg overflow-hidden">
             <div class="px-4 py-5 sm:px-6">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">Détail par client</h3>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('messages.details_by_client') }}</h3>
                     <div class="flex space-x-2">
                         <!-- Export Excel -->
                         <button onclick="exportToExcel()" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors">

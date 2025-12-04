@@ -151,14 +151,16 @@
         }
     </style>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/notification-system.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/notification-system.js', 'resources/js/notification-alpine.js'])
     <script src="{{ asset('js/ultimate-auth-guard.js') }}"></script>
 </head>
 <body class="bg-gray-50 text-gray-900">
     <div class="flex h-screen overflow-hidden">
+        <!-- Mobile menu overlay -->
+        <div id="mobileMenuOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="toggleMobileMenu()"></div>
         <!-- Sidebar -->
-        <aside class="hidden md:flex md:flex-shrink-0">
-            <div class="flex flex-col w-64">
+        <aside id="mobileMenu" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:transform-none md:flex md:flex-shrink-0 md:translate-x-0">
+            <div class="flex flex-col w-64 h-full">
                 <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-white border-r border-gray-200">
                     <div class="flex items-center flex-shrink-0 px-4">
                         <img src="{{ asset('images/blog-logo.jpeg') }}" alt="Unicorn Madagascar" class="h-8 w-auto rounded mr-2">
@@ -233,7 +235,7 @@
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between h-16">
                         <div class="flex items-center space-x-4">
-                            <button class="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="{{ __('messages.open_menu') }}" aria-expanded="false">
+                            <button class="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="{{ __('messages.open_menu') }}" aria-expanded="false" onclick="toggleMobileMenu()">
                                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                                 </svg>
@@ -245,7 +247,14 @@
                             <x-language-switcher />
 
                             <!-- Notifications dropdown -->
-                            <div class="relative" x-data="{ notificationOpen: false }">
+                            <div class="relative" x-data="{
+                                unreadCount: 0,
+                                notificationOpen: false,
+                                init() {
+                                    window.loadNotifications();
+                                    setInterval(() => window.loadNotifications(), 30000);
+                                }
+                            }">
                                 <button @click="notificationOpen = !notificationOpen" class="p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 relative" aria-label="{{ __('messages.notifications') }}">
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
@@ -317,5 +326,69 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
     @stack('scripts')
+    <script>
+        // Mobile menu functionality - completely rewritten
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const body = document.body;
+
+            console.log('Toggle menu called'); // Debug
+
+            if (menu.classList.contains('-translate-x-full')) {
+                // Open menu
+                console.log('Opening menu'); // Debug
+                menu.classList.remove('-translate-x-full');
+                menu.classList.add('translate-x-0');
+                overlay.classList.remove('hidden');
+                body.classList.add('overflow-hidden');
+            } else {
+                // Close menu
+                console.log('Closing menu'); // Debug
+                menu.classList.add('-translate-x-full');
+                menu.classList.remove('translate-x-0');
+                overlay.classList.add('hidden');
+                body.classList.remove('overflow-hidden');
+            }
+        }
+
+        // Initialize menu state
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded'); // Debug
+
+            // Close menu when clicking on overlay
+            const overlay = document.getElementById('mobileMenuOverlay');
+            if (overlay) {
+                overlay.addEventListener('click', toggleMobileMenu);
+            }
+
+            // Handle menu links
+            const mobileLinks = document.querySelectorAll('#mobileMenu a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    console.log('Menu link clicked'); // Debug
+                    // Only close menu on mobile screens
+                    if (window.innerWidth < 768) {
+                        setTimeout(() => toggleMobileMenu(), 100); // Small delay to allow navigation
+                    }
+                });
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768) {
+                    // Reset menu state for desktop
+                    const menu = document.getElementById('mobileMenu');
+                    const overlay = document.getElementById('mobileMenuOverlay');
+                    const body = document.body;
+
+                    menu.classList.add('-translate-x-full');
+                    menu.classList.remove('translate-x-0');
+                    overlay.classList.add('hidden');
+                    body.classList.remove('overflow-hidden');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

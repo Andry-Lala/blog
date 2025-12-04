@@ -164,7 +164,7 @@
 $(document).ready(function() {
     $('#clientsTable').DataTable({
         language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
+            url: '{{ asset('assets/js/datatables/i18n/fr-FR.json') }}',
             search: "{{ __('messages.search_placeholder') }}",
             lengthMenu: "{{ __('messages.show') }} _MENU_ {{ __('messages.entries') }}",
             info: "{{ __('messages.showing_to_of_total_entries') }}",

@@ -211,19 +211,19 @@
                                                 <span class="text-sm font-semibold text-blue-500">{{ $totalClients ?? 0 }}</span>
                                             </div>
                                             <div class="flex items-center justify-between">
-                                                <span class="text-sm text-gray-500">Montants validés</span>
+                                                <span class="text-sm text-gray-500">{{ __('messages.validated_amounts') }}</span>
                                                 <span class="text-sm font-semibold text-green-500">{{ number_format($totalValidatedAmount ?? 0, 2, ',', ' ') }} Ar</span>
                                             </div>
                                             <div class="flex items-center justify-between">
-                                                <span class="text-sm text-gray-500">Montants en attente</span>
+                                                <span class="text-sm text-gray-500">{{ __('messages.pending_amounts') }}</span>
                                                 <span class="text-sm font-semibold text-yellow-500">{{ number_format($totalPendingAmount ?? 0, 2, ',', ' ') }} Ar</span>
                                             </div>
                                             <div class="flex items-center justify-between">
-                                                <span class="text-sm text-gray-500">Montants en cours</span>
+                                                <span class="text-sm text-gray-500">{{ __('messages.processing_amounts') }}</span>
                                                 <span class="text-sm font-semibold text-blue-500">{{ number_format($totalProcessingAmount ?? 0, 2, ',', ' ') }} Ar</span>
                                             </div>
                                             <div class="flex items-center justify-between">
-                                                <span class="text-sm text-gray-500">Montants rejetés</span>
+                                                <span class="text-sm text-gray-500">{{ __('messages.rejected_amounts') }}</span>
                                                 <span class="text-sm font-semibold text-red-500">{{ number_format($totalRejectedAmount ?? 0, 2, ',', ' ') }} Ar</span>
                                             </div>
                                         </div>
@@ -459,7 +459,7 @@
         // Préparer les données de base pour tous les utilisateurs
         const baseDatasets = [
             {
-                label: 'Investissements Validés',
+                label: '{{ __('messages.validated_investments') }}',
                 data: @json($userValidatedData ?? $validatedData ?? []),
                 backgroundColor: 'rgba(74, 222, 128, 0.2)',
                 borderColor: 'rgba(74, 222, 128, 1)',
@@ -467,7 +467,7 @@
                 tension: 0.4
             },
             {
-                label: 'Investissements en Attente',
+                label: '{{ __('messages.pending_investments') }}',
                 data: @json($userPendingData ?? $pendingData ?? []),
                 backgroundColor: 'rgba(250, 204, 21, 0.3)',
                 borderColor: 'rgba(250, 204, 21, 1)',
@@ -480,7 +480,7 @@
         let datasets = [...baseDatasets];
         if (isAdmin) {
             datasets.push({
-                label: 'Investissements en Cours',
+                label: '{{ __('messages.processing_investments') }}',
                 data: @json($processingData ?? []),
                 backgroundColor: 'rgba(59, 130, 246, 0.2)',
                 borderColor: 'rgba(59, 130, 246, 1)',
@@ -489,7 +489,7 @@
             });
 
             datasets.push({
-                label: 'Investissements Rejetés',
+                label: '{{ __('messages.rejected_investments') }}',
                 data: @json($rejectedData ?? []),
                 backgroundColor: 'rgba(239, 68, 68, 0.2)',
                 borderColor: 'rgba(239, 68, 68, 1)',
@@ -561,7 +561,7 @@
                 labels: @json($chartLabels ?? []),
                 datasets: [
                     {
-                        label: 'Montants Validés',
+                        label: '{{ __('messages.validated_amounts') }}',
                         data: @json($validatedAmountData ?? []),
                         backgroundColor: 'rgba(74, 222, 128, 0.2)',
                         borderColor: 'rgba(74, 222, 128, 1)',
@@ -569,7 +569,7 @@
                         tension: 0.4
                     },
                     {
-                        label: 'Montants en Attente',
+                        label: '{{ __('messages.pending_amounts') }}',
                         data: @json($pendingAmountData ?? []),
                         backgroundColor: 'rgba(250, 204, 21, 0.3)',
                         borderColor: 'rgba(250, 204, 21, 1)',

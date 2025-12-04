@@ -6,27 +6,63 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadNotifications() {
-    fetch('/notifications/unread')
-        .then(response => response.json())
-        .then(data => {
-            updateNotificationBadge(data.count);
-            updateNotificationsList(data.notifications);
-        })
-        .catch(error => {
-            console.error('Error loading notifications:', error);
-        });
+    fetch('/notifications/unread', {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+        }
+    })
+    .then(response => {
+        // Check if response is HTML (likely a redirect to login)
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Received HTML instead of JSON - likely authentication redirect');
+        }
+        return response.json();
+    })
+    .then(data => {
+        updateNotificationBadge(data.count);
+        updateNotificationsList(data.notifications);
+
+        // Update Alpine.js unreadCount variable if Alpine is available
+        if (window.Alpine && window.Alpine.store) {
+            // Find the Alpine component and update unreadCount
+            document.querySelectorAll('[x-data*="unreadCount"]').forEach(el => {
+                if (el._x_dataStack && el._x_dataStack[0]) {
+                    el._x_dataStack[0].unreadCount = data.count;
+                }
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error loading notifications:', error);
+        // If it's an authentication error, we can silently fail or redirect
+        if (error.message.includes('authentication')) {
+            // Silently fail - the auth guard will handle redirect
+            return;
+        }
+    });
 }
 
 function updateNotificationBadge(count) {
-    const badge = document.querySelector('.notification-badge');
-    if (badge) {
-        if (count > 0) {
-            badge.textContent = count > 99 ? '99+' : count;
-            badge.classList.remove('hidden');
-        } else {
-            badge.classList.add('hidden');
+    const badges = document.querySelectorAll('.notification-badge');
+    badges.forEach(badge => {
+        if (badge) {
+            if (count > 0) {
+                badge.textContent = count > 99 ? '99+' : count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
         }
-    }
+    });
+
+    // Also update Alpine.js data
+    document.querySelectorAll('[x-data*="unreadCount"]').forEach(el => {
+        if (el._x_dataStack && el._x_dataStack[0]) {
+            el._x_dataStack[0].unreadCount = count;
+        }
+    });
 }
 
 function updateNotificationsList(notifications) {

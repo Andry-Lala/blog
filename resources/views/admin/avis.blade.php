@@ -87,7 +87,7 @@
 $(document).ready(function() {
     $('#avisAdminTable').DataTable({
         language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
+            url: '{{ asset('assets/js/datatables/i18n/fr-FR.json') }}',
             search: "Rechercher:",
             lengthMenu: "Afficher _MENU_ entrées",
             info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",

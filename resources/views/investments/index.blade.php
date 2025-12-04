@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 $('#investmentsTable').DataTable({
                     language: {
-                        url: app()->getLocale() === 'fr' ? '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json' : '//cdn.datatables.net/plug-ins/1.13.7/i18n/en-GB.json',
+                        url: app()->getLocale() === 'fr' ? '{{ asset('assets/js/datatables/i18n/fr-FR.json') }}' : '{{ asset('assets/js/datatables/i18n/en-GB.json') }}',
                         search: "{{ __('messages.search_placeholder') }}",
                         lengthMenu: "{{ __('messages.show') }} _MENU_ {{ __('messages.entries') }}",
                         info: "{{ __('messages.showing_to_of_total_entries') }}",
