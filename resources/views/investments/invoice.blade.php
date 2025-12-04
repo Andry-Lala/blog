@@ -27,6 +27,15 @@
             top: 10px;
             right: 10px;
         }
+        .flex {
+            display: flex;
+        }
+        .justify-between {
+            justify-content: space-between;
+        }
+        .items-center {
+            align-items: center;
+        }
         .invoice-header {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             color: white;
@@ -82,11 +91,11 @@
             font-weight: 600;
             text-transform: uppercase;
         }
-        .status-validé {
+        .status-valide {
             background-color: #dcfce7;
             color: #166534;
         }
-        .status-envoyé {
+        .status-envoye {
             background-color: #fef3c7;
             color: #92400e;
         }
@@ -124,10 +133,7 @@
         <div class="invoice-header">
             <div class="flex justify-between items-center">
                 <h1>UNICORN MADAGASCAR - FACTURE</h1>
-                <!-- Language switcher -->
-                <div class="language-switcher-container">
-                    <x-language-switcher />
-                </div>
+                <!-- Language switcher removed for invoice -->
             </div>
             <div class="invoice-info">
                 <div><strong>Numéro de facture:</strong> FAC-UM-{{ sprintf('%03d', $investment->id) }}</div>
@@ -157,7 +163,7 @@
                 </div>
                 <div class="info-item">
                     <strong>Statut:</strong>
-                    <span class="status-badge status-{{ strtolower(str_replace(' ', '-', $investment->status)) }}">
+                    <span class="status-badge status-{{ str_replace(' ', '-', strtolower($investment->status)) }}">
                         {{ $investment->status }}
                     </span>
                 </div>
