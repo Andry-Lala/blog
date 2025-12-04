@@ -82,6 +82,7 @@ return [
     'actions' => 'Actions',
     'view_details' => 'Voir les détails',
     'generate_invoice_pdf' => 'Générer la facture PDF',
+    'generate_invoice' => 'Générer la facture',
     'no_investment_found' => 'Aucun investissement trouvé',
     'nouvel_investissement' => 'Nouvel Investissement',
     'nouveau_client' => 'Nouveau Client',

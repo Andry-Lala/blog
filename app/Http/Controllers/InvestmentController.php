@@ -380,6 +380,11 @@ class InvestmentController extends Controller
             abort(403);
         }
 
+        // Only allow invoice generation for validated investments
+        if ($investment->status !== 'Validé' && $investment->status !== 'Approved') {
+            abort(403, 'Invoice can only be generated for validated investments.');
+        }
+
         // Generate HTML invoice content
         $htmlContent = view('investments.invoice', compact('investment'))->render();
 

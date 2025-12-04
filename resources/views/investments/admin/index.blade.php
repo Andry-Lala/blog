@@ -160,8 +160,9 @@ function toggleInvestments(clientId) {
                     <div class="text-xs text-gray-500">
                         ${new Date(investment.created_at).toLocaleDateString('fr-FR')} ${new Date(investment.created_at).toLocaleTimeString('fr-FR')}
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-2 flex space-x-2">
                         <a href="/investments/${investment.id}" class="text-blue-500 hover:text-blue-700 text-xs">{{ __('messages.view_details') }}</a>
+                        <a href="/investments/${investment.id}/invoice" target="_blank" class="text-green-500 hover:text-green-700 text-xs">{{ __('messages.generate_invoice') }}</a>
                     </div>
                 </div>
             `;
