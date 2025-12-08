@@ -56,8 +56,8 @@
                     <span class="navbar-toggler-icon inline-block w-8 h-8 align-middle"></span>
                 </button>
 
-                <div class="navbar-collapse offcanvas-collapse lg:flex lg:flex-grow lg:items-center" id="navbarsExampleDefault">
-                    <ul class="pl-0 mt-3 mb-2 ml-auto flex flex-col list-none lg:mt-0 lg:mb-0 lg:flex-row">
+                <div class="navbar-collapse offcanvas-collapse lg:flex lg:flex-grow lg:items-center lg:space-x-6 items-center" id="navbarsExampleDefault">
+                    <ul class="pl-0 mt-3 mb-2 ml-auto flex flex-col list-none lg:mt-0 lg:mb-0 lg:flex-row lg:space-x-6">
                         <li>
                             <a id="home_nav_link" class="nav-link page-scroll active" href="#header">Home <span class="sr-only">(current)</span></a>
                         </li>
@@ -81,7 +81,13 @@
                         </li>
                         <li>
                             <div class="flex space-x-4 items-center">
-                                <!-- Language switcher --> 
+                                <!-- Bouton Login -->
+                                <a href="/login" id="login" class="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition font-medium">Log In</a>
+                            </div>
+
+                        </li>
+                    </ul>
+                    <!-- Language switcher --> 
                                 <div class="relative inline-block w-40">
                                     <!-- Icône -->
                                     <div class="pointer-events-none absolute inset-y-0 left-3 flex items-center">
@@ -95,12 +101,6 @@
                                         <option value="fr">Français</option>
                                     </select>
                                 </div>
-                                <!-- Bouton Login -->
-                                <a href="/login" id="login" class="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition font-medium">Log In</a>
-                            </div>
-
-                        </li>
-                    </ul>
                 </div> <!-- end of navbar-collapse -->
             </div> <!-- end of container -->
         </nav> <!-- end of navbar -->
