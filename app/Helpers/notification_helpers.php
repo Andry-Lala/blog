@@ -27,22 +27,27 @@ if (!function_exists('createNotificationForInvestment')) {
      */
     function createNotificationForInvestment($userId, $investment, $action, $message = null)
     {
+        // Stocker les clés de traduction plutôt que le texte traduit
         $title = match($action) {
-            'created' => __('messages.notification_investment_created'),
-            'approved' => __('messages.notification_investment_approved'),
-            'rejected' => __('messages.notification_investment_rejected'),
-            'processing' => __('messages.notification_investment_processing'),
-            default => __('messages.notification_investment_updated')
+            'created' => 'messages.notification_investment_created',
+            'approved' => 'messages.notification_investment_approved',
+            'rejected' => 'messages.notification_investment_rejected',
+            'processing' => 'messages.notification_investment_processing',
+            'default' => 'messages.notification_investment_updated'
         };
 
         if (!$message) {
-            $message = match($action) {
-                'created' => __('messages.notification_investment_created_message', ['amount' => $investment->amount]),
-                'approved' => __('messages.notification_investment_approved_message', ['amount' => $investment->amount]),
-                'rejected' => __('messages.notification_investment_rejected_message', ['amount' => $investment->amount]),
-                'processing' => __('messages.notification_investment_processing_message', ['amount' => $investment->amount]),
-                default => __('messages.notification_investment_updated_message')
-            };
+            // Stocker la clé et les données pour traduction dynamique
+            $message = [
+                'key' => match($action) {
+                    'created' => 'messages.notification_investment_created_message',
+                    'approved' => 'messages.notification_investment_approved_message',
+                    'rejected' => 'messages.notification_investment_rejected_message',
+                    'processing' => 'messages.notification_investment_processing_message',
+                    'default' => 'messages.notification_investment_updated_message'
+                },
+                'params' => ['amount' => $investment->amount]
+            ];
         }
 
         $type = match($action) {
@@ -50,7 +55,7 @@ if (!function_exists('createNotificationForInvestment')) {
             'rejected' => 'error',
             'processing' => 'warning',
             'created' => 'info',
-            default => 'info'
+            'default' => 'info'
         };
 
         return \App\Models\Notification::createForUser(
@@ -70,27 +75,35 @@ if (!function_exists('createNotificationForUser')) {
      */
     function createNotificationForUser($userId, $user, $action, $message = null)
     {
+        // Stocker les clés de traduction plutôt que le texte traduit
         $title = match($action) {
-            'verified' => __('messages.notification_user_verified'),
-            'unverified' => __('messages.notification_user_unverified'),
-            'registered' => __('messages.notification_new_user_registered'),
-            default => __('messages.notification_user_updated')
+            'verified' => 'messages.notification_user_verified',
+            'unverified' => 'messages.notification_user_unverified',
+            'registered' => 'messages.notification_new_user_registered',
+            'default' => 'messages.notification_user_updated'
         };
 
         if (!$message) {
-            $message = match($action) {
-                'verified' => __('messages.notification_user_verified_message'),
-                'unverified' => __('messages.notification_user_unverified_message'),
-                'registered' => __('messages.notification_new_user_registered_message', ['firstName' => $user->prenom, 'lastName' => $user->nom]),
-                default => __('messages.notification_user_updated_message')
-            };
+            // Stocker la clé et les données pour traduction dynamique
+            $message = [
+                'key' => match($action) {
+                    'verified' => 'messages.notification_user_verified_message',
+                    'unverified' => 'messages.notification_user_unverified_message',
+                    'registered' => 'messages.notification_new_user_registered_message',
+                    'default' => 'messages.notification_user_updated_message'
+                },
+                'params' => match($action) {
+                    'registered' => ['firstName' => $user->prenom, 'lastName' => $user->nom],
+                    'default' => []
+                }
+            ];
         }
 
         $type = match($action) {
             'verified' => 'success',
             'unverified' => 'warning',
             'registered' => 'info',
-            default => 'info'
+            'default' => 'info'
         };
 
         return \App\Models\Notification::createForUser(

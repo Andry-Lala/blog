@@ -3,7 +3,13 @@
 @section('title', __('messages.dashboard'))
 
 @section('header')
-    <h1 class="ml-4 text-2xl font-semibold text-gray-900">{{ __('messages.dashboard') }}</h1>
+    <div class="ml-4 flex items-center w-full">
+        <div class="flex-1 min-w-0">
+            <h1 class="text-xl sm:text-2xl font-semibold text-gray-900 truncate">
+                {{ __('messages.dashboard') }}
+            </h1>
+        </div>
+    </div>
 @endsection
 
 @section('content')

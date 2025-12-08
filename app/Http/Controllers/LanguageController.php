@@ -35,15 +35,44 @@ class LanguageController extends Controller
 
         // Check if it's an AJAX request
         if ($request->ajax() || $request->wantsJson()) {
+            // Forcer la mise à jour des notifications pour qu'elles se retraduisent
+            if (auth()->check()) {
+                // Vider le cache des notifications pour forcer la retraduction
+                $userId = auth()->id();
+                cache()->forget("user_unread_notifications_{$userId}");
+
+                // Invalider tous les caches de notifications
+                for ($i = 1; $i <= 10; $i++) {
+                    cache()->forget("user_unread_notifications_{$userId}_page_{$i}");
+                }
+            }
+
             return response()->json([
                 'success' => true,
                 'locale' => $locale,
                 'reload' => true,
-                'message' => $locale === 'fr' ? 'Langue changée en français' : 'Language changed to English'
+                'message' => $locale === 'fr' ? 'Langue changée en français' : 'Language changed to English',
+                'force_notification_refresh' => true
             ])->withCookie(cookie('locale', $locale, 43200));
         }
 
         // Redirect back to previous page for non-AJAX requests
         return redirect()->back()->withCookie(cookie('locale', $locale, 43200));
+    }
+
+    /**
+     * Fournir les traductions pour JavaScript
+     */
+    public function getTranslations()
+    {
+        $translations = [
+            'no_notifications' => __('messages.no_notifications'),
+            'just_now' => __('messages.just_now'),
+            'minutes_ago' => __('messages.minutes_ago'),
+            'hours_ago' => __('messages.hours_ago'),
+            'days_ago' => __('messages.days_ago')
+        ];
+
+        return response()->json($translations);
     }
 }

@@ -3,20 +3,24 @@
 @section('title', 'Récapitulatif des investissements clients')
 
 @section('header')
-    <div class="ml-4 flex items-center justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">Récapitulatif des investissements clients</h1>
-        <div class="flex space-x-3">
-            <a href="{{ route('admin.clients.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="ml-4 flex items-center w-full">
+        <div class="flex-1 min-w-0">
+            <h1 class="text-xl sm:text-2xl font-semibold text-gray-900 truncate">
+                Récapitulatif des investissements clients
+            </h1>
+        </div>
+        <div class="flex space-x-2 flex-shrink-0">
+            <a href="{{ route('admin.clients.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-2 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.354 5.992M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
-                Gestion clients
+                <span class="hidden sm:inline">Gestion clients</span>
             </a>
-            <a href="{{ route('investments.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('investments.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-2 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2v2a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H9z"></path>
                 </svg>
-                Investissements
+                <span class="hidden sm:inline">Investissements</span>
             </a>
         </div>
     </div>

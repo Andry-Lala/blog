@@ -234,13 +234,15 @@
             <header class="bg-white shadow-sm border-b border-gray-200">
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between h-16">
-                        <div class="flex items-center space-x-4">
-                            <button class="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="{{ __('messages.open_menu') }}" aria-expanded="false" onclick="toggleMobileMenu()">
+                        <div class="flex items-center space-x-4 flex-1 min-w-0">
+                            <button class="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 flex-shrink-0" aria-label="{{ __('messages.open_menu') }}" aria-expanded="false" onclick="toggleMobileMenu()">
                                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                                 </svg>
                             </button>
-                            @yield('header')
+                            <div class="flex-1 min-w-0">
+                                @yield('header')
+                            </div>
                         </div>
                         <div class="flex items-center space-x-4">
                             <!-- Language switcher -->
@@ -326,6 +328,40 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
     @stack('scripts')
+    <script>
+        // Injecter les traductions pour les notifications
+        window.translations = {
+            'no_notifications': "{{ __('messages.no_notifications') }}",
+            'just_now': "{{ __('messages.just_now') }}",
+            'minutes_ago': "{{ __('messages.minutes_ago') }}",
+            'hours_ago': "{{ __('messages.hours_ago') }}",
+            'days_ago': "{{ __('messages.days_ago') }}"
+        };
+
+        // Injecter la langue actuelle pour les traductions temporelles
+        window.currentLocale = "{{ app()->getLocale() }}";
+
+        // Fonction pour recharger les traductions
+        window.updateTranslations = function() {
+            fetch('{{ route("language.translations") }}', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.translations = data;
+                // Recharger les notifications avec les nouvelles traductions
+                if (typeof window.loadNotifications === 'function') {
+                    window.loadNotifications();
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors du chargement des traductions:', error);
+            });
+        };
+    </script>
     <script>
         // Mobile menu functionality - completely rewritten
         function toggleMobileMenu() {

@@ -26,6 +26,13 @@ class NotificationController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
+        // Traduire les titres et messages des notifications
+        $notifications->getCollection()->transform(function ($notification) {
+            $notification->title = $this->translateNotificationText($notification->title);
+            $notification->message = $this->translateNotificationText($notification->message);
+            return $notification;
+        });
+
         if ($request->ajax()) {
             return view('notifications.partials.notification-list', compact('notifications'))->render();
         }
@@ -55,7 +62,13 @@ class NotificationController extends Controller
             ->where('is_read', false)
             ->orderBy('created_at', 'desc')
             ->limit(10)
-            ->get();
+            ->get()
+            ->map(function ($notification) {
+                // Traduire les titres et messages si nécessaire
+                $notification->title = $this->translateNotificationText($notification->title);
+                $notification->message = $this->translateNotificationText($notification->message);
+                return $notification;
+            });
 
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
@@ -168,5 +181,73 @@ class NotificationController extends Controller
     public static function createNotification($userId, string $title, string $message, string $type = 'info', $relatedType = null, $relatedId = null, array $data = []): Notification
     {
         return Notification::createForUser($userId, $title, $message, $type, $relatedType, $relatedId, $data);
+    }
+
+    /**
+     * Traduire le texte des notifications si nécessaire
+     */
+    private function translateNotificationText($text)
+    {
+        // Toujours essayer de retraduire complètement les notifications existantes
+        // pour forcer la traduction selon la langue actuelle
+
+        // Si c'est un tableau avec clé et paramètres (nouveau format)
+        if (is_array($text) && isset($text['key'])) {
+            return __($text['key'], $text['params'] ?? []);
+        }
+
+        // Vérifier si le texte est une clé de traduction
+        if (is_string($text) && str_starts_with($text, 'messages.')) {
+            return __($text);
+        }
+
+        // Pour les anciennes notifications déjà traduites, forcer la retraduction complète
+        if (is_string($text) && !str_starts_with($text, 'messages.')) {
+            // Essayer de détecter le type de notification et retraduire complètement
+            $currentLocale = app()->getLocale();
+
+            // Détecter les patterns communs et retraduire selon la langue
+            if (preg_match('/investissement/i', $text)) {
+                if (preg_match('/créé|created/i', $text)) {
+                    return __('messages.notification_investment_created');
+                }
+                if (preg_match('/approuvé|approved/i', $text)) {
+                    return __('messages.notification_investment_approved');
+                }
+                if (preg_match('/rejeté|rejected/i', $text)) {
+                    return __('messages.notification_investment_rejected');
+                }
+                if (preg_match('/traitement|processing/i', $text)) {
+                    return __('messages.notification_investment_processing');
+                }
+            }
+
+            if (preg_match('/compte|account/i', $text)) {
+                if (preg_match('/vérifié|verified/i', $text)) {
+                    return __('messages.notification_user_verified');
+                }
+                if (preg_match('/non vérifié|unverified/i', $text)) {
+                    return __('messages.notification_user_unverified');
+                }
+                if (preg_match('/inscrit|registered/i', $text)) {
+                    return __('messages.notification_new_user_registered');
+                }
+                if (preg_match('/mise à jour|update/i', $text)) {
+                    return __('messages.notification_user_updated');
+                }
+            }
+
+            // Si aucun pattern détecté, retourner une traduction générique
+            return __('messages.notification_investment_updated');
+        }
+
+        // Si le texte contient des variables, essayer de traduire
+        if (is_string($text) && preg_match('/\{[^}]+\}/', $text)) {
+            // Pour les messages avec variables, on retourne le texte tel quel
+            // car il a déjà été traduit lors de la création
+            return $text;
+        }
+
+        return $text;
     }
 }

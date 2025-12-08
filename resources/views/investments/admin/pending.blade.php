@@ -3,10 +3,14 @@
 @section('title', __('messages.pending_investments_validation'))
 
 @section('header')
-    <div class="ml-4 flex items-center justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">{{ __('messages.pending_investments_validation') }}</h1>
-        <div class="flex space-x-3">
-            <a href="{{ route('investments.index') }}" class="text-gray-500 hover:text-gray-700">
+    <div class="ml-4 flex items-center justify-between w-full">
+        <div class="flex-1 min-w-0">
+            <h1 class="text-xl sm:text-2xl font-semibold text-gray-900 truncate pr-2">
+                {{ __('messages.pending_investments_validation') }}
+            </h1>
+        </div>
+        <div class="flex space-x-3 flex-shrink-0">
+            <a href="{{ route('investments.index') }}" class="text-gray-500 hover:text-gray-700" title="{{ __('messages.back') }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
@@ -144,6 +148,16 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                             </svg>
                                         </a>
+
+                                        @if($investment->status === 'Validé' || $investment->status === 'Approved')
+                                            <button onclick="generateInvoice({{ $investment->id }})"
+                                                    class="text-green-600 hover:text-green-800"
+                                                    title="{{ __('messages.generate_invoice_pdf') }}">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                                </svg>
+                                            </button>
+                                        @endif
                                         <button type="button" class="text-yellow-600 hover:text-yellow-800"
                                                 title="{{ __('messages.put_in_processing') }}"
                                                 onclick="openProcessModal({{ $investment->id }})">
@@ -292,7 +306,13 @@
     </div>
 </div>
 
+@push('scripts')
 <script>
+// Fonction pour générer une facture
+function generateInvoice(investmentId) {
+    window.open(`/investments/${investmentId}/invoice`, '_blank');
+}
+
 // Fonctions pour gérer les modals
 function openProcessModal(investmentId) {
     document.getElementById('processModal' + investmentId).classList.remove('hidden');
@@ -303,11 +323,13 @@ function closeProcessModal(investmentId) {
 }
 
 function openApproveModal(investmentId, clientName, amount) {
-    const message = app()->getLocale() === 'fr'
-        ? `Êtes-vous sûr de vouloir approuver l'investissement de ${number_format(amount, 0, ',', ' ')} Ar de ${clientName} ?`
-        : `Are you sure you want to approve investment of ${number_format(amount, 0, ',', ' ')} Ar from ${clientName}?`;
+    const currentLocale = document.documentElement.lang || '{{ app()->getLocale() }}';
+    const formattedAmount = new Intl.NumberFormat('fr-FR').format(amount);
+    const message = currentLocale === 'fr'
+        ? `Êtes-vous sûr de vouloir approuver l'investissement de ${formattedAmount} Ar de ${clientName} ?`
+        : `Are you sure you want to approve investment of ${formattedAmount} Ar from ${clientName}?`;
     document.getElementById('approveMessage').textContent = message;
-    document.getElementById('approveForm').action = `/investments/${investmentId}/approve`;
+    document.getElementById('approveForm').action = `{{ route('investments.approve', ':investmentId') }}`.replace(':investmentId', investmentId);
     document.getElementById('approveModal').classList.remove('hidden');
 }
 
@@ -317,11 +339,13 @@ function closeApproveModal() {
 }
 
 function openRejectModal(investmentId, clientName, amount) {
-    const message = app()->getLocale() === 'fr'
-        ? `Êtes-vous sûr de vouloir rejeter l'investissement de ${number_format(amount, 0, ',', ' ')} Ar de ${clientName} ?`
-        : `Are you sure you want to reject investment of ${number_format(amount, 0, ',', ' ')} Ar from ${clientName}?`;
+    const currentLocale = document.documentElement.lang || '{{ app()->getLocale() }}';
+    const formattedAmount = new Intl.NumberFormat('fr-FR').format(amount);
+    const message = currentLocale === 'fr'
+        ? `Êtes-vous sûr de vouloir rejeter l'investissement de ${formattedAmount} Ar de ${clientName} ?`
+        : `Are you sure you want to reject investment of ${formattedAmount} Ar from ${clientName}?`;
     document.getElementById('rejectMessage').textContent = message;
-    document.getElementById('rejectForm').action = `/investments/${investmentId}/reject`;
+    document.getElementById('rejectForm').action = `{{ route('investments.reject', ':investmentId') }}`.replace(':investmentId', investmentId);
     document.getElementById('rejectModal').classList.remove('hidden');
 }
 
@@ -329,7 +353,10 @@ function closeRejectModal() {
     document.getElementById('rejectModal').classList.add('hidden');
     document.getElementById('admin_notes_reject').value = '';
 }
+</script>
+@endpush
 
+<script>
 // Initialiser DataTable quand le document est prêt
 document.addEventListener('DOMContentLoaded', function() {
     // S'assurer que jQuery est chargé
@@ -416,9 +443,129 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (error) {
                 console.error('Erreur lors de l\'initialisation du DataTable:', error);
             }
+
+            // S'assurer que les formulaires de modals soumettent correctement
+            const approveForm = document.getElementById('approveForm');
+            const rejectForm = document.getElementById('rejectForm');
+
+            if (approveForm) {
+                approveForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    const action = this.action;
+
+                    fetch(action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    })
+                    .then(response => {
+                        if (response.redirected) {
+                            window.location.href = response.url;
+                        } else {
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de l\'approbation:', error);
+                        window.location.reload();
+                    });
+                });
+            }
+
+            if (rejectForm) {
+                rejectForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    const action = this.action;
+
+                    fetch(action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    })
+                    .then(response => {
+                        if (response.redirected) {
+                            window.location.href = response.url;
+                        } else {
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors du rejet:', error);
+                        window.location.reload();
+                    });
+                });
+            }
         });
     } else {
         console.error('jQuery n\'est pas chargé');
+
+        // Fallback pour les formulaires si jQuery n'est pas chargé
+        const approveForm = document.getElementById('approveForm');
+        const rejectForm = document.getElementById('rejectForm');
+
+        if (approveForm) {
+            approveForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const action = this.action;
+
+                fetch(action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de l\'approbation:', error);
+                    window.location.reload();
+                });
+            });
+        }
+
+        if (rejectForm) {
+            rejectForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const action = this.action;
+
+                fetch(action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors du rejet:', error);
+                    window.location.reload();
+                });
+            });
+        }
     }
 });
 </script>

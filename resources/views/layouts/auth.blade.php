@@ -51,9 +51,18 @@
 <body class="bg-gray-50 text-gray-900">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full space-y-8">
-            <!-- Header with language switcher -->
-            <div class="text-center relative">
-                <div class="absolute top-0 right-0">
+            <!-- Header -->
+            <div class="text-center">
+                <div class="flex items-center justify-center mb-4">
+                    <img src="{{ asset('images/blog-logo.jpeg') }}" alt="Unicorn Madagascar" class="h-12 w-auto rounded mr-2">
+                    <span class="text-xl font-semibold text-gray-800">Unicorn Madagascar</span>
+                </div>
+                <p class="mt-2 text-sm text-gray-600 mb-6">
+                    @yield('subtitle')
+                </p>
+
+                <!-- Language switcher positioned below the subtitle -->
+                <div class="flex justify-center">
                     <div x-data="{ languageOpen: false }" class="relative">
                         <!-- Language selector button -->
                         <button @click="languageOpen = !languageOpen"
@@ -77,7 +86,7 @@
                              x-transition:leave-start="transform opacity-100 scale-100"
                              x-transition:leave-end="transform opacity-0 scale-95"
                              @click.away="languageOpen = false"
-                             class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                             class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 sm:left-0 sm:right-auto">
                             <div class="py-1" role="menu">
                                 <!-- French -->
                                 <a href="{{ route('language.switch', 'fr') }}"
@@ -112,13 +121,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center justify-center mb-4">
-                    <img src="{{ asset('images/blog-logo.jpeg') }}" alt="Unicorn Madagascar" class="h-12 w-auto rounded mr-2">
-                    <span class="text-xl font-semibold text-gray-800">Unicorn Madagascar</span>
-                </div>
-                <p class="mt-2 text-sm text-gray-600">
-                    @yield('subtitle')
-                </p>
             </div>
 
             <!-- Flash messages -->
