@@ -3,8 +3,10 @@
 @section('title', __('messages.my_information'))
 
 @section('header')
-    <div class="ml-4 flex items-center">
-        <h1 class="text-2xl font-semibold text-gray-900">{{ __('messages.my_information') }}</h1>
+    <div class="ml-4 flex items-center justify-between w-full">
+        <h1 class="text-xl sm:text-2xl font-semibold text-gray-900 truncate">
+            {{ __('messages.my_information') }}
+        </h1>
     </div>
 @endsection
 
@@ -22,23 +24,8 @@
         </div>
 
         <!-- Actions Header -->
-        <div class="mb-6 flex items-center justify-between">
+        <div class="mb-6">
             <h3 class="text-lg font-medium text-gray-900">{{ __('messages.details_information') }}</h3>
-            <div class="flex space-x-3">
-                <a href="{{ route('dashboard') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    {{ __('messages.back') }}
-                </a>
-                <a href="{{ route('clients.show', $user) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                    </svg>
-                    {{ __('messages.edit') }}
-                </a>
-            </div>
         </div>
 
         <!-- User Information Card -->

@@ -4,7 +4,9 @@
 
 @section('header')
     <div class="ml-4 flex items-center">
-        <h1 class="text-2xl font-semibold text-gray-900">Administration - Clients et Investissements</h1>
+        <h1 class="text-xl sm:text-2xl font-semibold text-gray-900 truncate">
+            <span class="hidden sm:inline">Administration - </span>Clients et Investissements
+        </h1>
     </div>
 @endsection
 

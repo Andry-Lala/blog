@@ -3,8 +3,12 @@
 @section('title', __('messages.client_management'))
 
 @section('header')
-    <div class="ml-4 flex items-center">
-        <h1 class="text-2xl font-semibold text-gray-900">{{ __('messages.client_management') }}</h1>
+    <div class="ml-4 flex items-center w-full">
+        <div class="flex-1 min-w-0">
+            <h1 class="text-xl sm:text-2xl font-semibold text-gray-900 truncate">
+                {{ __('messages.client_management') }}
+            </h1>
+        </div>
     </div>
 @endsection
 

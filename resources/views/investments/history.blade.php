@@ -3,14 +3,21 @@
 @section('title', __('messages.investment_history'))
 
 @section('header')
-    <div class="ml-4 flex items-center justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">{{ __('messages.investment_history') }}</h1>
-        <a href="{{ route('investments.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            {{ __('messages.new_investment') }}
-        </a>
+    <div class="ml-4 flex items-center w-full">
+        <div class="flex-1 min-w-0">
+            <h1 class="text-xl sm:text-2xl font-semibold text-gray-900 truncate">
+                {{ __('messages.investment_history') }}
+            </h1>
+        </div>
+        <div class="flex-shrink-0">
+            <a href="{{ route('investments.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                <svg class="w-4 h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span class="hidden sm:inline">{{ __('messages.new_investment') }}</span>
+                <span class="sm:hidden">+</span>
+            </a>
+        </div>
     </div>
 @endsection
 

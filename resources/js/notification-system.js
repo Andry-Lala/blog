@@ -3,6 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     loadNotifications();
     // Auto-refresh notifications every 30 seconds
     setInterval(loadNotifications, 30000);
+
+    // Écouter les changements de langue
+    window.addEventListener('languageChanged', function() {
+        // Vider le cache des notifications et forcer le rechargement
+        const listContainer = document.getElementById('notificationsList');
+        if (listContainer) {
+            listContainer.innerHTML = '<div class="px-4 py-8 text-center text-sm text-gray-500">{{ __("messages.loading") }}</div>';
+        }
+        // Forcer le rechargement immédiat
+        setTimeout(() => {
+            loadNotifications();
+        }, 200);
+    });
 });
 
 function loadNotifications() {
@@ -70,9 +83,10 @@ function updateNotificationsList(notifications) {
     if (!listContainer) return;
 
     if (notifications.length === 0) {
+        const noNotificationsText = getTranslation('no_notifications');
         listContainer.innerHTML = `
             <div class="px-4 py-8 text-center text-sm text-gray-500">
-                No notifications
+                ${noNotificationsText}
             </div>
         `;
         return;
@@ -111,10 +125,53 @@ function formatTime(dateString) {
     const now = new Date();
     const diff = Math.floor((now - date) / 1000); // diff in seconds
 
-    if (diff < 60) return 'just now';
-    if (diff < 3600) return `minutes ago ${Math.floor(diff / 60)}`;
-    if (diff < 86400) return `hours ago ${Math.floor(diff / 3600)}`;
-    return `days ago ${Math.floor(diff / 86400)}`;
+    const justNow = getTranslation('just_now');
+    const minutesAgo = getTranslation('minutes_ago');
+    const hoursAgo = getTranslation('hours_ago');
+    const daysAgo = getTranslation('days_ago');
+
+    // Obtenir la langue actuelle depuis l'HTML ou une variable globale
+    const currentLang = document.documentElement.lang ||
+                      (typeof window.currentLocale !== 'undefined' ? window.currentLocale : 'fr');
+
+    if (diff < 60) return justNow;
+    if (diff < 3600) {
+        const minutes = Math.floor(diff / 60);
+        // Forcer la traduction selon la langue actuelle
+        if (currentLang === 'fr') {
+            return `il y a ${minutes} minute${minutes > 1 ? 's' : ''}`;
+        } else {
+            return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+        }
+    }
+    if (diff < 86400) {
+        const hours = Math.floor(diff / 3600);
+        // Forcer la traduction selon la langue actuelle
+        if (currentLang === 'fr') {
+            return `il y a ${hours} heure${hours > 1 ? 's' : ''}`;
+        } else {
+            return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+        }
+    }
+    const days = Math.floor(diff / 86400);
+    // Forcer la traduction selon la langue actuelle
+    if (currentLang === 'fr') {
+        if (days === 7) {
+            return `il y a 1 semaine`;
+        }
+        return `il y a ${days} jour${days > 1 ? 's' : ''}`;
+    } else {
+        if (days === 7) {
+            return `1 week ago`;
+        }
+        return `${days} day${days > 1 ? 's' : ''} ago`;
+    }
+}
+
+function getTranslation(key) {
+    // Récupérer les traductions depuis les données globales ou le HTML
+    const translations = window.translations || {};
+    return translations[key] || key;
 }
 
 function viewNotification(id) {

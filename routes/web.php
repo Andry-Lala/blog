@@ -29,6 +29,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Language switching routes
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
+Route::get('/language/translations', [LanguageController::class, 'getTranslations'])->name('language.translations');
 
 // API route for authentication check
 Route::get('/api/auth-check', function () {

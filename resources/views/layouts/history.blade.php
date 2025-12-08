@@ -179,6 +179,40 @@
 
     @stack('scripts')
     <script>
+        // Injecter les traductions pour les notifications
+        window.translations = {
+            'no_notifications': "{{ __('messages.no_notifications') }}",
+            'just_now': "{{ __('messages.just_now') }}",
+            'minutes_ago': "{{ __('messages.minutes_ago') }}",
+            'hours_ago': "{{ __('messages.hours_ago') }}",
+            'days_ago': "{{ __('messages.days_ago') }}"
+        };
+
+        // Injecter la langue actuelle pour les traductions temporelles
+        window.currentLocale = "{{ app()->getLocale() }}";
+
+        // Fonction pour recharger les traductions
+        window.updateTranslations = function() {
+            fetch('{{ route("language.translations") }}', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.translations = data;
+                // Recharger les notifications avec les nouvelles traductions
+                if (typeof window.loadNotifications === 'function') {
+                    window.loadNotifications();
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors du chargement des traductions:', error);
+            });
+        };
+    </script>
+    <script>
         // Mobile menu functionality - completely rewritten
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
